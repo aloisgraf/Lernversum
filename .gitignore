@@ -1,0 +1,18 @@
+# Umgebungsvariablen und Geheimnisse
+.env
+.env.*
+!.env.example
+
+# Abhängigkeiten und Builds
+node_modules/
+.next/
+dist/
+coverage/
+
+# Supabase lokal
+supabase/.temp/
+supabase/.branches/
+
+# System
+.DS_Store
+Thumbs.db
