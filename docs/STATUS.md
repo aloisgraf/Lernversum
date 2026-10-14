@@ -5,7 +5,12 @@
 ## Stand
 
 - Phase 1 (Architekturplanung) als Entwurf fertig; E-8 und E-14 offen.
-- Kein Code, keine Migrationen, keine Tests ausgeführt (nichts zu testen).
+- Phase 2a (technisches Grundgerüst) umgesetzt und mit Freigabe committed. Noch keine
+  Benutzer, Rollen oder Tabellen.
+- Lokal geprüft: Lint, Typprüfung, Format, 4 Unit-Tests, Build, 9 End-to-End-Tests
+  (3 Bildschirmgrößen), Abhängigkeitsprüfung ohne Befund. RLS-Basistest in einem
+  Supabase-Postgres-Container ausgeführt (positiv und negativ). Der volle lokale
+  Supabase-Stack ließ sich in der Cloud-Umgebung nicht starten (Docker-Hub-Limit); er läuft in der CI.
 - Dokumentation am 2026-10-14 mit Freigabe von Alois committed (Branch `claude/project-thread-xulmv5`).
 
 ## Entscheidungen vor Entwicklungsbeginn
@@ -34,5 +39,6 @@
 
 ## Nächste Schritte
 
-1. Freigabe der Planung durch Alois; E-14 nachreichen.
-2. Phase 2 (Grundplattform) laut `ROADMAP.md`.
+1. CI auf GitHub beobachten.
+2. Benutzer- und Rollenmodell klären (`ACCOUNT-FLOWS.md`), inkl. E-14.
+3. Danach Phase 2b: Login, Rollen, Konten laut `ROADMAP.md`.

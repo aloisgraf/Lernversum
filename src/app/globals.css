@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Design-Tokens (Basis). Ausbau in Phase 7, siehe docs/DESIGN-SYSTEM.md. */
+:root {
+  --color-bg: #fbfaf7;
+  --color-fg: #1d2330;
+  --color-muted: #5b6475;
+  --color-accent: #2f6f4f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #12161d;
+    --color-fg: #eef1f5;
+    --color-muted: #a7b0bf;
+    --color-accent: #7cc9a0;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

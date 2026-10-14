@@ -76,6 +76,14 @@ Ergänzt D-014. Schüler- und Elterncode werden einmal eingelöst. Danach meldet
 `vorname.nachname` und selbst gewähltem Passwort an. Benutzername der Eltern: Vorschlag
 `eltern.vorname.nachname` des Kindes (noch zu bestätigen).
 
+## D-016 Werkzeugversionen im Grundgerüst — verbindlich (2026-10-14)
+
+- Node 22 LTS, pnpm 10 (über Corepack), Next.js 16.3, React 19, Tailwind 4, Zod 4.
+- TypeScript 5 statt 7: `typescript-eslint` unterstützt TypeScript 7 noch nicht.
+- ESLint 9 statt 10: `eslint-plugin-react` (über `eslint-config-next`) läuft noch nicht mit ESLint 10.
+- Paketversionen müssen mindestens 14 Tage alt sein (`minimumReleaseAge`).
+- Kein `output: "standalone"` vorerst; kommt mit dem Docker-Deployment.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit

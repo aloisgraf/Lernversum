@@ -4,8 +4,21 @@ Modulare Lernplattform für Kinder: Administratoren verwalten Lehrkräfte und Li
 Lehrkräfte legen Schüler an und schalten Lernspiele zeitlich begrenzt frei, Schüler spielen
 in einer kindgerechten Spielebibliothek.
 
-**Stand:** Architekturplanung (Phase 1), noch kein Code. Installations- und Startanweisungen
-folgen mit dem Grundgerüst in Phase 2 (geplant: `docs/DEVELOPMENT.md`).
+**Stand:** Technisches Grundgerüst (Phase 2a). Noch keine Benutzer, Rollen oder Spiele.
+
+## Schnellstart
+
+Voraussetzungen: Node.js 22, Docker, Git. Unter Windows WSL 2.
+
+```
+corepack enable
+pnpm install
+cp .env.example .env.local
+pnpm db:start
+pnpm dev
+```
+
+Ausführliche Anleitung für Windows und macOS: `docs/DEVELOPMENT.md`.
 
 ## Architekturplanung (Master-Prompt, Abschnitt 18)
 

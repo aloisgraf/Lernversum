@@ -1,0 +1,8 @@
+# Sicherheit: Pakete erst installieren, wenn die Version mindestens 14 Tage alt ist
+# (Schutz vor kompromittierten Neuveröffentlichungen). Angabe in Minuten.
+minimumReleaseAge: 20160
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - supabase
+  - unrs-resolver

@@ -16,3 +16,9 @@ supabase/.branches/
 # System
 .DS_Store
 Thumbs.db
+
+# Tests
+playwright-report/
+test-results/
+*.tsbuildinfo
+next-env.d.ts
