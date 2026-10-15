@@ -80,6 +80,7 @@ Danach `docs/STATUS.md` aktualisieren.
 | `docs/ARCHITECTURE.md` | Systemarchitektur |
 | `docs/DECISIONS.md` | Entscheidungen (verbindlich vs. vorläufig) |
 | `docs/SECURITY.md` | Sicherheitsanforderungen und Risiken |
+| `docs/SECURITY-AUDIT.md` | Audit-Bericht, Maßnahmenplan; `FREIGABE-CHECKLISTE.md` für den Produktivbetrieb |
 | `docs/DATA-PROTECTION.md` | Datenschutz und Datenverarbeitung |
 | `docs/DATABASE.md` | Datenmodell und Migrationen |
 | `docs/GAME-MODULES.md` | Spielmodule, Konfiguration, Statistik |

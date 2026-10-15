@@ -1,0 +1,48 @@
+### GET /
+HTTP/1.1 200 OK
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+x-nextjs-cache: HIT
+x-nextjs-prerender: 1
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 300
+Cache-Control: s-maxage=31536000
+ETag: "14rtf2bmxzz4be"
+Content-Type: text/html; charset=utf-8
+Content-Length: 5596
+Date: Wed, 14 Oct 2026 21:59:43 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+### GET /gibt-es-nicht
+HTTP/1.1 404 Not Found
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+x-nextjs-cache: HIT
+x-nextjs-prerender: 1
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 300
+ETag: "z0507wxa825wn"
+Content-Type: text/html; charset=utf-8
+Content-Length: 7657
+Date: Wed, 14 Oct 2026 21:59:43 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+### TRACE /
+405
+### POST / mit fremdem Origin
+405
+### /_next/static Quellcodekarten
+### Geheimnisnamen im Client-Bundle
+keine
+### server-only Schutz

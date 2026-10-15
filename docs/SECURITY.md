@@ -47,6 +47,15 @@ Alle Punkte aus dem Master-Prompt, Abschnitt 14, als pgTAP- und Playwright-Tests
 - Medien ohne Berechtigung nicht abrufbar, auch nicht mit geratener URL.
 - Produktionskonfiguration zeigt auf EU-Regionen (Konfigurationstest).
 
+## Audit und verbindliche Ergänzungen
+
+- Sicherheits- und Datenschutz-Audit Nr. 1 (2026-10-14): `SECURITY-AUDIT.md`, Freigabe-Checkliste
+  für den Produktivbetrieb: `FREIGABE-CHECKLISTE.md`. Nur die Maßnahmen zu K-01 bis K-03 sind
+  freigegeben (D-017); alle anderen Maßnahmen des Audits sind offen.
+- D-017 präzisiert die Zeilen Authentifizierung und Rate-Limits oben: Anmeldung von Schülern und
+  Eltern nur über eigenen Server-Endpunkt mit Begrenzung je Benutzername, Status immer aus
+  Tabellen, Token-Laufzeit 10 Minuten, Admin-Rechte nur mit `aal2`.
+
 ## Restrisiken (bekannt)
 
 - **Erratbare Benutzernamen:** `vorname.nachname` ist vorhersehbar; Schutz liegt allein im
@@ -59,3 +68,6 @@ Alle Punkte aus dem Master-Prompt, Abschnitt 14, als pgTAP- und Playwright-Tests
   des Kindes, daher Elternkarte getrennt und vertraulich übergeben.
 - Gemeinsam genutzte Geräte in Schule/Familie: Abmelden muss einfach und deutlich sein.
 - Abhängigkeit von Anbieter-Sicherheit (Supabase, Hosting).
+- Supabase vergibt neuen Tabellen und Funktionen in `public` standardmäßig volle Rechte für
+  `anon` und `authenticated`; RLS und ausdrückliches `REVOKE` sind die einzige Schranke
+  (Audit A-02). Views umgehen RLS ohne `security_invoker` (Audit A-01).

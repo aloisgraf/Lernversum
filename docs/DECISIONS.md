@@ -84,6 +84,25 @@ Ergänzt D-014. Schüler- und Elterncode werden einmal eingelöst. Danach meldet
 - Paketversionen müssen mindestens 14 Tage alt sein (`minimumReleaseAge`).
 - Kein `output: "standalone"` vorerst; kommt mit dem Docker-Deployment.
 
+## D-017 Anmeldeschutz, Sperrwirkung und Admin-2FA — verbindlich (2026-10-15)
+
+Aus dem Sicherheitsaudit (`SECURITY-AUDIT.md`, K-01 bis K-03). Umsetzung mit Phase 2b.
+
+- **Anmeldeschutz (K-01):** Schüler und Eltern melden sich nur über einen eigenen Server-Endpunkt
+  an; der direkte Passwort-Login gegen die Supabase-Auth-API wird für sie unterbunden. Je
+  Benutzername nach 5 Fehlversuchen 1 Minute Wartezeit, danach jeweils doppelt so lang, höchstens
+  15 Minuten, keine Dauersperre. Je IP-Adresse 100 Versuche in 5 Minuten. Zähler in einer
+  Postgres-Tabelle (keine neue Infrastruktur). Passwörter: Kinder mindestens 8, Eltern mindestens
+  12 Zeichen, keine häufigen Passwörter, nicht der eigene Benutzername. Gleiche Fehlermeldung für
+  falschen Namen und falsches Passwort; Fehlversuche nur mit IDs protokolliert.
+- **Sperrwirkung (K-02):** Rolle, Konto- und Lizenzstatus werden in RLS, `can_play` und
+  Server-Code immer aus den Tabellen gelesen; der Rollen-Claim im Token dient nur der Oberfläche.
+  Zugriffstoken gelten 10 Minuten (`jwt_expiry = 600`). Sperre und neuer Aktivierungscode beenden
+  alle Sitzungen.
+- **Admin-2FA (K-03):** Alle Admin-Policies und Admin-Funktionen verlangen `aal2`. TOTP ist in
+  Staging und Produktion aktiviert und für Admins Pflicht.
+- **Abnahme:** Tests T-K1-1 bis T-K3-2 laut `SECURITY-AUDIT.md`, Abschnitt 8, in CI grün.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit

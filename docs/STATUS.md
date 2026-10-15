@@ -1,6 +1,6 @@
 # Projektstand
 
-**Zuletzt aktualisiert:** 2026-10-14
+**Zuletzt aktualisiert:** 2026-10-15
 
 ## Stand
 
@@ -12,6 +12,9 @@
   Supabase-Postgres-Container ausgeführt (positiv und negativ). Der volle lokale
   Supabase-Stack ließ sich in der Cloud-Umgebung nicht starten (Docker-Hub-Limit); er läuft in der CI.
 - Dokumentation am 2026-10-14 mit Freigabe von Alois committed (Branch `claude/project-thread-xulmv5`).
+- CI auf GitHub für Phase 2a grün (alle 6 Jobs).
+- Sicherheits- und Datenschutz-Audit Nr. 1 durchgeführt (`SECURITY-AUDIT.md`, `FREIGABE-CHECKLISTE.md`):
+  kein kritischer Befund; Maßnahmen zu K-01 bis K-03 freigegeben (D-017), übrige Maßnahmen offen.
 
 ## Entscheidungen vor Entwicklungsbeginn
 
@@ -39,6 +42,7 @@
 
 ## Nächste Schritte
 
-1. CI auf GitHub beobachten.
+1. Weitere Audit-Maßnahmen (`SECURITY-AUDIT.md`, Abschnitt 7) zur Freigabe vorlegen, vor allem
+   Branch-Schutz (A-04) und Erweiterung des RLS-Basistests (A-01 bis A-03) vor der ersten Migration.
 2. Benutzer- und Rollenmodell klären (`ACCOUNT-FLOWS.md`), inkl. E-14.
-3. Danach Phase 2b: Login, Rollen, Konten laut `ROADMAP.md`.
+3. Danach Phase 2b: Login, Rollen, Konten laut `ROADMAP.md`, inklusive D-017.

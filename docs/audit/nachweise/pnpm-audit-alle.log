@@ -1,0 +1,5 @@
+│ high                │ braces vulnerable to stack-exhaustion denial of        │
+│ Package             │ braces                                                 │
+│ Paths               │ .>eslint-config-next>@next/eslint-plugin-next>fast-    │
+│ More info           │ https://github.com/advisories/GHSA-vfj7-8cjw-p6xm      │
+Severity: 1 high
