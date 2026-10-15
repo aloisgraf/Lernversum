@@ -1,7 +1,7 @@
 # Spielmodule, Konfiguration und Statistik
 
-**Stand:** Entwurf Phase 1. Es gibt noch kein konkretes Spiel; Spiele werden erst nach Alois'
-Beschreibung entwickelt (Phase 8). Die Ideen aus „Lernversum Zauberwald“ sind Material für später.
+**Stand:** Entwurf Phase 1. Erstes Spiel als Testversion ohne Anmeldung und ohne Speicherung:
+„Wald-Wesen füttern“ (`docs/games/wald-wesen-fuettern.md`), aus dem Konzept „Lernversum Zauberwald“.
 
 ## Prinzip
 

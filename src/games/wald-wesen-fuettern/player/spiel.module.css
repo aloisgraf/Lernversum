@@ -1,0 +1,177 @@
+/* Eigenes Erscheinungsbild von „Wald-Wesen füttern“ nach dem Zauberwald-Entwurf. */
+.wald {
+  background: #0c1b3a;
+  color: #fff7e6;
+}
+
+.wald button:focus-visible,
+.wald a:focus-visible {
+  outline: 4px solid #ffe08a;
+  outline-offset: 4px;
+}
+
+.pille {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 18px 0 6px;
+  border-radius: 26px;
+  background: rgb(255 247 230 / 0.14);
+  color: #fff7e6;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.stern {
+  width: clamp(16px, 3.4vw, 28px);
+  height: auto;
+}
+
+.pille[role="img"] {
+  padding: 0 14px;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.zurueck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff7e6;
+}
+
+.zurueck:hover {
+  background: rgb(255 247 230 / 0.14);
+}
+
+.emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  line-height: 1;
+}
+
+.karte {
+  width: clamp(150px, min(24vw, 31vh), 280px);
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  border: 7px solid #f2c14e;
+  background: #fff7e6;
+  box-shadow:
+    0 0 0 10px rgb(255 224 138 / 0.12),
+    0 18px 50px rgb(0 0 0 / 0.45);
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  transition:
+    transform 0.25s ease,
+    border-color 0.3s ease;
+}
+
+.karteZieht {
+  transition: border-color 0.3s ease;
+  cursor: grabbing;
+  z-index: 10;
+}
+
+.bildFlaeche {
+  display: flex;
+  width: 72%;
+  aspect-ratio: 1;
+}
+
+.bildFlaeche svg {
+  width: 100%;
+  height: 100%;
+}
+
+.bildEmoji {
+  font-size: clamp(90px, 11vw, 140px);
+}
+
+.wackeln {
+  animation: wackeln 0.45s ease-in-out;
+}
+
+@keyframes wackeln {
+  0%,
+  100% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+  30% {
+    rotate: -3deg;
+    translate: -8px 0;
+  }
+  70% {
+    rotate: 2deg;
+    translate: 6px 0;
+  }
+}
+
+.wesen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 24px;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.wesen:disabled {
+  cursor: default;
+}
+
+.figur {
+  width: 100%;
+  max-width: min(176px, 19vh);
+  height: auto;
+  aspect-ratio: 160 / 175;
+}
+
+.schild {
+  min-width: min(96px, 100%);
+  height: 52px;
+  box-sizing: border-box;
+  padding: 0 clamp(8px, 2vw, 22px);
+  border-radius: 26px;
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 700;
+  line-height: 52px;
+  white-space: nowrap;
+}
+
+.schildKlein {
+  font-size: clamp(12px, 3.2vw, 20px);
+  font-weight: 600;
+}
+
+.kaut {
+  animation: kauen 0.6s ease-in-out 2;
+  transform-origin: 50% 90%;
+}
+
+@keyframes kauen {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08, 0.94);
+  }
+}
