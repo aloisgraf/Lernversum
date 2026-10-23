@@ -35,5 +35,11 @@ export default defineConfig({
     url: `http://127.0.0.1:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    // Nur für die Tests: Demo-Login mit Wegwerf-Passwörtern (keine echten Zugangsdaten).
+    env: {
+      DEMO_LOGIN: "on",
+      DEMO_ADMIN_PASSWORD: "e2e-nur-test-admin",
+      DEMO_USER_PASSWORD: "e2e-nur-test-benutzer",
+    },
   },
 });

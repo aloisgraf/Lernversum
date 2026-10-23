@@ -12,6 +12,9 @@ export default function HomePage() {
       >
         Spiele ausprobieren
       </Link>
+      <Link href="/login" className="self-start underline">
+        Anmelden (Demo)
+      </Link>
     </main>
   );
 }

@@ -1,6 +1,6 @@
 # Projektstand
 
-**Zuletzt aktualisiert:** 2026-10-21
+**Zuletzt aktualisiert:** 2026-10-23
 
 ## Stand
 
@@ -17,6 +17,10 @@
 - Dokumentation am 2026-10-14 mit Freigabe von Alois committed (Branch `claude/project-thread-xulmv5`).
 - Sicherheits- und Datenschutz-Audit Nr. 1 durchgeführt (`SECURITY-AUDIT.md`, `FREIGABE-CHECKLISTE.md`):
   kein kritischer Befund; Maßnahmen zu K-01 bis K-03 freigegeben (D-017), übrige Maßnahmen offen.
+
+- Demo-Login für die DEV-Seite (D-019) und Next.js-Sicherheitsupdate auf 16.4.2 (D-020)
+  umgesetzt und lokal geprüft: Lint, Typen, Format, 36 Unit-Tests, Build, 28 End-to-End-Tests,
+  Abhängigkeitsprüfung ohne Befund.
 
 ## Entscheidungen vor Entwicklungsbeginn
 

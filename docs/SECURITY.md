@@ -43,6 +43,10 @@ Alle Punkte aus dem Master-Prompt, Abschnitt 14, als pgTAP- und Playwright-Tests
   fehlende Signatur, wiederholte Nachricht, manipulierter Betrag oder manipuliertes Paket werden
   abgewiesen. Paket, Preis und Kinderzahl kommen nur aus der Serverkonfiguration, nie aus dem
   Browser. Keine Zahlungsdaten bei Lernversum.
+- Demo-Login (D-019) nur auf Test-Servern: aus, solange nicht ausdrücklich eingeschaltet;
+  Negativtests in `tests/e2e/demo-login.spec.ts` (ohne Anmeldung, falsches Passwort, falsche
+  Rolle, gefälschtes Cookie, zweite Anmeldung, Abmelden). Restrisiko: Passwörter liegen im
+  Klartext in den Coolify-Einstellungen; deshalb nur Testdaten.
 - Einzelanmeldung (D-018, vorläufig): Eine neue Anmeldung beendet alle anderen Sitzungen des
   Kontos. Negativtest: Nach der zweiten Anmeldung wird das Token der ersten serverseitig
   abgelehnt, auch per direktem API-Aufruf. Restrisiko: Bis zum Ablauf des Zugriffstokens

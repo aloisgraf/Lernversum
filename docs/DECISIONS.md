@@ -120,6 +120,26 @@ Vorgabe von Alois; Details in `ACCOUNT-FLOWS.md`, Abschnitte 0, 2a und 4a.
   hier dokumentiert, bevor er eingebunden wird (L-5).
 - Offene Punkte L-2 bis L-7 in `ACCOUNT-FLOWS.md`; erst danach insgesamt verbindlich.
 
+## D-019 Demo-Login für die DEV-Seite — vorläufig (2026-10-23)
+
+Auf Wunsch von Alois: ein Test-Login mit groben Admin- und Benutzerseiten, bevor es eine
+Datenbank gibt. Zwei feste Konten (`admin`, `testuser`); Passwörter nur als
+Server-Umgebungsvariablen in Coolify, nie im Repository. Ohne `DEMO_LOGIN=on` und gültige
+Passwörter ist der Login aus. Sitzungen nur im Speicher des Servers (Neustart meldet alle ab),
+je Konto eine Sitzung (D-018), Anmeldeschutz nach D-017. Geschützte Seiten prüfen die Rolle
+serverseitig bei jeder Anfrage. Kein Ersatz für Phase 2b: wird mit der echten Anmeldung über
+Supabase entfernt. Nur Testdaten.
+
+## D-020 Ausnahme von der 14-Tage-Regel für Sicherheitsupdates — verbindlich nach Freigabe (2026-10-23)
+
+Next.js 16.0 bis 16.4.0 hat kritische Lücken (u. a. Codeausführung ohne Anmeldung,
+GHSA-2464-fhr4-w9xw, GHSA-673q-mjm6-r5xr; DoS GHSA-p3m5-59mp-jv5r). Die behobene Version
+16.4.2 ist jünger als 14 Tage. Das Risiko einer bekannten, öffentlich ausnutzbaren Lücke auf dem
+DEV-Server wiegt schwerer als das Risiko einer kompromittierten Neuveröffentlichung des
+Herstellers. Darum `minimumReleaseAgeExclude` nur für `next`, `@next/*` und `eslint-config-next`;
+nach dem 2026-10-29 wieder entfernen. Regel für künftige Fälle: Ausnahmen nur für behobene
+kritische oder hohe Lücken, auf die betroffenen Pakete begrenzt und befristet.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit
