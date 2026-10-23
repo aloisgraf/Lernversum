@@ -47,6 +47,10 @@ Alle Punkte aus dem Master-Prompt, Abschnitt 14, als pgTAP- und Playwright-Tests
   Negativtests in `tests/e2e/demo-login.spec.ts` (ohne Anmeldung, falsches Passwort, falsche
   Rolle, gefälschtes Cookie, zweite Anmeldung, Abmelden). Restrisiko: Passwörter liegen im
   Klartext in den Coolify-Einstellungen; deshalb nur Testdaten.
+- Test-Admin (D-021): Jede Server-Aktion prüft zuerst die Admin-Rolle; Eingaben mit Zod
+  geprüft; Anzahl der Einträge begrenzt. Negativtests: ohne Anmeldung und als `testuser` sind
+  alle Admin-Seiten gesperrt. Offen: kein automatisierter Test, der Admin-Aktionen direkt per
+  POST als `testuser` aufruft (kommt mit der echten Umsetzung in Phase 2b).
 - Einzelanmeldung (D-018, vorläufig): Eine neue Anmeldung beendet alle anderen Sitzungen des
   Kontos. Negativtest: Nach der zweiten Anmeldung wird das Token der ersten serverseitig
   abgelehnt, auch per direktem API-Aufruf. Restrisiko: Bis zum Ablauf des Zugriffstokens

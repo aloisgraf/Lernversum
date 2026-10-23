@@ -5,6 +5,7 @@ const ADMIN = { username: "admin", password: "e2e-nur-test-admin" };
 const USER = { username: "testuser", password: "e2e-nur-test-benutzer" };
 
 // Alle Projekte teilen sich einen Server; Anmeldungen würden sich gegenseitig abmelden.
+// Darum stehen alle Tests mit Anmeldung in dieser einen Datei (läuft der Reihe nach).
 test.beforeEach(({}, testInfo) => {
   test.skip(testInfo.project.name !== "desktop", "Demo-Login nur im Desktop-Projekt testen");
 });
@@ -73,4 +74,56 @@ test("Abmelden beendet die Sitzung", async ({ page }) => {
   await expect(page).toHaveURL(/\/login$/);
   await page.goto("/bereich");
   await expect(page).toHaveURL(/\/login$/);
+});
+
+// Test-Admin (Prototyp, D-021)
+
+test("ohne Anmeldung sind die Admin-Unterseiten gesperrt", async ({ page }) => {
+  for (const path of ["/admin/lizenznehmer", "/admin/spiele"]) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/login$/);
+  }
+});
+
+test("Benutzer kommt nicht in die Admin-Unterseiten", async ({ page }) => {
+  await login(page, USER);
+  await expect(page).toHaveURL(/\/bereich$/);
+  for (const path of ["/admin/lizenznehmer", "/admin/spiele"]) {
+    const response = await page.goto(path);
+    expect(response?.status()).toBe(404);
+  }
+});
+
+test("Admin legt Lizenznehmer, Lizenz, Kind und Freischaltung an", async ({ page }) => {
+  await login(page, ADMIN);
+  await page.getByRole("link", { name: "Lizenznehmer und Kinder" }).click();
+
+  const suffix = Date.now().toString(36);
+  await page.getByLabel("Name").fill(`Therapie Test ${suffix}`);
+  await page.getByLabel("E-Mail").fill(`t-${suffix}@example.org`);
+  await page.getByLabel("Art").selectOption("therapeut");
+  await page.getByRole("button", { name: "Anlegen" }).click();
+  await page.getByRole("link", { name: new RegExp(`Therapie Test ${suffix}`) }).click();
+
+  await page.getByRole("button", { name: "Lizenz zuweisen" }).click();
+  await expect(page.getByText(/Lizenz gültig bis/)).toBeVisible();
+
+  await page.getByLabel("Vorname").fill("Lena");
+  await page.getByLabel("Nachname").fill("Tester");
+  await page.getByRole("button", { name: "Kind anlegen" }).click();
+  await expect(page.getByText(/Kinderkarte: Benutzername/)).toBeVisible();
+  await expect(page.getByText(/Elternkarte: Benutzername eltern\.lena\.tester/)).toBeVisible();
+
+  await page.getByRole("button", { name: "Spiel freischalten" }).click();
+  await expect(page.getByText(/Darf heute spielen: Wald-Wesen füttern/)).toBeVisible();
+});
+
+test("Admin legt ein Thema an", async ({ page }) => {
+  await login(page, ADMIN);
+  await expect(page).toHaveURL(/\/admin$/);
+  await page.goto("/admin/spiele");
+  const name = `Thema ${Date.now().toString(36)}`;
+  await page.getByLabel("Neues Thema").fill(name);
+  await page.getByRole("button", { name: "Thema anlegen" }).click();
+  await expect(page.getByText(`Thema „${name}“ angelegt.`)).toBeVisible();
 });

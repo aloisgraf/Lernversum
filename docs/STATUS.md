@@ -22,6 +22,9 @@
   umgesetzt und lokal geprüft: Lint, Typen, Format, 36 Unit-Tests, Build, 28 End-to-End-Tests,
   Abhängigkeitsprüfung ohne Befund.
 
+- Test-Admin als Prototyp (D-021) umgesetzt und lokal geprüft: Lint, Typen, Format,
+  53 Unit-Tests, Build, 32 End-to-End-Tests.
+
 ## Entscheidungen vor Entwicklungsbeginn
 
 | Nr. | Frage | Ergebnis |

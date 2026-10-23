@@ -140,6 +140,17 @@ Herstellers. Darum `minimumReleaseAgeExclude` nur für `next`, `@next/*` und `es
 nach dem 2026-10-29 wieder entfernen. Regel für künftige Fälle: Ausnahmen nur für behobene
 kritische oder hohe Lücken, auf die betroffenen Pakete begrenzt und befristet.
 
+## D-021 Test-Admin als Prototyp — vorläufig (2026-10-23)
+
+Alois hat „Prototyp“ gewählt: ein klickbarer Adminbereich auf der DEV-Seite, um die Abläufe
+auszuprobieren (Lizenznehmer anlegen, Lizenz mit Paket und Laufzeit zuweisen, Kinder mit
+Kinder- und Elternkarte anlegen, Spiele freischalten, Themen anlegen und Spielen zuordnen).
+Daten nur im Speicher des Servers, nach jedem Neustart weg; Beispieldaten frei erfunden. Regeln
+wie geplant: Paket passt zur Art des Lizenznehmers, Kinderlimit, Freischaltung nur innerhalb
+der Lizenzlaufzeit, Codes nur einmal angezeigt und nur als Prüfwert gespeichert, jede Aktion
+prüft serverseitig die Admin-Rolle. Kein Ersatz für Phase 2b/3: Datenmodell und Oberfläche
+dienen als Vorlage, die Umsetzung erfolgt dann in Supabase mit RLS und pgTAP-Tests.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit
