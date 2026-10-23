@@ -16,11 +16,13 @@ keine externen Laufzeit-Abrufe (Fonts, CDNs, Analytics) im Schülerbereich.
 | Admin: E-Mail, Name, 2FA | Verwaltung | Admins | bei Ausscheiden |
 | Schule (optional): Name | Verwaltung | Admin; zugeordnete Lehrkräfte | mit Auflösung |
 | Lehrkraft: E-Mail, Name, Schulen | Konto, Lizenz | Lehrkraft, Admin | 90 Tage nach Lizenzende ohne Verlängerung |
+| Käufer: Name, E-Mail, ggf. Firma und Rechnungsadresse, Bestellungen (D-018) | Vertrag, Rechnung | Admin; Käufer selbst | gesetzliche Aufbewahrungsfrist für Buchhaltungsunterlagen (genaue Dauer prüfen); Kontodaten wie Lehrkraft |
 | Schüler: Vorname, Nachname, Benutzername, Pseudonym-ID | Login, Zuordnung | Lehrkraft; Eltern; Schüler selbst | mit Löschung durch Lehrkraft oder Fristende |
 | Elternzugang: Benutzername | Fortschritt einsehen | Lehrkraft verwaltet | mit dem Schülerkonto |
 | Freischaltungen | Lizenzprüfung | Lehrkraft, Schüler (eigene), Admin (ohne Namen) | mit Schülerkonto |
 | Spielsitzungen und Ereignisse | Lernstatistik | Lehrkraft; Eltern (nur lesen); Admin nur zweckgebunden mit Audit | Rohdaten 12 Monate, Aggregate bis Kontolöschung (Fristen entschieden, D-011) |
 | Audit-/Sicherheitslogs | Nachvollziehbarkeit, Sicherheit | Admin | 12 Monate |
+| Anmeldezeitpunkte und Sitzungsübernahmen (D-018) | Schutz vor Weitergabe der Zugangsdaten | Admin | Vorschlag 90 Tage; keine Gerätefingerabdrücke |
 | Hochgeladene Medien | Spielinhalte | nach Scope | mit Inhalt |
 
 Keine Geburtsdaten, keine E-Mail-Adressen von Kindern, keine Fotos oder Sprachaufnahmen von
@@ -62,3 +64,5 @@ Zugriffe über Elterncodes werden protokolliert (ohne Inhaltsdaten).
 4. **Datenschutz-Folgenabschätzung:** wegen Kindern und Leistungsdaten wahrscheinlich nötig.
 5. **Unterauftragsverarbeiter und Drittlandzugriffe** der Anbieter (`DEPLOYMENT.md`).
 6. Datenschutzerklärung (kindgerechte Fassung), Impressum, Nutzungsbedingungen.
+7. **Online-Kauf (D-018):** AGB mit Sperrklausel, Widerrufsrecht bei digitalen Inhalten für
+   Verbraucher, Umsatzsteuer und Rechnungen, Vertrag mit dem Zahlungsanbieter.

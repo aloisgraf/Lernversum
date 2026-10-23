@@ -17,7 +17,7 @@ dokumentierten Restrisiken.
 | Transport | nur HTTPS/TLS, HSTS |
 | Speicherung | Verschlüsselung at rest durch Datenbank- und Speicheranbieter; Backups verschlüsselt |
 | Schlüssel | Service-Role und andere Geheimnisse nur als Server-Umgebungsvariablen; nie `NEXT_PUBLIC_`; Secret-Scanning in CI; `.env*` in `.gitignore` |
-| Authentifizierung | keine öffentliche Registrierung; Admin mit 2FA (TOTP) Pflicht; Lehrkraft 2FA empfohlen; Sitzungswiderruf bei Sperre |
+| Authentifizierung | keine freie Registrierung, Konten nur nach bestätigter Zahlung oder durch Admin (D-018); Admin mit 2FA (TOTP) Pflicht; Lehrkraft 2FA empfohlen; Sitzungswiderruf bei Sperre |
 | Admin-Einrichtung | einmaliges CLI-Skript mit Einmal-Token, nur auf dem Server ausführbar, danach gesperrt |
 | Autorisierung | RLS auf allen Tabellen; `can_play` und Kernfunktionen als SECURITY DEFINER mit festem `search_path` und eigener Rechteprüfung |
 | Eingaben | Zod-Validierung serverseitig; parametrisierte Abfragen; keine dynamische SQL-Zusammensetzung |
@@ -38,6 +38,16 @@ Alle Punkte aus dem Master-Prompt, Abschnitt 14, als pgTAP- und Playwright-Tests
 - Lehrkraft A liest/ändert keine Schüler, Gruppen, Freischaltungen, Statistiken von Lehrkraft B.
 - Eltern sehen nur das eigene Kind, nur lesend, und können kein Spiel starten und nichts schreiben.
 - Ein neuer Aktivierungscode macht den alten ungültig und beendet laufende Sitzungen.
+- Online-Kauf (D-018): Konto und Lizenz nur aus einem Webhook mit gültiger Signatur des
+  Zahlungsanbieters; doppelte Zustellung legt nichts doppelt an. Negativtests: gefälschte oder
+  fehlende Signatur, wiederholte Nachricht, manipulierter Betrag oder manipuliertes Paket werden
+  abgewiesen. Paket, Preis und Kinderzahl kommen nur aus der Serverkonfiguration, nie aus dem
+  Browser. Keine Zahlungsdaten bei Lernversum.
+- Einzelanmeldung (D-018, vorläufig): Eine neue Anmeldung beendet alle anderen Sitzungen des
+  Kontos. Negativtest: Nach der zweiten Anmeldung wird das Token der ersten serverseitig
+  abgelehnt, auch per direktem API-Aufruf. Restrisiko: Bis zum Ablauf des Zugriffstokens
+  (10 Minuten, D-017) bleibt die alte Sitzung für reine Lesezugriffe gültig, sofern RLS die
+  Sitzung nicht zusätzlich prüft.
 - Ein verbrauchter oder abgelaufener Code kann nicht erneut eingelöst werden.
 - Gleiche Schule gibt keinen Zugriff auf Schüler anderer Lehrkräfte.
 - Lehrkraft kann nur Spiele aus ihrem Plan und nur im erlaubten Zeitraum freischalten.

@@ -92,9 +92,13 @@ Eine Lehrkraftlizenz verweist auf einen Plan; Admins können einzelne Werte pro 
 ### Eltern, Lerntherapeuten, Nachhilfe
 
 Eltern sind eine eigene, rein lesende Rolle, die zu genau einem Schüler gehört (D-014). Ein
-Lerntherapeut oder Nachhilfelehrer ist eine Lehrkraft mit eigenem Lizenzplan. Ein späterer
-Online-Kauf ersetzt nur den Schritt „Admin legt Lehrkraft und Lizenz an“ durch einen geprüften
-Zahlungs-Webhook; für Version 1 legt der Admin an, ohne Zahlung (D-009).
+Lerntherapeut oder Nachhilfelehrer ist eine Lehrkraft mit eigenem Lizenzplan. Lizenzpakete und
+Laufzeiten nach D-018 (vorläufig): Elternlizenz 1 Kind, Lerntherapie 6/12/20, Schule 20;
+3, 6 oder 12 Monate. Bei der Elternlizenz ist der Elternteil Lizenznehmer (Plan mit
+`max_students = 1`, Elternbereich statt Lehrkraftbereich). Je Konto ist nur eine Sitzung aktiv
+(`ACCOUNT-FLOWS.md`, Abschnitt 4a). Lizenzen werden
+online gekauft (D-018): Ein signaturgeprüfter, idempotenter Zahlungs-Webhook ersetzt den Schritt
+„Admin legt Lehrkraft und Lizenz an“. Der manuelle Admin-Weg bleibt bestehen.
 
 ## 4. Lehrkraft-, Schüler- und Elternverwaltung
 
@@ -106,7 +110,8 @@ sich danach mit Benutzername und selbst gewähltem Passwort an (D-015).
   Lehrkraft kann zu keiner, einer oder mehreren Schulen gehören. Gleiche Schule heißt **nicht**,
   dass Lehrkräfte gegenseitig Schüler oder Daten sehen.
 - **Lehrkraft anlegen (Admin):** Server-Funktion legt Auth-Konto an, verschickt Einladungslink
-  (Passwort setzt die Lehrkraft selbst), legt Profil und Lizenz an. Keine öffentliche Registrierung.
+  (Passwort setzt die Lehrkraft selbst), legt Profil und Lizenz an. Alternativ entsteht das Konto
+  nach bestätigtem Online-Kauf (D-018). Keine freie Registrierung ohne Kauf.
 - **Klasse anlegen (Lehrkraft):** Die Lehrkraft legt ihre Klasse bzw. Lerngruppe an und darin
   ihre Schüler, einzeln oder als Liste. Klassen sind optional.
 - **Schüler anlegen (Lehrkraft):** Eine Server-Funktion prüft Lizenz und Schülerlimit in einer

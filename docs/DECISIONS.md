@@ -33,7 +33,7 @@ Genutzt bei Bibliothek, Sitzungsstart und jedem Ereignis.
 
 ## D-008 Hosting: Supabase Cloud Frankfurt + App-Container bei EU-Hoster — Richtung verbindlich (D-011), Anbieterprüfung offen
 
-## D-009 Zugang in Version 1: Admin legt Lehrkräfte an — verbindlich (2026-10-14)
+## D-009 Zugang in Version 1: Admin legt Lehrkräfte an — teilweise ersetzt durch D-018 (2026-10-21)
 
 Keine Selbstregistrierung und keine Zahlung in V1. Eltern und Lerntherapeuten werden als
 Lehrkraft mit eigenem Lizenzplan angelegt (z. B. „Eltern“: max. 1 Schüler, keine Gruppen).
@@ -102,6 +102,23 @@ Aus dem Sicherheitsaudit (`SECURITY-AUDIT.md`, K-01 bis K-03). Umsetzung mit Pha
 - **Admin-2FA (K-03):** Alle Admin-Policies und Admin-Funktionen verlangen `aal2`. TOTP ist in
   Staging und Produktion aktiviert und für Admins Pflicht.
 - **Abnahme:** Tests T-K1-1 bis T-K3-2 laut `SECURITY-AUDIT.md`, Abschnitt 8, in CI grün.
+
+## D-018 Lizenzpakete, Laufzeiten und Einzelanmeldung — vorläufig (2026-10-21)
+
+Vorgabe von Alois; Details in `ACCOUNT-FLOWS.md`, Abschnitte 0, 2a und 4a.
+
+- Pakete: Elternlizenz (1 Kind), Lerntherapie (6, 12 oder 20 Kinder), Schule/Lehrperson
+  (20 Kinder). Laufzeiten 3, 6 oder 12 Monate. Umsetzung über `license_plans`.
+- Bei der Elternlizenz ist der Elternteil Lizenznehmer und legt sein Kind selbst an.
+- Je Konto höchstens eine aktive Sitzung; Weitergabe der Zugangsdaten kann zur Sperre führen
+  (AGB).
+- **Online-Kauf in Selbstbedienung (von Alois entschieden, 2026-10-21):** Privatpersonen und
+  Unternehmen kaufen ihre Lizenz online; Konto und Lizenz entstehen erst nach vom
+  Zahlungsanbieter bestätigter Zahlung. Ersetzt in D-009 „keine Selbstregistrierung, keine
+  Zahlung in V1“. Der Admin kann weiterhin manuell anlegen.
+- Zahlungsanbieter ist neue Infrastruktur: Auswahl mit Kosten, AVV und Anbieterbindung wird
+  hier dokumentiert, bevor er eingebunden wird (L-5).
+- Offene Punkte L-2 bis L-7 in `ACCOUNT-FLOWS.md`; erst danach insgesamt verbindlich.
 
 ## Ersetzt
 
