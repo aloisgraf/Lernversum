@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currentSession, demoAuthConfig } from "@/lib/demo-auth/server";
+import type { DisabledReason } from "@/lib/demo-auth/core";
 import { loginAction } from "./actions";
+
+const reasonText: Record<DisabledReason, string> = {
+  DEMO_LOGIN_NICHT_ON: "DEMO_LOGIN ist nicht auf „on“ gesetzt.",
+  ADMIN_PASSWORT_ZU_KURZ: "DEMO_ADMIN_PASSWORD fehlt oder hat weniger als 12 Zeichen.",
+  USER_PASSWORT_ZU_KURZ: "DEMO_USER_PASSWORD fehlt oder hat weniger als 12 Zeichen.",
+  PASSWOERTER_GLEICH: "DEMO_ADMIN_PASSWORD und DEMO_USER_PASSWORD sind gleich.",
+};
 
 export const metadata: Metadata = { title: "Anmelden · Lernversum" };
 
@@ -16,7 +24,7 @@ export default async function LoginPage({
 
   const { fehler, warten } = await searchParams;
   const waitSeconds = Number(warten);
-  const enabled = demoAuthConfig().enabled;
+  const config = demoAuthConfig();
 
   return (
     <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 px-4">
@@ -27,8 +35,15 @@ export default async function LoginPage({
       <p className="rounded-lg border p-3 text-sm" style={{ borderColor: "var(--color-muted)" }}>
         Demo-Login für die Testumgebung. Keine echten Daten eingeben.
       </p>
-      {!enabled ? (
-        <p role="status">Der Demo-Login ist auf diesem Server nicht eingerichtet.</p>
+      {!config.enabled ? (
+        <div role="status" className="flex flex-col gap-2">
+          <p>Der Demo-Login ist auf diesem Server nicht eingerichtet.</p>
+          <ul className="list-disc pl-5 text-sm" style={{ color: "var(--color-muted)" }}>
+            {config.reasons.map((reason) => (
+              <li key={reason}>{reasonText[reason]}</li>
+            ))}
+          </ul>
+        </div>
       ) : (
         <form action={loginAction} className="flex flex-col gap-4">
           {fehler ? (

@@ -8,7 +8,13 @@ export type DemoRole = "admin" | "user";
 
 export type DemoUser = { username: string; role: DemoRole; password: string };
 
-export type DemoAuthConfig = { enabled: false } | { enabled: true; users: readonly DemoUser[] };
+// Gründe, warum der Login aus ist. Enthalten nie Werte, nur welche Bedingung fehlt.
+export type DisabledReason =
+  "DEMO_LOGIN_NICHT_ON" | "ADMIN_PASSWORT_ZU_KURZ" | "USER_PASSWORT_ZU_KURZ" | "PASSWOERTER_GLEICH";
+
+export type DemoAuthConfig =
+  | { enabled: false; reasons: readonly DisabledReason[] }
+  | { enabled: true; users: readonly DemoUser[] };
 
 export const MIN_PASSWORD_LENGTH = 12;
 export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
@@ -16,16 +22,17 @@ export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 // Eingeschaltet nur mit DEMO_LOGIN=on und zwei ausreichend langen Passwörtern aus der
 // Server-Umgebung. Fehlt etwas, bleibt der Login aus (sicherer Standard).
 export function parseDemoAuthConfig(env: Record<string, string | undefined>): DemoAuthConfig {
-  const adminPassword = env.DEMO_ADMIN_PASSWORD ?? "";
-  const userPassword = env.DEMO_USER_PASSWORD ?? "";
-  if (
-    env.DEMO_LOGIN !== "on" ||
-    adminPassword.length < MIN_PASSWORD_LENGTH ||
-    userPassword.length < MIN_PASSWORD_LENGTH ||
-    adminPassword === userPassword
-  ) {
-    return { enabled: false };
+  // Leerzeichen am Rand entfernen: Sie entstehen leicht beim Kopieren in die Servereinstellungen.
+  const adminPassword = (env.DEMO_ADMIN_PASSWORD ?? "").trim();
+  const userPassword = (env.DEMO_USER_PASSWORD ?? "").trim();
+  const reasons: DisabledReason[] = [];
+  if ((env.DEMO_LOGIN ?? "").trim().toLowerCase() !== "on") reasons.push("DEMO_LOGIN_NICHT_ON");
+  if (adminPassword.length < MIN_PASSWORD_LENGTH) reasons.push("ADMIN_PASSWORT_ZU_KURZ");
+  if (userPassword.length < MIN_PASSWORD_LENGTH) reasons.push("USER_PASSWORT_ZU_KURZ");
+  if (adminPassword.length > 0 && adminPassword === userPassword) {
+    reasons.push("PASSWOERTER_GLEICH");
   }
+  if (reasons.length > 0) return { enabled: false, reasons };
   return {
     enabled: true,
     users: [

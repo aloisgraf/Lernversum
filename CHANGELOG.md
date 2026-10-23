@@ -2,6 +2,8 @@
 
 ## Unveröffentlicht
 
+- Demo-Login: Anmeldeseite nennt bei ausgeschaltetem Login den Grund (ohne Werte);
+  `DEMO_LOGIN` und Passwörter tolerieren Leerzeichen am Rand, `on` auch großgeschrieben.
 - Sicherheit: Next.js 16.3.8 → 16.4.2 (kritische Lücken GHSA-2464-fhr4-w9xw,
   GHSA-673q-mjm6-r5xr, GHSA-p3m5-59mp-jv5r), befristete Ausnahme von der 14-Tage-Regel (D-020).
 - Demo-Login für Test-Server mit `/login`, grobem Adminbereich `/admin` und Benutzerbereich

@@ -21,6 +21,7 @@ describe("parseDemoAuthConfig", () => {
 
   it("bleibt aus, wenn DEMO_LOGIN nicht 'on' ist", () => {
     expect(parseDemoAuthConfig({ ...env, DEMO_LOGIN: "true" }).enabled).toBe(false);
+    expect(parseDemoAuthConfig({ ...env, DEMO_LOGIN: "" }).enabled).toBe(false);
   });
 
   it("bleibt aus bei zu kurzen oder gleichen Passwörtern", () => {
@@ -28,6 +29,24 @@ describe("parseDemoAuthConfig", () => {
     expect(
       parseDemoAuthConfig({ ...env, DEMO_USER_PASSWORD: env.DEMO_ADMIN_PASSWORD }).enabled,
     ).toBe(false);
+  });
+
+  it("nennt die Gründe, ohne Werte preiszugeben", () => {
+    const config = parseDemoAuthConfig({ DEMO_LOGIN: "on", DEMO_ADMIN_PASSWORD: "kurz" });
+    expect(config).toEqual({
+      enabled: false,
+      reasons: ["ADMIN_PASSWORT_ZU_KURZ", "USER_PASSWORT_ZU_KURZ"],
+    });
+    expect(JSON.stringify(config)).not.toContain('kurz"');
+  });
+
+  it("toleriert Groß-/Kleinschreibung und Leerzeichen am Rand", () => {
+    expect(parseDemoAuthConfig({ ...env, DEMO_LOGIN: " On " }).enabled).toBe(true);
+    const config = parseDemoAuthConfig({
+      ...env,
+      DEMO_ADMIN_PASSWORD: ` ${env.DEMO_ADMIN_PASSWORD}\n`,
+    });
+    expect(findUser(config, "admin", env.DEMO_ADMIN_PASSWORD)?.role).toBe("admin");
   });
 
   it("ist mit allen Einstellungen an", () => {
@@ -51,7 +70,7 @@ describe("findUser", () => {
   });
 
   it("lässt bei ausgeschaltetem Login niemanden hinein", () => {
-    expect(findUser({ enabled: false }, "admin", env.DEMO_ADMIN_PASSWORD)).toBeNull();
+    expect(findUser({ enabled: false, reasons: [] }, "admin", env.DEMO_ADMIN_PASSWORD)).toBeNull();
   });
 });
 
