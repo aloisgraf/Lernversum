@@ -26,7 +26,7 @@ export default async function AdminPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+      <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
         Adminbereich
       </h1>
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">

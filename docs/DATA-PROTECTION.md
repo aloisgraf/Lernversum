@@ -18,6 +18,7 @@ keine externen Laufzeit-Abrufe (Fonts, CDNs, Analytics) im Schülerbereich.
 | Lehrkraft: E-Mail, Name, Schulen | Konto, Lizenz | Lehrkraft, Admin | 90 Tage nach Lizenzende ohne Verlängerung |
 | Käufer: Name, E-Mail, ggf. Firma und Rechnungsadresse, Bestellungen (D-018) | Vertrag, Rechnung | Admin; Käufer selbst | gesetzliche Aufbewahrungsfrist für Buchhaltungsunterlagen (genaue Dauer prüfen); Kontodaten wie Lehrkraft |
 | Schüler: Vorname, Nachname, Benutzername, Pseudonym-ID | Login, Zuordnung | Lehrkraft; Eltern; Schüler selbst | mit Löschung durch Lehrkraft oder Fristende |
+| Kinderprofil: Spitzname (optional), Avatar aus fester Auswahl (D-023) | Anrede und Wiedererkennen im Kinderbereich | Kind selbst; Lehrkraft und Eltern (sehen, zurücksetzen) | mit dem Schülerkonto |
 | Elternzugang: Benutzername | Fortschritt einsehen | Lehrkraft verwaltet | mit dem Schülerkonto |
 | Freischaltungen | Lizenzprüfung | Lehrkraft, Schüler (eigene), Admin (ohne Namen) | mit Schülerkonto |
 | Spielsitzungen und Ereignisse | Lernstatistik | Lehrkraft; Eltern (nur lesen); Admin nur zweckgebunden mit Audit | Rohdaten 12 Monate, Aggregate bis Kontolöschung (Fristen entschieden, D-011) |
@@ -27,6 +28,16 @@ keine externen Laufzeit-Abrufe (Fonts, CDNs, Analytics) im Schülerbereich.
 
 Keine Geburtsdaten, keine E-Mail-Adressen von Kindern, keine Fotos oder Sprachaufnahmen von
 Kindern, keine Gesundheits- oder Diagnosefelder.
+
+## Kinderprofil (D-023, vorläufig)
+
+Das Kind kann einen Spitznamen eintragen und einen Avatar wählen. Avatare sind gezeichnete
+Figuren aus einer festen Auswahl; Hochladen von Bildern oder Fotos gibt es nicht. Der Spitzname
+ist freiwillig und auf 2 bis 20 Buchstaben begrenzt (keine Ziffern, Links oder E-Mail-Adressen);
+die Oberfläche bittet, nicht den ganzen Namen einzutragen. Er erscheint nur im eigenen
+Kinderbereich, nicht in Statistiken, Protokollen oder für andere Kinder. Lehrkraft und Eltern sehen
+den Spitznamen und können ihn zurücksetzen, etwa bei unpassenden Wörtern (Alois, 2026-10-24).
+Im Prototyp liegt das Profil nur im Speicher des Servers.
 
 ## Pseudonymisierung
 

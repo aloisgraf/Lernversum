@@ -1,5 +1,5 @@
 // Wortmarke nach Lernversum_Wortmarke.svg aus dem Designpaket, ohne Hintergrundfläche und in
-// der Oberflächenschrift Nunito statt Trebuchet MS (nicht frei mitlieferbar).
+// der runden Schrift Fredoka statt Trebuchet MS (nicht frei mitlieferbar).
 type Props = { className?: string; onDark?: boolean; showClaim?: boolean };
 
 export function Wortmarke({ className, onDark = false, showClaim = true }: Props) {
@@ -10,12 +10,12 @@ export function Wortmarke({ className, onDark = false, showClaim = true }: Props
       role="img"
       aria-label="Lernversum"
       className={className}
-      style={{ fontFamily: "var(--font-nunito), Arial, sans-serif" }}
+      style={{ fontFamily: "var(--font-fredoka), var(--font-nunito), Arial, sans-serif" }}
     >
-      <text x="70" y="125" fontSize="104" fontWeight="800" letterSpacing="-3" fill={ink}>
+      <text x="70" y="125" fontSize="104" fontWeight="700" letterSpacing="-2" fill={ink}>
         Lernversum
       </text>
-      {/* Stern und Planeten näher an den Schriftzug, weil Nunito schmaler läuft als Trebuchet MS */}
+      {/* Stern und Planeten näher an den Schriftzug, weil Fredoka schmaler läuft als Trebuchet MS */}
       <g transform="translate(-145 0)">
         <path
           d="M820 35 L830 58 L855 60 L836 76 L841 100 L820 87 L799 100 L804 76 L785 60 L810 58 Z"

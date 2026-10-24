@@ -42,17 +42,20 @@ Weitere Tokens: `--lv-radius-card` 18 px, `--lv-radius-control` 12 px, `--lv-sha
 
 ## Schrift
 
-- **Nunito** (SIL Open Font License) für die ganze Plattform, Gewichte 400/600/700/800, über
-  `next/font/google`: wird beim Build geladen und von der eigenen Domain ausgeliefert, kein Abruf
-  bei Google zur Laufzeit (Datenschutz).
+- **Nunito** (SIL Open Font License) für Fließtext, Formulare und Tabellen, Gewichte
+  400/600/700/800.
+- **Fredoka** (SIL Open Font License) für Wortmarke und große Überschriften (Klasse
+  `font-display`), weil sie der runden Logo-Schrift im UI-Konzept nahekommt.
+- Beide über `next/font/google`: werden beim Build geladen und von der eigenen Domain
+  ausgeliefert, kein Abruf bei Google zur Laufzeit (Datenschutz).
 - Spiele behalten ihre eigene Schrift (Wald-Wesen: Lexend).
-- Die handgezeichnete Logo-Schrift aus dem Paket wird erst verwendet, wenn Herkunft und Lizenz
-  geklärt sind.
+- Die Original-Logo-Schrift aus dem UI-Konzept ist nicht im Paket; sie wird erst verwendet,
+  wenn Herkunft und Lizenz geklärt sind.
 
 ## Wortmarke (`src/ui/Wortmarke.tsx`)
 
 Inline-SVG nach `Lernversum_Wortmarke.svg` aus dem Paket, ohne Hintergrundfläche, mit
-`aria-label="Lernversum"`. Schrift Nunito 800 statt Trebuchet MS (nicht frei mitlieferbar);
+`aria-label="Lernversum"`. Schrift Fredoka 700 statt Trebuchet MS (nicht frei mitlieferbar);
 Stern und Planeten deshalb näher an den Schriftzug gerückt. Varianten: hell/dunkel
 (`onDark`), mit oder ohne Claim „Entdecken. Lernen. Wachsen.“ (`showClaim`).
 
@@ -63,8 +66,14 @@ Stern und Planeten deshalb näher an den Schriftzug gerückt. Varianten: hell/du
   `.lv-btn-reward` (Gelb, Navy-Schrift), `.lv-btn-quiet` (weiß mit Rahmen).
 - `.lv-input`, `.lv-link`, sichtbarer Fokusrahmen für Tastaturbedienung.
 - `.lv-space`: Weltraum-Hintergrund aus CSS-Verläufen, ohne Bilddateien.
-- `src/ui/Planet.tsx`: Platzhalter-Planet als SVG, gesperrt mit Schloss; wird ersetzt, sobald
-  Illustrationen mit geklärter Lizenz vorliegen.
+- `src/ui/Planet.tsx`: Lernwelt als schwebende Insel (eigene SVG-Zeichnung im Stil des
+  UI-Konzepts) mit Motiv je Thema (Buch, Zahlen, Stift, Glühbirne, Spielpad, aus dem
+  Themennamen abgeleitet); gesperrt grau mit Schloss.
+- `src/ui/Avatar.tsx`: acht gezeichnete Avatare (sechs Kinder im Raumanzug mit verschiedenen
+  Haut- und Haarfarben, Alien, Roboter); Auswahl im Profil als Kacheln mit Funkfeldern
+  (`.lv-avatar-wahl`, mindestens 48 px, Tastatur und Screenreader bedienbar).
+- Alois hat entschieden, dass die Zeichnungen vorerst von Claude kommen (2026-10-24); echte
+  Illustrationen können sie später ersetzen.
 
 ## Regeln
 

@@ -25,9 +25,14 @@
 - Test-Admin als Prototyp (D-021) umgesetzt und lokal geprüft: Lint, Typen, Format,
   53 Unit-Tests, Build, 32 End-to-End-Tests.
 
-- Designpaket Schritt 1 und 2 (D-022) umgesetzt, noch nicht committed: Farben, Nunito,
-  Wortmarke, Startseite, Login, Test-Admin, Kinder-Weltkarte. Offen: Herkunft und Lizenz der
-  Logo-Schrift und der Illustrationen, danach Schritt 3 (Illustrationen) und 4 (Spielkomponenten).
+- Kinderprofil mit Spitzname und Avatar, gezeichnete Lernwelten und Avatare (D-023)
+  umgesetzt, noch nicht committed; lokal geprüft: Lint, Typen, Format, 67 Unit-Tests, Build,
+  34 End-to-End-Tests (inkl. Negativtests: ohne Anmeldung und als Admin kein Zugriff,
+  ungültiger Spitzname abgelehnt).
+- Designpaket Schritt 1 und 2 (D-022) umgesetzt und committed (678069b): Farben, Nunito,
+  Wortmarke, Startseite, Login, Test-Admin, Kinder-Weltkarte. Noch nicht committed: Fredoka
+  für Wortmarke und Überschriften, Zod-Sicherheitsupdate. Offen: Herkunft und Lizenz der
+  Original-Logo-Schrift; Schritt 4 (Avatare im Spiel, Belohnungen) nach Phase 2b/3.
 
 ## Entscheidungen vor Entwicklungsbeginn
 

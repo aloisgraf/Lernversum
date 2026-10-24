@@ -140,6 +140,10 @@ Herstellers. Darum `minimumReleaseAgeExclude` nur für `next`, `@next/*` und `es
 nach dem 2026-10-29 wieder entfernen. Regel für künftige Fälle: Ausnahmen nur für behobene
 kritische oder hohe Lücken, auf die betroffenen Pakete begrenzt und befristet.
 
+Nachtrag 2026-10-24 (nach dieser Regel): Zod unter 4.6.6 hat eine hohe Lücke
+(GHSA-mrhx-c7xc-m3w5, Speichererschöpfung bei übergroßen begrenzten Sammlungen). Die behobene
+Version ist jünger als 14 Tage; `zod` steht deshalb ebenfalls bis 2026-10-29 in der Ausnahme.
+
 ## D-021 Test-Admin als Prototyp — vorläufig (2026-10-23)
 
 Alois hat „Prototyp“ gewählt: ein klickbarer Adminbereich auf der DEV-Seite, um die Abläufe
@@ -160,6 +164,19 @@ für Knöpfe mit weißer Schrift (Paket-Blau erreicht nur 3,0), Nunito statt Tre
 Wortmarke, Planeten als einfache SVG-Platzhalter. Nunito (SIL OFL) wird beim Build geladen und
 selbst ausgeliefert. Die Logo-Schrift und Illustrationen aus dem Paket werden erst eingebaut,
 wenn Herkunft und Lizenz geklärt sind. Details in `DESIGN-SYSTEM.md`.
+Nachtrag 2026-10-24: Für Wortmarke und große Überschriften Fredoka (SIL OFL) statt Nunito,
+weil Alois die Schrift im Vergleich zum UI-Konzept unpassend fand.
+
+## D-023 Kinderprofil mit Spitzname und Avatar — vorläufig (2026-10-24)
+
+Alois wünscht: Das angemeldete Kind sieht in seinem Profil seinen Namen, kann einen Spitznamen
+vergeben und einen Avatar auswählen; die Zeichnungen (Lernwelten, Avatare) übernimmt vorerst
+Claude im Stil des UI-Konzepts. Umsetzung im Prototyp: Seite `/bereich/profil`, nur für die
+Rolle Benutzer, Server-Aktion speichert nur das eigene Profil, Spitzname 2 bis 20 Buchstaben,
+Avatar aus acht festen Zeichnungen, kein Bild-Upload. Daten nur im Speicher. In Phase 2b/3
+kommt das Profil in die Datenbank (eigene Zeile je Schüler, RLS: Kind ändert nur sein Profil).
+Lehrkraft und Eltern sehen den Spitznamen und können ihn zurücksetzen (Alois, 2026-10-24);
+umgesetzt wird das mit den Lehrkraft- und Elternbereichen.
 
 ## Ersetzt
 

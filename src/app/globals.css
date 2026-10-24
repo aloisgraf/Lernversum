@@ -50,6 +50,7 @@
   --color-lv-action: var(--lv-action);
   --color-lv-hint: var(--lv-hint);
   --font-sans: var(--font-nunito), Arial, sans-serif;
+  --font-display: var(--font-fredoka), var(--font-nunito), Arial, sans-serif;
 }
 
 body {
@@ -91,6 +92,26 @@ body {
     border: 1px solid var(--lv-border);
     background: #fff;
     color: var(--lv-text);
+  }
+
+  .lv-avatar-wahl {
+    display: flex;
+    min-height: 48px;
+    cursor: pointer;
+    justify-content: center;
+    border: 3px solid var(--lv-border);
+    border-radius: var(--lv-radius-card);
+    background: #fff;
+    padding: 0.5rem;
+  }
+  .lv-avatar-wahl:has(input:checked) {
+    border-color: var(--lv-action);
+    background: #fff8d6;
+    box-shadow: 0 0 0 3px var(--lv-yellow);
+  }
+  .lv-avatar-wahl:has(input:focus-visible) {
+    outline: 3px solid var(--lv-action);
+    outline-offset: 3px;
   }
 
   .lv-input {

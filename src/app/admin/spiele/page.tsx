@@ -16,7 +16,7 @@ export default async function GamesPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+      <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
         Spiele und Themen
       </h1>
       <section className="flex flex-col gap-3 lv-card p-4">

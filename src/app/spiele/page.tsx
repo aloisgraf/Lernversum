@@ -14,7 +14,7 @@ export default function SpielePage() {
         <Link href="/" className="w-44" aria-label="Zur Startseite">
           <Wortmarke onDark showClaim={false} className="h-auto w-full" />
         </Link>
-        <h1 className="text-4xl font-extrabold">Spiele</h1>
+        <h1 className="font-display text-4xl font-bold">Spiele</h1>
         <ul className="grid gap-4 sm:grid-cols-2">
           {spiele.map((spiel) => (
             <li key={spiel.slug}>

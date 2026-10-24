@@ -2,7 +2,10 @@
 
 ## Unveröffentlicht
 
-- Design nach dem Designpaket (D-022): Farben, Schrift Nunito, Wortmarke; Startseite und Login
+- Kinderbereich: Lernwelten als gezeichnete schwebende Inseln, Profil `/bereich/profil` mit
+  Spitzname und Avatarwahl (acht gezeichnete Avatare), Begrüßung mit Spitzname (D-023).
+- Sicherheit: Zod 4.6.5 → 4.6.7 (hohe Lücke GHSA-mrhx-c7xc-m3w5), befristete Ausnahme nach D-020.
+- Design nach dem Designpaket (D-022): Farben, Schriften Nunito und Fredoka, Wortmarke; Startseite und Login
   im Weltraum-Stil, Test-Admin mit Seitenleiste und Karten, Kinderbereich als Weltkarte.
 - Test-Admin (Prototyp, Daten nur im Speicher): Lizenznehmer, Lizenzen mit Paket und Laufzeit,
   Kinder mit Kinder- und Elternkarte, Spielfreischaltungen, Themen (D-021).

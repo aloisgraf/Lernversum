@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Fredoka, Nunito } from "next/font/google";
 import "./globals.css";
 
 // Nunito (SIL Open Font License) wird beim Build geladen und von der eigenen Domain
@@ -11,6 +11,15 @@ const nunito = Nunito({
   variable: "--font-nunito",
 });
 
+// Fredoka (SIL Open Font License) für Wortmarke und große Überschriften, nah an der
+// runden Logo-Schrift im UI-Konzept; ebenfalls selbst ausgeliefert.
+const fredoka = Fredoka({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  display: "swap",
+  variable: "--font-fredoka",
+});
+
 export const metadata: Metadata = {
   title: "Lernversum",
   description: "Lernplattform für Kinder",
@@ -19,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="de" className={nunito.variable}>
+    <html lang="de" className={`${nunito.variable} ${fredoka.variable}`}>
       <body>{children}</body>
     </html>
   );

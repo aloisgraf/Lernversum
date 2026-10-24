@@ -6,9 +6,10 @@ Jede Schrift, Grafik oder Mediendatei bekommt hier einen Eintrag, bevor sie verw
 | Element | Verwendung | Herkunft | Lizenz |
 | --- | --- | --- | --- |
 | Nunito | Schrift der Plattform | Google Fonts, über `next/font/google` beim Build eingebunden | SIL Open Font License 1.1 |
+| Fredoka | Wortmarke und große Überschriften | Google Fonts, über `next/font/google` beim Build eingebunden | SIL Open Font License 1.1 |
 | Lexend | Schrift im Spiel Wald-Wesen | Google Fonts, über `next/font/google` | SIL Open Font License 1.1 |
 | Wortmarke Lernversum | `src/ui/Wortmarke.tsx` | nach `Lernversum_Wortmarke.svg` aus dem Designpaket von Alois, im Code nachgebaut | Eigentum des Projekts |
-| Planeten, Sterne, Hintergrund | `src/ui/Planet.tsx`, `globals.css` | im Code gezeichnet (SVG, CSS) | Eigentum des Projekts |
+| Lernwelt-Inseln, Avatare, Sterne, Hintergrund | `src/ui/Planet.tsx`, `src/ui/Avatar.tsx`, `globals.css` | im Code gezeichnet (SVG, CSS), Stil nach dem UI-Konzept | Eigentum des Projekts |
 
 ## Noch nicht verwendet (Klärung offen)
 

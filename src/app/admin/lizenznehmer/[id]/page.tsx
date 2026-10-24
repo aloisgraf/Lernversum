@@ -46,7 +46,7 @@ export default async function HolderPage({ params }: { params: Promise<{ id: str
         ← alle Lizenznehmer
       </Link>
       <div>
-        <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+        <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
           {holder.name}
         </h1>
         <p style={{ color: "var(--color-muted)" }}>

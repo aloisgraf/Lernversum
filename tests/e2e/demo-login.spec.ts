@@ -34,7 +34,7 @@ test("falsches Passwort wird abgelehnt", async ({ page }) => {
 test("Benutzer sieht seinen Bereich, aber nicht den Adminbereich", async ({ page }) => {
   await login(page, USER);
   await expect(page).toHaveURL(/\/bereich$/);
-  await expect(page.getByRole("heading", { name: "Hallo testuser!" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Hallo, testuser!" })).toBeVisible();
   const response = await page.goto("/admin");
   expect(response?.status()).toBe(404);
 });
@@ -126,4 +126,43 @@ test("Admin legt ein Thema an", async ({ page }) => {
   await page.getByLabel("Neues Thema").fill(name);
   await page.getByRole("button", { name: "Thema anlegen" }).click();
   await expect(page.getByText(`Thema „${name}“ angelegt.`)).toBeVisible();
+});
+
+test("ohne Anmeldung ist das Profil gesperrt, Admin bekommt es nicht", async ({ page }) => {
+  await page.goto("/bereich/profil");
+  await expect(page).toHaveURL(/\/login$/);
+  await login(page, ADMIN);
+  await expect(page).toHaveURL(/\/admin$/);
+  const response = await page.goto("/bereich/profil");
+  expect(response?.status()).toBe(404);
+});
+
+test("Kind wählt Spitzname und Avatar; ungültiger Spitzname wird abgelehnt", async ({ page }) => {
+  await login(page, USER);
+  await expect(page).toHaveURL(/\/bereich$/);
+  await page.getByRole("link", { name: "Mein Profil" }).click();
+  await expect(page.getByRole("heading", { name: "Mein Profil" })).toBeVisible();
+  await expect(page.getByText("testuser", { exact: true })).toBeVisible();
+
+  await page.getByLabel("Mein Spitzname").fill("Mia123");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByText("Im Spitznamen sind nur Buchstaben")).toBeVisible();
+
+  await page.getByLabel("Mein Spitzname").fill("Sternchen");
+  // Wie ein Kind: auf das Bild tippen (das Auswahlfeld selbst ist unsichtbar).
+  await page
+    .locator("label", { has: page.getByRole("radio", { name: "Freundliches Alien" }) })
+    .click();
+  await expect(page.getByRole("radio", { name: "Freundliches Alien" })).toBeChecked();
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByText("Gespeichert!")).toBeVisible();
+
+  await page.getByRole("link", { name: "Zurück zur Weltkarte" }).click();
+  await expect(page.getByRole("heading", { name: "Hallo, Sternchen!" })).toBeVisible();
+
+  // Zurücksetzen, damit andere Tests den Benutzernamen sehen.
+  await page.goto("/bereich/profil");
+  await page.getByLabel("Mein Spitzname").fill("");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByText("Gespeichert!")).toBeVisible();
 });
