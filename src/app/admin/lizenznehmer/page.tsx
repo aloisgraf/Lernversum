@@ -19,7 +19,9 @@ export default async function HoldersPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">Lizenznehmer und Kinder</h1>
+      <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+        Lizenznehmer und Kinder
+      </h1>
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-semibold">Neuen Lizenznehmer anlegen</h2>
         <p className="text-sm" style={{ color: "var(--color-muted)" }}>
@@ -52,7 +54,7 @@ export default async function HoldersPage() {
               <li key={holder.id}>
                 <Link
                   href={`/admin/lizenznehmer/${holder.id}`}
-                  className="flex flex-wrap justify-between gap-2 rounded-xl border p-4"
+                  className="flex flex-wrap justify-between gap-2 lv-card p-4"
                 >
                   <span>
                     <strong>{holder.name}</strong> · {typeLabel[holder.type]}

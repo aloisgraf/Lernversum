@@ -3,7 +3,7 @@ import { logoutAction } from "./actions";
 export function LogoutButton() {
   return (
     <form action={logoutAction}>
-      <button type="submit" className="rounded-full border px-4 py-2">
+      <button type="submit" className="lv-btn lv-btn-quiet">
         Abmelden
       </button>
     </form>

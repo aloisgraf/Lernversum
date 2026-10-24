@@ -26,11 +26,15 @@ export default async function AdminPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">Adminbereich</h1>
+      <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+        Adminbereich
+      </h1>
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((stat) => (
-          <li key={stat.label} className="rounded-xl border p-4">
-            <p className="text-3xl font-semibold">{stat.value}</p>
+          <li key={stat.label} className="lv-card p-4">
+            <p className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+              {stat.value}
+            </p>
             <p className="text-sm" style={{ color: "var(--color-muted)" }}>
               {stat.label}
             </p>

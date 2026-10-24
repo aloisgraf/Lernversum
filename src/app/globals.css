@@ -1,26 +1,131 @@
 @import "tailwindcss";
 
-/* Design-Tokens (Basis). Ausbau in Phase 7, siehe docs/DESIGN-SYSTEM.md. */
+/*
+ * Design-Tokens nach dem Lernversum-Designpaket v1.0 (docs/DESIGN-SYSTEM.md).
+ * Kontrastwerte stehen dort; Farben mit zu wenig Kontrast für Text nur für Flächen/Deko.
+ */
 :root {
-  --color-bg: #fbfaf7;
-  --color-fg: #1d2330;
-  --color-muted: #5b6475;
-  --color-accent: #2f6f4f;
+  /* Markenfarben */
+  --lv-space: #081a43; /* Weltraum-Nacht */
+  --lv-navy: #173d83; /* Kosmosblau */
+  --lv-violet: #8050e8; /* Galaxieviolett */
+  --lv-blue: #2799f5; /* Sternenblau: nur Flächen, Fortschritt, Deko */
+  --lv-turquoise: #38c9ce; /* Planetentürkis: nur Flächen/Deko */
+  --lv-yellow: #ffd84d; /* Sternengelb: Belohnungen, Hauptaktion mit dunkler Schrift */
+  --lv-coral: #ff777e; /* Kometenkoralle: nur Flächen/Deko */
+  --lv-white: #f7faff; /* Sternenweiß */
+  --lv-text: #17305c;
+  --lv-muted: #60708c;
+  --lv-border: #d8e5f7;
+
+  /* Ergänzt für WCAG AA (weiße Schrift 5,0:1) */
+  --lv-action: #1c6fc9; /* Aktionsblau: Knöpfe und Links */
+  --lv-hint: #9a3412; /* Hinweise und Fehler als Text (7,0:1) */
+  --lv-on-dark-muted: #b9c6e0; /* Nebentext auf Weltraum-Nacht (9,9:1) */
+
+  /* Formen */
+  --lv-radius-card: 18px;
+  --lv-radius-control: 12px;
+  --lv-shadow-card: 0 6px 18px rgba(8, 26, 67, 0.12);
+
+  /* Alte Namen aus dem Grundgerüst, zeigen auf die neuen Tokens */
+  --color-bg: var(--lv-white);
+  --color-fg: var(--lv-text);
+  --color-muted: var(--lv-muted);
+  --color-accent: var(--lv-action);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #12161d;
-    --color-fg: #eef1f5;
-    --color-muted: #a7b0bf;
-    --color-accent: #7cc9a0;
-  }
+@theme inline {
+  --color-lv-space: var(--lv-space);
+  --color-lv-navy: var(--lv-navy);
+  --color-lv-violet: var(--lv-violet);
+  --color-lv-blue: var(--lv-blue);
+  --color-lv-turquoise: var(--lv-turquoise);
+  --color-lv-yellow: var(--lv-yellow);
+  --color-lv-coral: var(--lv-coral);
+  --color-lv-white: var(--lv-white);
+  --color-lv-text: var(--lv-text);
+  --color-lv-muted: var(--lv-muted);
+  --color-lv-border: var(--lv-border);
+  --color-lv-action: var(--lv-action);
+  --color-lv-hint: var(--lv-hint);
+  --font-sans: var(--font-nunito), Arial, sans-serif;
 }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-fg);
-  font-family: system-ui, sans-serif;
+  background: var(--lv-white);
+  color: var(--lv-text);
+  font-family: var(--font-nunito), Arial, sans-serif;
+}
+
+@layer components {
+  .lv-card {
+    background: #fff;
+    border: 1px solid var(--lv-border);
+    border-radius: var(--lv-radius-card);
+    box-shadow: var(--lv-shadow-card);
+  }
+
+  .lv-btn {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 700;
+  }
+  .lv-btn:disabled {
+    opacity: 0.5;
+  }
+  .lv-btn-primary {
+    background: var(--lv-action);
+    color: #fff;
+  }
+  .lv-btn-reward {
+    background: var(--lv-yellow);
+    color: var(--lv-navy);
+  }
+  .lv-btn-quiet {
+    border: 1px solid var(--lv-border);
+    background: #fff;
+    color: var(--lv-text);
+  }
+
+  .lv-input {
+    min-height: 44px;
+    border: 1px solid #b7c7e0;
+    border-radius: var(--lv-radius-control);
+    background: #fff;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .lv-link {
+    color: var(--lv-action);
+    text-decoration: underline;
+  }
+
+  :where(a, button, input, select):focus-visible {
+    outline: 3px solid var(--lv-action);
+    outline-offset: 2px;
+  }
+
+  /* Weltraum-Hintergrund aus reinen CSS-Verläufen (keine Bilddatei nötig). */
+  .lv-space {
+    background-color: var(--lv-space);
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 72%, #fff 50%, transparent 51%),
+      radial-gradient(2px 2px at 44% 30%, var(--lv-yellow) 50%, transparent 51%),
+      radial-gradient(1px 1px at 63% 12%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 64%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 90% 26%, #fff 50%, transparent 51%),
+      radial-gradient(2px 2px at 8% 88%, var(--lv-turquoise) 50%, transparent 51%),
+      radial-gradient(60% 50% at 20% 10%, rgba(128, 80, 232, 0.45), transparent 70%),
+      radial-gradient(50% 45% at 85% 85%, rgba(39, 153, 245, 0.35), transparent 70%);
+    color: #fff;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

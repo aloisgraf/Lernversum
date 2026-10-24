@@ -2,6 +2,8 @@
 
 ## Unveröffentlicht
 
+- Design nach dem Designpaket (D-022): Farben, Schrift Nunito, Wortmarke; Startseite und Login
+  im Weltraum-Stil, Test-Admin mit Seitenleiste und Karten, Kinderbereich als Weltkarte.
 - Test-Admin (Prototyp, Daten nur im Speicher): Lizenznehmer, Lizenzen mit Paket und Laufzeit,
   Kinder mit Kinder- und Elternkarte, Spielfreischaltungen, Themen (D-021).
 - Demo-Login: Anmeldeseite nennt bei ausgeschaltetem Login den Grund (ohne Werte);

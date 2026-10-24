@@ -1,40 +1,45 @@
-import Link from "next/link";
 import { LogoutButton } from "@/app/login/LogoutButton";
 import { requireRole } from "@/lib/demo-auth/server";
+import { Wortmarke } from "@/ui/Wortmarke";
+import { AdminNav } from "./AdminNav";
 
 export const dynamic = "force-dynamic";
-
-const nav = [
-  { href: "/admin", label: "Übersicht" },
-  { href: "/admin/lizenznehmer", label: "Lizenznehmer und Kinder" },
-  { href: "/admin/spiele", label: "Spiele und Themen" },
-];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await requireRole("admin");
   return (
-    <div className="mx-auto flex min-h-screen max-w-5xl flex-col gap-6 px-4 py-6">
-      <header className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="text-xl font-semibold">Lernversum · Admin</p>
-          <p className="text-sm" style={{ color: "var(--color-muted)" }}>
+    <div className="flex min-h-screen flex-col md:flex-row">
+      <aside
+        className="md:w-64 md:shrink-0"
+        style={{ background: "var(--lv-navy)", color: "#fff" }}
+      >
+        <div className="flex flex-col gap-6 p-4 md:sticky md:top-0 md:h-screen">
+          <Wortmarke onDark showClaim={false} className="h-auto w-44" />
+          <AdminNav />
+          <div className="mt-auto hidden flex-col gap-3 md:flex">
+            <p className="text-sm" style={{ color: "var(--lv-on-dark-muted)" }}>
+              Angemeldet als {session.username}
+            </p>
+            <LogoutButton />
+          </div>
+        </div>
+      </aside>
+      <div className="flex min-w-0 flex-1 flex-col gap-6 px-4 py-6 md:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-3 md:hidden">
+          <p className="text-sm" style={{ color: "var(--lv-muted)" }}>
             Angemeldet als {session.username}
           </p>
+          <LogoutButton />
         </div>
-        <LogoutButton />
-      </header>
-      <p className="rounded-lg border p-3 text-sm" style={{ borderColor: "#b45309" }}>
-        Prototyp: Daten liegen nur im Speicher des Servers und sind nach jedem Neustart weg. Nur
-        erfundene Namen eingeben.
-      </p>
-      <nav className="flex flex-wrap gap-2">
-        {nav.map((item) => (
-          <Link key={item.href} href={item.href} className="rounded-full border px-4 py-2">
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-      <main className="flex flex-col gap-8">{children}</main>
+        <p
+          className="rounded-xl border-2 p-3 text-sm"
+          style={{ borderColor: "var(--lv-yellow)", background: "#fffbea" }}
+        >
+          Prototyp: Daten liegen nur im Speicher des Servers und sind nach jedem Neustart weg. Nur
+          erfundene Namen eingeben.
+        </p>
+        <main className="flex flex-col gap-8">{children}</main>
+      </div>
     </div>
   );
 }

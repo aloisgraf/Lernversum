@@ -1,20 +1,23 @@
 import Link from "next/link";
+import { Wortmarke } from "@/ui/Wortmarke";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-4 px-4">
-      <h1 className="text-4xl font-semibold">Lernversum</h1>
-      <p style={{ color: "var(--color-muted)" }}>Die Plattform befindet sich im Aufbau.</p>
-      <Link
-        href="/spiele"
-        className="self-start rounded-full px-6 py-3 text-lg font-semibold"
-        style={{ background: "var(--color-accent)", color: "var(--color-bg)" }}
-      >
-        Spiele ausprobieren
-      </Link>
-      <Link href="/login" className="self-start underline">
-        Anmelden (Demo)
-      </Link>
+    <main className="lv-space flex min-h-screen flex-col items-center justify-center gap-8 px-4 py-10">
+      <h1 className="w-full max-w-xl">
+        <Wortmarke onDark className="h-auto w-full" />
+      </h1>
+      <p className="max-w-md text-center text-lg" style={{ color: "var(--lv-on-dark-muted)" }}>
+        Die Plattform befindet sich im Aufbau.
+      </p>
+      <div className="flex flex-wrap justify-center gap-3">
+        <Link href="/spiele" className="lv-btn lv-btn-reward text-lg">
+          Spiele ausprobieren
+        </Link>
+        <Link href="/login" className="lv-btn lv-btn-quiet text-lg">
+          Anmelden (Demo)
+        </Link>
+      </div>
     </main>
   );
 }

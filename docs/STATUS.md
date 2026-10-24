@@ -1,6 +1,6 @@
 # Projektstand
 
-**Zuletzt aktualisiert:** 2026-10-23
+**Zuletzt aktualisiert:** 2026-10-24
 
 ## Stand
 
@@ -24,6 +24,10 @@
 
 - Test-Admin als Prototyp (D-021) umgesetzt und lokal geprüft: Lint, Typen, Format,
   53 Unit-Tests, Build, 32 End-to-End-Tests.
+
+- Designpaket Schritt 1 und 2 (D-022) umgesetzt, noch nicht committed: Farben, Nunito,
+  Wortmarke, Startseite, Login, Test-Admin, Kinder-Weltkarte. Offen: Herkunft und Lizenz der
+  Logo-Schrift und der Illustrationen, danach Schritt 3 (Illustrationen) und 4 (Spielkomponenten).
 
 ## Entscheidungen vor Entwicklungsbeginn
 

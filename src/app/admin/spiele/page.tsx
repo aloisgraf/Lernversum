@@ -16,12 +16,18 @@ export default async function GamesPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">Spiele und Themen</h1>
-      <section className="flex flex-col gap-3 rounded-xl border p-4">
+      <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+        Spiele und Themen
+      </h1>
+      <section className="flex flex-col gap-3 lv-card p-4">
         <h2 className="text-xl font-semibold">Themen</h2>
         <ul className="flex flex-wrap gap-2">
           {topics.map((topic) => (
-            <li key={topic.id} className="rounded-full border px-3 py-1">
+            <li
+              key={topic.id}
+              className="rounded-full px-3 py-1 font-semibold"
+              style={{ background: "var(--lv-border)" }}
+            >
               {topic.name}
             </li>
           ))}
@@ -37,7 +43,7 @@ export default async function GamesPage() {
         {spiele.map((spiel) => {
           const assigned = new Set(store.gameTopics.get(spiel.slug) ?? []);
           return (
-            <article key={spiel.slug} className="flex flex-col gap-3 rounded-xl border p-4">
+            <article key={spiel.slug} className="flex flex-col gap-3 lv-card p-4">
               <h3 className="text-lg font-semibold">
                 <span aria-hidden="true">{spiel.vorschau}</span> {spiel.titel}
               </h3>

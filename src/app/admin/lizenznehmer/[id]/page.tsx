@@ -42,17 +42,19 @@ export default async function HolderPage({ params }: { params: Promise<{ id: str
 
   return (
     <>
-      <Link href="/admin/lizenznehmer" className="self-start underline">
+      <Link href="/admin/lizenznehmer" className="lv-link self-start">
         ← alle Lizenznehmer
       </Link>
       <div>
-        <h1 className="text-3xl font-semibold">{holder.name}</h1>
+        <h1 className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+          {holder.name}
+        </h1>
         <p style={{ color: "var(--color-muted)" }}>
           {typeLabel[holder.type]} · {holder.email}
         </p>
       </div>
 
-      <section className="flex flex-col gap-3 rounded-xl border p-4">
+      <section className="flex flex-col gap-3 lv-card p-4">
         <h2 className="text-xl font-semibold">Lizenz</h2>
         <p>
           {pkg
@@ -88,7 +90,7 @@ export default async function HolderPage({ params }: { params: Promise<{ id: str
         </ActionForm>
       </section>
 
-      <section className="flex flex-col gap-3 rounded-xl border p-4">
+      <section className="flex flex-col gap-3 lv-card p-4">
         <h2 className="text-xl font-semibold">Kind anlegen</h2>
         <p className="text-sm" style={{ color: "var(--color-muted)" }}>
           {holder.type === "eltern"
@@ -114,7 +116,7 @@ export default async function HolderPage({ params }: { params: Promise<{ id: str
           const grants = store.grantsOf(child.id);
           const playable = store.playableGames(child.id, now);
           return (
-            <article key={child.id} className="flex flex-col gap-3 rounded-xl border p-4">
+            <article key={child.id} className="flex flex-col gap-3 lv-card p-4">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <h3 className="text-lg font-semibold">

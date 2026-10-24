@@ -151,6 +151,16 @@ der Lizenzlaufzeit, Codes nur einmal angezeigt und nur als Prüfwert gespeichert
 prüft serverseitig die Admin-Rolle. Kein Ersatz für Phase 2b/3: Datenmodell und Oberfläche
 dienen als Vorlage, die Umsetzung erfolgt dann in Supabase mit RLS und pgTAP-Tests.
 
+## D-022 Designpaket übernommen (Schritt 1 und 2) — vorläufig (2026-10-24)
+
+Alois hat das Designpaket geliefert und Schritt 1 und 2 freigegeben: Farb-Tokens, Schrift
+Nunito, Wortmarke, Startseite, Login, Test-Admin im Dashboard-Stil, Kinderbereich als
+Weltkarte (Themen als Planeten). Abweichungen vom Paket: zusätzliches Aktionsblau `#1C6FC9`
+für Knöpfe mit weißer Schrift (Paket-Blau erreicht nur 3,0), Nunito statt Trebuchet MS in der
+Wortmarke, Planeten als einfache SVG-Platzhalter. Nunito (SIL OFL) wird beim Build geladen und
+selbst ausgeliefert. Die Logo-Schrift und Illustrationen aus dem Paket werden erst eingebaut,
+wenn Herkunft und Lizenz geklärt sind. Details in `DESIGN-SYSTEM.md`.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit
