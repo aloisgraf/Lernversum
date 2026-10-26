@@ -19,6 +19,7 @@ dokumentierten Restrisiken.
 | Schlüssel | Service-Role und andere Geheimnisse nur als Server-Umgebungsvariablen; nie `NEXT_PUBLIC_`; Secret-Scanning in CI; `.env*` in `.gitignore` |
 | Authentifizierung | keine freie Registrierung, Konten nur nach bestätigter Zahlung oder durch Admin (D-018); Admin mit 2FA (TOTP) Pflicht; Lehrkraft 2FA empfohlen; Sitzungswiderruf bei Sperre |
 | Admin-Einrichtung | einmaliges CLI-Skript mit Einmal-Token, nur auf dem Server ausführbar, danach gesperrt |
+| Passwörter (D-024) | scrypt (N=16384, r=8, p=1) mit Salz, auch für Erstpasswörter; Kinder ≥ 8, Erwachsene ≥ 12, max. 128 Zeichen; Liste häufiger Passwörter; Pflichtwechsel nach Erstpasswort; gleiche Rechenzeit für unbekannte Benutzernamen |
 | Autorisierung | RLS auf allen Tabellen; `can_play` und Kernfunktionen als SECURITY DEFINER mit festem `search_path` und eigener Rechteprüfung |
 | Eingaben | Zod-Validierung serverseitig; parametrisierte Abfragen; keine dynamische SQL-Zusammensetzung |
 | XSS | React-Escaping, kein `dangerouslySetInnerHTML` ohne Sanitizer, strenge Content-Security-Policy mit Nonces |
@@ -75,6 +76,14 @@ Alle Punkte aus dem Master-Prompt, Abschnitt 14, als pgTAP- und Playwright-Tests
   Tabellen, Token-Laufzeit 10 Minuten, Admin-Rechte nur mit `aal2`.
 
 ## Restrisiken (bekannt)
+
+- **Loginzettel (D-025):** Ein gedruckter Zettel mit Erstpasswort kann verloren gehen oder
+  fotografiert werden. Ausgleich: gilt nur bis zum Pflichtwechsel, Passwort wird nicht
+  gespeichert und nur einmal angezeigt, QR-Code ohne Zugangsdaten.
+- **Erstpasswort (D-024):** Der Admin kennt es, bis das Kind es ändert. Ausgleich:
+  Pflichtwechsel vor jeder anderen Seite, nur Hash gespeichert, Zurücksetzen beendet alle
+  Sitzungen. Die Liste häufiger Passwörter ist im Prototyp klein; ab Phase 2b prüft Supabase
+  zusätzlich gegen bekannte Datenlecks.
 
 - **Erratbare Benutzernamen:** `vorname.nachname` ist vorhersehbar; Schutz liegt allein im
   Passwort. Ausgleich: Mindestlänge, Rate-Limits pro Benutzername und IP, gleiche Fehlermeldung

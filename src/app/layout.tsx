@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fredoka, Nunito } from "next/font/google";
+import { Fredoka, Nunito, Patrick_Hand } from "next/font/google";
 import "./globals.css";
 
 // Nunito (SIL Open Font License) wird beim Build geladen und von der eigenen Domain
@@ -11,13 +11,21 @@ const nunito = Nunito({
   variable: "--font-nunito",
 });
 
-// Fredoka (SIL Open Font License) für Wortmarke und große Überschriften, nah an der
-// runden Logo-Schrift im UI-Konzept; ebenfalls selbst ausgeliefert.
+// Fredoka (SIL Open Font License) für Überschriften im Adminbereich; selbst ausgeliefert.
 const fredoka = Fredoka({
   subsets: ["latin"],
   weight: ["600", "700"],
   display: "swap",
   variable: "--font-fredoka",
+});
+
+// Patrick Hand (SIL Open Font License) für Wortmarke und Kinderbereich (Überschriften,
+// Knöpfe), auf Wunsch von Alois (2026-10-26); ebenfalls selbst ausgeliefert.
+const patrickHand = Patrick_Hand({
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-patrick-hand",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="de" className={`${nunito.variable} ${fredoka.variable}`}>
+    <html lang="de" className={`${nunito.variable} ${fredoka.variable} ${patrickHand.variable}`}>
       <body>{children}</body>
     </html>
   );

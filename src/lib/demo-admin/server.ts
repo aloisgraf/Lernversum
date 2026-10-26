@@ -12,8 +12,10 @@ export function today(): string {
 export function adminStore(): DemoAdminStore {
   if (!globalStore.__lvDemoAdmin) {
     const store = new DemoAdminStore(spiele.map((s) => s.slug));
-    seedStore(store, today(), spiele[0]?.slug);
+    seedStore(store, new Date(), spiele[0]?.slug);
     globalStore.__lvDemoAdmin = store;
   }
+  // Aufbewahrungsfrist bei jedem Zugriff durchsetzen (im Prototyp genügt das).
+  globalStore.__lvDemoAdmin.pruneRounds(new Date());
   return globalStore.__lvDemoAdmin;
 }

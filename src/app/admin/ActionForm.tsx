@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import type { ActionState } from "./actions";
+import { LoginzettelAnsicht } from "./LoginzettelAnsicht";
 
 type Props = {
   action: (state: ActionState, form: FormData) => Promise<ActionState>;
@@ -25,7 +26,9 @@ export function ActionForm({
       <button
         type="submit"
         disabled={pending}
-        className={variant === "primary" ? "lv-btn lv-btn-primary" : "lv-btn lv-btn-quiet text-sm"}
+        className={
+          variant === "primary" ? "lv-btn lv-btn-primary" : "lv-btn lv-btn-quiet lv-btn-sm"
+        }
       >
         {submitLabel}
       </button>
@@ -35,24 +38,7 @@ export function ActionForm({
         </p>
       ) : null}
       {state.ok && !state.error ? <p className="w-full text-sm">{state.ok}</p> : null}
-      {state.codes ? (
-        <div
-          className="w-full rounded-xl border-2 p-4"
-          style={{ borderColor: "var(--lv-yellow)", background: "#fffbea" }}
-        >
-          <p className="mb-2 font-semibold">
-            Zugangskarten – die Codes werden nur jetzt angezeigt (gespeichert ist nur ein Prüfwert):
-          </p>
-          <ul className="flex flex-col gap-1">
-            {state.codes.map((card) => (
-              <li key={card.label}>
-                {card.label}: Benutzername <strong>{card.username}</strong> · Code{" "}
-                <code className="font-mono text-lg">{card.code}</code>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
+      {state.zettel && !state.error ? <LoginzettelAnsicht zettel={state.zettel} /> : null}
     </form>
   );
 }

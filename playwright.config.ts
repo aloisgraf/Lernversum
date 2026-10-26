@@ -9,6 +9,8 @@ export default defineConfig({
   testDir: "tests/e2e",
   forbidOnly: !!process.env.CI,
   retries: 0,
+  // Ein Server-Speicher und je Konto nur eine Sitzung: Tests laufen nacheinander.
+  workers: 1,
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL: `http://127.0.0.1:${port}`,

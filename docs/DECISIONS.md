@@ -166,6 +166,10 @@ selbst ausgeliefert. Die Logo-Schrift und Illustrationen aus dem Paket werden er
 wenn Herkunft und Lizenz geklärt sind. Details in `DESIGN-SYSTEM.md`.
 Nachtrag 2026-10-24: Für Wortmarke und große Überschriften Fredoka (SIL OFL) statt Nunito,
 weil Alois die Schrift im Vergleich zum UI-Konzept unpassend fand.
+Nachtrag 2026-10-26: Auf Wunsch von Alois Patrick Hand (SIL OFL) für die Wortmarke und im
+Kinderbereich (Überschriften, Knöpfe), selbst ausgeliefert; der Admin bleibt bei Fredoka und
+Nunito, Fließtext überall Nunito. Admin-Bedienelemente im Stil „spielerisches Flat Design mit plastischen
+Schatten“: Pill-Buttons, Datentabellen, Status-Pillen.
 
 ## D-023 Kinderprofil mit Spitzname und Avatar — vorläufig (2026-10-24)
 
@@ -177,6 +181,66 @@ Avatar aus acht festen Zeichnungen, kein Bild-Upload. Daten nur im Speicher. In 
 kommt das Profil in die Datenbank (eigene Zeile je Schüler, RLS: Kind ändert nur sein Profil).
 Lehrkraft und Eltern sehen den Spitznamen und können ihn zurücksetzen (Alois, 2026-10-24);
 umgesetzt wird das mit den Lehrkraft- und Elternbereichen.
+
+## D-024 Admin-Aufbau: Benutzername mit Erstpasswort, Kategorien mit Stufen, Lernpakete — vorläufig (2026-10-26)
+
+Alois hat den Aufbau des Adminbereichs vorgegeben und den Plan (`plaene/admin-aufbau.md`)
+Punkt für Punkt bestätigt. Umgesetzt im Prototyp (Daten nur im Speicher):
+
+- **Kinderkonten:** Der Admin wählt den Benutzernamen frei (3 bis 30 Zeichen, Kleinbuchstaben,
+  Ziffern, `.`, `_`, `-`) und legt ein Erstpasswort fest. Nach der ersten Anmeldung muss das
+  Kind das Passwort ändern; vorher erreicht es keine andere Seite. Das ersetzt für vom Admin
+  angelegte Kinder vorerst die Aktivierungscodes und Karten aus D-014/D-015. Elternzugang mit
+  freiem Benutzernamen kommt mit dem Elternbereich.
+- **Passwortregeln** (NIST SP 800-63B, BSI): Kinder mindestens 8, Erwachsene mindestens 12
+  Zeichen, höchstens 128; Abgleich mit häufigen Passwörtern, kein Benutzername im Passwort,
+  kein Zeichenklassen-Zwang, kein regelmäßiger Zwangswechsel. Gespeichert wird nur ein
+  scrypt-Hash, auch das Erstpasswort.
+- **Kategorien** mit den Stufen einfach, mittel, schwer; der Admin ordnet Spiele den Stufen
+  zu. Ein Spiel darf in mehreren Kategorien und Stufen stehen.
+- **Lernpaket:** Freigabe an ein Kind aus ganzen Stufen und/oder einzelnen Spielen,
+  unbefristet (dann bis Lizenzende) oder mit Ablaufdatum. Nach Ablauf oder Beenden sieht das
+  Kind die Spiele nicht mehr, aber seine Ergebnisse. Das Paket bleibt im Admin mit erstellt,
+  gültig bis, beendet, Inhalt und Spielrunden (gespielt am, Dauer, Aufgaben, Fehlversuche).
+- Das Kind sieht nur Spiele, nie Stufen; Ergebnisse als Sterne, ohne Vergleich mit anderen.
+- Spielrunden ohne Geräte- oder Ortsdaten; einzelne Runden 12 Monate, danach nur eine
+  Zusammenfassung je Paket.
+- Die öffentliche Spieleseite ist entfernt; Spiele öffnen nur angemeldete Kinder mit gültiger
+  Freigabe (serverseitig geprüft). Zum Testen bekommt `testuser` Lernpakete wie ein Kind.
+- **Vorläufig, Rückfrage offen:** Wird einer freigegebenen Stufe später ein Spiel zugeordnet,
+  erscheint es beim Kind automatisch (Stufen werden bei jeder Anfrage aufgelöst).
+
+In Phase 2b/3 wird das in Supabase mit RLS umgesetzt; der Prototyp dient als Vorlage.
+
+## D-025 Loginzettel mit QR-Code — vorläufig (2026-10-26)
+
+Alois wünscht: Nach dem Anlegen eines Kindes druckt der Admin einen Loginzettel mit QR-Code
+zur Website, Benutzername und Erstpasswort. Umsetzung: Der Zettel erscheint nur in der
+Antwort auf „Kind speichern“ oder „Neues Erstpasswort setzen“ und wird über die
+Druckfunktion des Browsers gedruckt (nur der Zettel). Das Passwort wird nirgends
+gespeichert und ist nach dem Neuladen weg; verloren heißt: neues Erstpasswort setzen. Der
+QR-Code enthält nur die Adresse der Anmeldeseite, nie Zugangsdaten. Adresse aus `LOGIN_URL`
+oder aus der Anfrage des Admins (Host streng geprüft).
+
+Neue Bibliothek `qrcode-generator` 2.0.4 (MIT, keine Abhängigkeiten, Version älter als
+14 Tage): erzeugt nur die QR-Matrix auf dem Server, gezeichnet wird als eigenes SVG ohne
+`dangerouslySetInnerHTML`. Nutzen: kein eigener QR-Encoder (fehleranfällig), keine
+Bild-Abrufe bei Dritten. Kosten: eine kleine Laufzeitabhängigkeit. Alternative `qrcode`
+verworfen, weil sie Kommandozeilen-Abhängigkeiten mitbringt.
+
+## D-026 Feuerplanet mit Funki — vorläufig (2026-10-26)
+
+Alois wünscht: Der erste Planet wird wie seine Vorlage gestaltet (Lavaplanet, passender
+Hintergrund), ein Lava-Alien steht am Seitenrand, begrüßt das Kind mit Namen, bittet um das
+erste Spiel und lobt nach jedem Spiel mit wechselnden Sätzen. Umsetzung: Planeten der
+Weltkarte führen auf eine eigene Seite `/bereich/welt/[id]` mit den freigegebenen Spielen
+dieser Kategorie. Die erste Kategorie ist der Feuerplanet mit Funki; weitere Welten zeigen
+vorerst die Insel ohne Begleiter. Verwendet wird das Bild von Alois selbst (er hat die
+Rechte daran bestätigt, 2026-10-26): als Szene mit Planet und Funki am rechten Rand und als
+runder Ausschnitt des Planeten auf der Weltkarte, beide als WebP im Projekt; eine eigene
+SVG-Nachzeichnung fand Alois unpassend und wurde verworfen. Funkis Sätze (`src/lib/welten/funki.ts`) wählen nach der Zahl der Runden, nicht nach
+Zufall; keine Vergleiche mit anderen Kindern. Die Seite prüft serverseitig, dass ein laufendes
+Lernpaket Spiele dieser Welt enthält, sonst geht es zurück zur Weltkarte.
 
 ## Ersetzt
 

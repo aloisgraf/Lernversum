@@ -1,6 +1,6 @@
 # Projektstand
 
-**Zuletzt aktualisiert:** 2026-10-24
+**Zuletzt aktualisiert:** 2026-10-26
 
 ## Stand
 
@@ -26,13 +26,21 @@
   53 Unit-Tests, Build, 32 End-to-End-Tests.
 
 - Kinderprofil mit Spitzname und Avatar, gezeichnete Lernwelten und Avatare (D-023)
-  umgesetzt, noch nicht committed; lokal geprüft: Lint, Typen, Format, 67 Unit-Tests, Build,
+  umgesetzt und committed (932c8ce), CI grün; lokal geprüft: Lint, Typen, Format, 67 Unit-Tests, Build,
   34 End-to-End-Tests (inkl. Negativtests: ohne Anmeldung und als Admin kein Zugriff,
   ungültiger Spitzname abgelehnt).
 - Designpaket Schritt 1 und 2 (D-022) umgesetzt und committed (678069b): Farben, Nunito,
-  Wortmarke, Startseite, Login, Test-Admin, Kinder-Weltkarte. Noch nicht committed: Fredoka
-  für Wortmarke und Überschriften, Zod-Sicherheitsupdate. Offen: Herkunft und Lizenz der
+  Wortmarke, Startseite, Login, Test-Admin, Kinder-Weltkarte; Fredoka und Zod-Update in
+  932c8ce bzw. 64c8454. Offen: Herkunft und Lizenz der
   Original-Logo-Schrift; Schritt 4 (Avatare im Spiel, Belohnungen) nach Phase 2b/3.
+
+- Admin-Aufbau nach Alois (D-024) umgesetzt, noch nicht committed: Kinder mit freiem
+  Benutzernamen und Erstpasswort, Pflicht-Passwortwechsel, Kategorien mit Stufen, Lernpakete
+  mit Ablaufdatum, Spielrunden mit Sternen, öffentliche Spieleseite entfernt. Lokal geprüft:
+  siehe Abschluss-Nachricht im Thread (Lint, Typen, Format, Unit-, Build- und End-to-End-Tests).
+  Dazu Loginzettel mit QR-Code (D-025), Admin im Stil „Flat Design mit plastischen Schatten“
+  und Patrick Hand im Kinderbereich, Feuerplanet mit Funki (D-026). Offen: Rückfrage, ob später zugeordnete Spiele einer
+  freigegebenen Stufe automatisch erscheinen (vorläufig ja).
 
 ## Entscheidungen vor Entwicklungsbeginn
 

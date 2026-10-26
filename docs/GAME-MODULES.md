@@ -84,6 +84,15 @@ Gemeinsame Grundlage, kein starres Kennzahlenmodell:
 Pro neuem Spiel wird mit Alois festgelegt: relevante Ereignisse, gespeicherte Daten, Kennzahlen,
 Lehrkraft-Ansicht, Zeitvergleich, Datensparsamkeit, Aufbewahrung, Tests.
 
+### Prototyp: Spielrunden (D-024)
+
+„Wald-Wesen füttern“ meldet mit `eventSchemaVersion: 1` am Ende jeder Runde ein Ergebnis
+(`stufe`, `aufgaben`, `fehler`, `dauerSek`) über eine Server-Aktion. Die Plattform prüft
+Rolle, Freigabe und Wertebereiche und speichert die Runde zum laufenden Lernpaket. Optional `fertigHref`: Nach einer geschafften
+Runde führt „Zurück zum Planeten“ dorthin (Plattform setzt es nur für bekannte Lernwelten).
+Sterne: 3 ohne Fehler, 2 bei höchstens einem Drittel Fehlversuche, sonst 1. Das Spiel ist nur über
+`/bereich` mit gültiger Freigabe erreichbar.
+
 ## Neues Spiel hinzufügen (Verfahren)
 
 1. Beschreibung von Alois analysieren: Lernziel, Mechanik, Inhalte, Einstellungen, Medien, Statistik.

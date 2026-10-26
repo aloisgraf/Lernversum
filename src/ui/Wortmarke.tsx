@@ -1,5 +1,5 @@
 // Wortmarke nach Lernversum_Wortmarke.svg aus dem Designpaket, ohne Hintergrundfläche und in
-// der runden Schrift Fredoka statt Trebuchet MS (nicht frei mitlieferbar).
+// der Schrift Patrick Hand statt Trebuchet MS (nicht frei mitlieferbar).
 type Props = { className?: string; onDark?: boolean; showClaim?: boolean };
 
 export function Wortmarke({ className, onDark = false, showClaim = true }: Props) {
@@ -10,13 +10,13 @@ export function Wortmarke({ className, onDark = false, showClaim = true }: Props
       role="img"
       aria-label="Lernversum"
       className={className}
-      style={{ fontFamily: "var(--font-fredoka), var(--font-nunito), Arial, sans-serif" }}
+      style={{ fontFamily: "var(--font-patrick-hand), var(--font-nunito), Arial, sans-serif" }}
     >
-      <text x="70" y="125" fontSize="104" fontWeight="700" letterSpacing="-2" fill={ink}>
+      <text x="70" y="125" fontSize="132" fontWeight="400" fill={ink}>
         Lernversum
       </text>
-      {/* Stern und Planeten näher an den Schriftzug, weil Fredoka schmaler läuft als Trebuchet MS */}
-      <g transform="translate(-145 0)">
+      {/* Stern und Planeten näher an den Schriftzug, passend zur Breite von Patrick Hand */}
+      <g transform="translate(-160 0)">
         <path
           d="M820 35 L830 58 L855 60 L836 76 L841 100 L820 87 L799 100 L804 76 L785 60 L810 58 Z"
           fill="#FFD84D"
@@ -36,7 +36,7 @@ export function Wortmarke({ className, onDark = false, showClaim = true }: Props
             strokeWidth="5"
             strokeLinecap="round"
           />
-          <text x="160" y="178" fontSize="30" fontWeight="600" fill={ink}>
+          <text x="160" y="178" fontSize="40" fontWeight="400" fill={ink}>
             Entdecken. Lernen. Wachsen.
           </text>
         </>

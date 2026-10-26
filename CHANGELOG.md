@@ -2,6 +2,19 @@
 
 ## Unveröffentlicht
 
+- Test-Admin neu aufgebaut (D-024): Kinder mit frei gewähltem Benutzernamen und Erstpasswort,
+  Passwortwechsel nach der ersten Anmeldung (scrypt-Hash, Mindestlänge, Liste häufiger
+  Passwörter), Kategorien mit Stufen einfach/mittel/schwer, Lernpakete mit Ablaufdatum oder
+  unbefristet, Ergebnisse je Paket; Kinder sehen freigegebene Spiele auf der Weltkarte und ihre
+  Sterne. Öffentliche Spieleseite entfernt, Spiele nur noch mit Freigabe.
+- Design: Schrift Patrick Hand für Wortmarke und Kinderbereich (Überschriften, Knöpfe);
+  Admin mit plastischen Pill-Buttons, Datentabellen und Status-Pillen, Formulare über
+  „+ Neu …“ aufklappbar.
+- Feuerplanet (D-026): erste Lernwelt mit dem Bild von Alois und eigener Seite, Funki das Lava-Alien
+  begrüßt mit Namen und lobt nach jedem Spiel mit wechselnden Sätzen; Weltkarte führt in die
+  Lernwelten, Spiele führen dorthin zurück.
+- Loginzettel (D-025): nach dem Anlegen eines Kindes oder neuem Erstpasswort druckbar, mit
+  QR-Code zur Anmeldeseite (Bibliothek `qrcode-generator`), Passwort nicht gespeichert.
 - Kinderbereich: Lernwelten als gezeichnete schwebende Inseln, Profil `/bereich/profil` mit
   Spitzname und Avatarwahl (acht gezeichnete Avatare), Begrüßung mit Spitzname (D-023).
 - Sicherheit: Zod 4.6.5 → 4.6.7 (hohe Lücke GHSA-mrhx-c7xc-m3w5), befristete Ausnahme nach D-020.

@@ -3,6 +3,7 @@ import { spiele } from "@/games/registry";
 import { adminStore, today } from "@/lib/demo-admin/server";
 import { licenseActive } from "@/lib/demo-admin/store";
 import { hasActiveSession, requireRole } from "@/lib/demo-auth/server";
+import { Abschnitt, Status, Tabelle, Titel } from "./ui";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Adminbereich · Lernversum" };
@@ -18,21 +19,23 @@ export default async function AdminPage() {
       value: holders.filter((h) => licenseActive(h.license, today())).length,
     },
     { label: "Kinder", value: store.children.size },
-    { label: "Elternzugänge", value: store.parents.size },
-    { label: "Freischaltungen", value: store.grants.size },
+    {
+      label: "laufende Lernpakete",
+      value: [...store.packages.values()].filter((p) => store.packageStatus(p, today()) === "läuft")
+        .length,
+    },
+    { label: "Spielrunden", value: store.rounds.size },
     { label: "Spiele", value: spiele.length },
-    { label: "Themen", value: store.topics.size },
+    { label: "Kategorien", value: store.categories.size },
   ];
 
   return (
     <>
-      <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
-        Adminbereich
-      </h1>
+      <Titel>Adminbereich</Titel>
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((stat) => (
           <li key={stat.label} className="lv-card p-4">
-            <p className="text-3xl font-extrabold" style={{ color: "var(--lv-navy)" }}>
+            <p className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
               {stat.value}
             </p>
             <p className="text-sm" style={{ color: "var(--color-muted)" }}>
@@ -42,28 +45,25 @@ export default async function AdminPage() {
         ))}
       </ul>
       <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Testkonten</h2>
-        <table className="w-full text-left">
-          <thead>
-            <tr>
-              <th className="py-2">Benutzername</th>
-              <th className="py-2">Rolle</th>
-              <th className="py-2">Gerade angemeldet</th>
+        <Abschnitt>Testkonten</Abschnitt>
+        <Tabelle label="Testkonten" spalten={["Benutzername", "Rolle", "Gerade angemeldet"]}>
+          {[
+            { name: "admin", rolle: "Admin" },
+            { name: "testuser", rolle: "Benutzer" },
+          ].map((konto) => (
+            <tr key={konto.name}>
+              <td className="font-bold">{konto.name}</td>
+              <td>{konto.rolle}</td>
+              <td>
+                {hasActiveSession(konto.name) ? (
+                  <Status art="ok">ja</Status>
+                ) : (
+                  <Status art="neutral">nein</Status>
+                )}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {[
-              { name: "admin", rolle: "Admin" },
-              { name: "testuser", rolle: "Benutzer" },
-            ].map((konto) => (
-              <tr key={konto.name} className="border-t">
-                <td className="py-2">{konto.name}</td>
-                <td className="py-2">{konto.rolle}</td>
-                <td className="py-2">{hasActiveSession(konto.name) ? "ja" : "nein"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </Tabelle>
       </section>
     </>
   );

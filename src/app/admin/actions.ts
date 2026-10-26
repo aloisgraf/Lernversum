@@ -2,14 +2,20 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { requireRole } from "@/lib/demo-auth/server";
-import { adminStore, today } from "@/lib/demo-admin/server";
-import { DemoAdminError } from "@/lib/demo-admin/store";
+import { beendeSitzung, requireRole } from "@/lib/demo-auth/server";
+import { adminStore } from "@/lib/demo-admin/server";
+import { DemoAdminError, STUFEN, type PackageItem, type Stufe } from "@/lib/demo-admin/store";
+import { anmeldeAdresse } from "@/lib/anmelde-adresse";
+import { qrZeilen } from "@/lib/qr";
+
+// Loginzettel: nur in der Antwort auf Anlegen oder Zurücksetzen, nirgends gespeichert. Der
+// QR-Code enthält nur die Adresse der Anmeldeseite, keine Zugangsdaten.
+export type Loginzettel = { benutzername: string; passwort: string; adresse: string; qr: string[] };
 
 export type ActionState = {
   error?: string;
   ok?: string;
-  codes?: { label: string; username: string; code: string }[];
+  zettel?: Loginzettel;
 };
 
 // Jede Aktion prüft zuerst serverseitig die Admin-Rolle. Server-Aktionen sind von außen per
@@ -67,67 +73,143 @@ export async function assignLicenseAction(_: ActionState, form: FormData): Promi
   });
 }
 
+async function zettelFuer(benutzername: string, passwort: string): Promise<Loginzettel> {
+  const adresse = await anmeldeAdresse();
+  return { benutzername, passwort, adresse, qr: qrZeilen(adresse) };
+}
+
 export async function addChildAction(_: ActionState, form: FormData): Promise<ActionState> {
-  return run(() => {
-    const input = z.object({ holderId: id, firstName: text(50), lastName: text(50) }).parse({
-      holderId: field(form, "holderId"),
-      firstName: field(form, "firstName"),
-      lastName: field(form, "lastName"),
-    });
-    const result = adminStore().addChild(input.holderId, input.firstName, input.lastName, today());
-    const codes = [
-      { label: "Kinderkarte", username: result.child.username, code: result.childCode },
-    ];
-    if (result.parent && result.parentCode) {
-      codes.push({
-        label: "Elternkarte",
-        username: result.parent.username,
-        code: result.parentCode,
+  const state = await run(() => {
+    const input = z
+      .object({ holderId: id, username: text(30), erstpasswort: z.string().min(1).max(200) })
+      .parse({
+        holderId: field(form, "holderId"),
+        username: field(form, "username"),
+        erstpasswort: field(form, "erstpasswort"),
       });
-    }
-    return { ok: `${result.child.firstName} angelegt.`, codes };
+    const child = adminStore().addChild(
+      input.holderId,
+      input.username,
+      input.erstpasswort,
+      new Date(),
+    );
+    return {
+      ok: `${child.username} angelegt. Beim ersten Anmelden muss das Kind ein eigenes Passwort wählen.`,
+      zettel: { benutzername: child.username, passwort: input.erstpasswort, adresse: "", qr: [] },
+    };
   });
+  return mitZettel(state);
+}
+
+// Ergänzt Adresse und QR-Code erst nach erfolgreicher, rollengeprüfter Aktion.
+async function mitZettel(state: ActionState): Promise<ActionState> {
+  if (!state.zettel) return state;
+  return { ...state, zettel: await zettelFuer(state.zettel.benutzername, state.zettel.passwort) };
 }
 
 export async function removeChildAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(() => {
-    adminStore().removeChild(id.parse(field(form, "childId")));
+    const store = adminStore();
+    const child = store.requireChild(id.parse(field(form, "childId")));
+    store.removeChild(child.id);
+    beendeSitzung(child.username);
     return { ok: "Kind entfernt." };
   });
 }
 
-export async function grantGameAction(_: ActionState, form: FormData): Promise<ActionState> {
+export async function resetPasswordAction(_: ActionState, form: FormData): Promise<ActionState> {
+  const state = await run(() => {
+    const input = z
+      .object({ childId: id, erstpasswort: z.string().min(1).max(200) })
+      .parse({ childId: field(form, "childId"), erstpasswort: field(form, "erstpasswort") });
+    const store = adminStore();
+    store.resetPassword(input.childId, input.erstpasswort);
+    const child = store.requireChild(input.childId);
+    beendeSitzung(child.username);
+    return {
+      ok: "Neues Erstpasswort gesetzt. Das Kind muss es beim Anmelden ändern.",
+      zettel: { benutzername: child.username, passwort: input.erstpasswort, adresse: "", qr: [] },
+    };
+  });
+  return mitZettel(state);
+}
+
+export async function createCategoryAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(() => {
-    const input = z.object({ childId: id, gameSlug: text(80), from: date, until: date }).parse({
-      childId: field(form, "childId"),
+    const category = adminStore().createCategory(text(80).parse(field(form, "name")));
+    return { ok: `Kategorie „${category.name}“ angelegt.` };
+  });
+}
+
+export async function placeGameAction(_: ActionState, form: FormData): Promise<ActionState> {
+  return run(() => {
+    const input = z.object({ categoryId: id, stufe: z.enum(STUFEN), gameSlug: text(80) }).parse({
+      categoryId: field(form, "categoryId"),
+      stufe: field(form, "stufe"),
       gameSlug: field(form, "gameSlug"),
-      from: field(form, "from"),
-      until: field(form, "until"),
     });
-    adminStore().grantGame(input.childId, input.gameSlug, input.from, input.until);
-    return { ok: "Spiel freigeschaltet." };
+    adminStore().placeGame(input.categoryId, input.stufe, input.gameSlug);
+    return { ok: "Spiel zugeordnet." };
   });
 }
 
-export async function revokeGrantAction(_: ActionState, form: FormData): Promise<ActionState> {
+export async function removePlacementAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(() => {
-    adminStore().revokeGrant(id.parse(field(form, "grantId")));
-    return { ok: "Freischaltung entfernt." };
+    adminStore().removePlacement(id.parse(field(form, "placementId")));
+    return { ok: "Zuordnung entfernt." };
   });
 }
 
-export async function createTopicAction(_: ActionState, form: FormData): Promise<ActionState> {
+// Auswahl im Formular: „s:<kategorie>:<stufe>“ für eine ganze Stufe, „g:<kategorie>:<spiel>“
+// für ein einzelnes Spiel.
+const auswahl = z.union([
+  z
+    .string()
+    .regex(/^s:[0-9a-f]{16}:(einfach|mittel|schwer)$/)
+    .transform((v): PackageItem => {
+      const [, categoryId, stufe] = v.split(":") as [string, string, Stufe];
+      return { art: "stufe", categoryId, stufe };
+    }),
+  z
+    .string()
+    .regex(/^g:[0-9a-f]{16}:[a-z0-9-]{1,80}$/)
+    .transform((v): PackageItem => {
+      const [, categoryId, gameSlug] = v.split(":") as [string, string, string];
+      return { art: "spiel", categoryId, gameSlug };
+    }),
+]);
+
+export async function createPackageAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(() => {
-    const topic = adminStore().createTopic(text(80).parse(field(form, "name")));
-    return { ok: `Thema „${topic.name}“ angelegt.` };
+    const input = z
+      .object({
+        childId: id,
+        name: text(60),
+        validUntil: z.union([z.literal(""), date]),
+        items: z.array(auswahl).max(50),
+      })
+      .parse({
+        childId: field(form, "childId"),
+        name: field(form, "name"),
+        validUntil: field(form, "validUntil"),
+        items: form.getAll("items"),
+      });
+    const pkg = adminStore().createPackage(
+      input.childId,
+      {
+        name: input.name,
+        validUntil: input.validUntil === "" ? null : input.validUntil,
+        items: input.items,
+      },
+      new Date(),
+    );
+    return { ok: `Lernpaket „${pkg.name}“ freigegeben.` };
   });
 }
 
-export async function setGameTopicsAction(_: ActionState, form: FormData): Promise<ActionState> {
+export async function endPackageAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(() => {
-    const gameSlug = text(80).parse(field(form, "gameSlug"));
-    const topicIds = z.array(id).max(50).parse(form.getAll("topicIds"));
-    adminStore().setGameTopics(gameSlug, topicIds);
-    return { ok: "Themen gespeichert." };
+    adminStore().endPackage(id.parse(field(form, "packageId")), new Date());
+    return { ok: "Lernpaket beendet." };
   });
 }

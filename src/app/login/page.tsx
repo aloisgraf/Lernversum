@@ -33,7 +33,7 @@ export default async function LoginPage({
         <Wortmarke onDark showClaim={false} className="h-auto w-full" />
       </Link>
       <div className="lv-card flex w-full max-w-sm flex-col gap-5 p-6 text-[var(--lv-text)]">
-        <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
+        <h1 className="font-display text-4xl" style={{ color: "var(--lv-navy)" }}>
           Anmelden
         </h1>
         <p

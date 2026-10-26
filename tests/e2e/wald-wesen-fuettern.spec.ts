@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { USER, login, testuserDarfSpielen } from "./hilfen";
 
 // Stufe 3 zeigt Wörter statt Bilder, daher kann der Test die richtige Endung ablesen.
 async function richtigesZiel(page: Page): Promise<string> {
@@ -7,17 +8,20 @@ async function richtigesZiel(page: Page): Promise<string> {
   return ["el", "en", "er"].includes(ende) ? ende : "hoehle";
 }
 
+test.beforeAll(async ({ browser }) => {
+  await testuserDarfSpielen(browser);
+});
+
 async function starteStufe3(page: Page) {
-  await page.goto("/");
-  await page.getByRole("link", { name: "Spiele ausprobieren" }).click();
+  await login(page, USER);
+  await expect(page).toHaveURL(/\/bereich$/);
+  await page.getByRole("link", { name: /Feuerplanet/ }).click();
   await page.getByRole("link", { name: /Wald-Wesen füttern/ }).click();
   await expect(page.getByRole("heading", { name: "Wald-Wesen füttern" })).toBeVisible();
   await page.getByRole("button", { name: /Stufe 3/ }).click();
 }
 
-test("Spiel ist von der Startseite aus ohne Anmeldung erreichbar und spielbar", async ({
-  page,
-}) => {
+test("freigegebenes Spiel ist aus dem Kinderbereich erreichbar und spielbar", async ({ page }) => {
   await starteStufe3(page);
   for (let i = 0; i < 9; i++) {
     const ziel = await richtigesZiel(page);
@@ -51,13 +55,35 @@ test("Bild lässt sich zum Wald-Wesen ziehen", async ({ page }) => {
   await expect(page.getByTestId("loesungswort")).toBeVisible();
 });
 
-test("Spielseite speichert nichts im Browser", async ({ page }) => {
+test("Spielseite speichert nichts im Browser außer der Sitzung", async ({ page }) => {
   await starteStufe3(page);
   await page.locator(`[data-ziel="${await richtigesZiel(page)}"]`).click();
   const gespeichert = await page.evaluate(() => ({
     local: localStorage.length,
     session: sessionStorage.length,
+    // Das Sitzungs-Cookie ist httpOnly und darum für Skripte unsichtbar.
     cookies: document.cookie,
   }));
   expect(gespeichert).toEqual({ local: 0, session: 0, cookies: "" });
+});
+
+test("Zurück führt vom Spiel in die Lernwelt und von dort auf die Weltkarte", async ({ page }) => {
+  await login(page, USER);
+  await expect(page).toHaveURL(/\/bereich$/);
+  await page.getByRole("link", { name: /Feuerplanet/ }).click();
+  await expect(page).toHaveURL(/\/bereich\/welt\/[0-9a-f]{16}$/);
+  const welt = page.url();
+  await page.getByRole("link", { name: /Wald-Wesen füttern/ }).click();
+  await expect(page.getByRole("heading", { name: "Wald-Wesen füttern" })).toBeVisible();
+  // Während der Runde führt Zurück erst zur Stufenwahl des Spiels, dann in die Lernwelt.
+  await page.getByRole("button", { name: /Stufe 3/ }).click();
+  await page.getByRole("button", { name: /Zurück/ }).click();
+  await expect(page.getByRole("heading", { name: "Wald-Wesen füttern" })).toBeVisible();
+  await page.getByRole("link", { name: "Zurück" }).click();
+  await expect(page).toHaveURL(welt);
+  await page.getByRole("link", { name: "← Zur Weltkarte" }).click();
+  await expect(page).toHaveURL(/\/bereich$/);
+  // Auch die Zurück-Taste des Browsers folgt diesem Weg.
+  await page.goBack();
+  await expect(page).toHaveURL(welt);
 });

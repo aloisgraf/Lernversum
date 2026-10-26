@@ -7,7 +7,7 @@ export const manifest = {
   thema: "Rechtschreibung: Endungen -el, -en, -er",
   vorschau: "🦔",
   configVersion: 1,
-  // Noch keine Spielereignisse: In dieser Testversion wird nichts gespeichert.
-  eventSchemaVersion: null,
+  // Version 1: je fertiger Runde Stufe, Anzahl Aufgaben, Fehlversuche, Dauer (keine Einzeleingaben).
+  eventSchemaVersion: 1,
   faehigkeiten: [] as const,
 } as const;

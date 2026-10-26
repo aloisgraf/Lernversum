@@ -21,6 +21,8 @@ keine externen Laufzeit-Abrufe (Fonts, CDNs, Analytics) im Schülerbereich.
 | Kinderprofil: Spitzname (optional), Avatar aus fester Auswahl (D-023) | Anrede und Wiedererkennen im Kinderbereich | Kind selbst; Lehrkraft und Eltern (sehen, zurücksetzen) | mit dem Schülerkonto |
 | Elternzugang: Benutzername | Fortschritt einsehen | Lehrkraft verwaltet | mit dem Schülerkonto |
 | Freischaltungen | Lizenzprüfung | Lehrkraft, Schüler (eigene), Admin (ohne Namen) | mit Schülerkonto |
+| Lernpakete (D-024): Name, Inhalt, erstellt, gültig bis, beendet | Freigabe, Nachvollziehbarkeit | Admin bzw. betreuende Person; Kind sieht nur Spiele | mit dem Schülerkonto |
+| Spielrunden (D-024): Spiel, Beginn, Dauer, Aufgaben, Fehlversuche | Ergebnisse für Kind und Betreuende | betreuende Person (im Prototyp Admin); Kind nur eigene Sterne | einzelne Runden 12 Monate, danach Zusammenfassung je Paket |
 | Spielsitzungen und Ereignisse | Lernstatistik | Lehrkraft; Eltern (nur lesen); Admin nur zweckgebunden mit Audit | Rohdaten 12 Monate, Aggregate bis Kontolöschung (Fristen entschieden, D-011) |
 | Audit-/Sicherheitslogs | Nachvollziehbarkeit, Sicherheit | Admin | 12 Monate |
 | Anmeldezeitpunkte und Sitzungsübernahmen (D-018) | Schutz vor Weitergabe der Zugangsdaten | Admin | Vorschlag 90 Tage; keine Gerätefingerabdrücke |
@@ -38,6 +40,18 @@ die Oberfläche bittet, nicht den ganzen Namen einzutragen. Er erscheint nur im 
 Kinderbereich, nicht in Statistiken, Protokollen oder für andere Kinder. Lehrkraft und Eltern sehen
 den Spitznamen und können ihn zurücksetzen, etwa bei unpassenden Wörtern (Alois, 2026-10-24).
 Im Prototyp liegt das Profil nur im Speicher des Servers.
+
+## Lernpakete und Spielrunden (D-024, vorläufig)
+
+Gespeichert wird je Runde nur Spiel, Lernpaket, Beginn, Dauer, Zahl der Aufgaben und der
+Fehlversuche; keine Geräte-, Browser- oder Ortsdaten, keine Eingaben im Wortlaut. Nach
+12 Monaten werden einzelne Runden zu einer Zusammenfassung je Paket verdichtet. Das Kind sieht
+nur seine eigenen Sterne, nie einen Vergleich mit anderen Kindern. Ergebnisse sieht, wer das
+Kind betreut; im Prototyp ist das der Admin. Sobald Lehrkräfte und Eltern ihre Kinder selbst
+betreuen, gilt für den Admin wieder E-7 (nur begründet, befristet, protokolliert).
+Das Erstpasswort wird nur als Hash gespeichert; der Admin übergibt es dem Kind selbst, etwa
+als Loginzettel (D-025). Der Zettel wird nur im Browser des Admins erzeugt und gedruckt, nicht
+gespeichert; der QR-Code enthält nur die Adresse der Anmeldeseite.
 
 ## Pseudonymisierung
 

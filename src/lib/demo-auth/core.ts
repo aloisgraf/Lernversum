@@ -100,6 +100,11 @@ export class SessionStore {
     }
   }
 
+  deleteUser(username: string): void {
+    const token = this.tokenByUser.get(username);
+    if (token) this.delete(token);
+  }
+
   hasActiveSession(username: string, now: number): boolean {
     const token = this.tokenByUser.get(username);
     return token !== undefined && this.get(token, now) !== null;

@@ -64,7 +64,10 @@ function Zahlen() {
     { x: 114, y: 48, farbe: "#38C9CE", z: "3" },
   ];
   return (
-    <g fontFamily="var(--font-fredoka), var(--font-nunito), Arial, sans-serif" fontWeight="700">
+    <g
+      fontFamily="var(--font-patrick-hand), var(--font-nunito), Arial, sans-serif"
+      fontWeight="700"
+    >
       {wuerfel.map((w) => (
         <g key={w.z}>
           <rect
@@ -122,7 +125,7 @@ function Stift() {
       <text
         x="66"
         y="72"
-        fontFamily="var(--font-fredoka), var(--font-nunito), Arial, sans-serif"
+        fontFamily="var(--font-patrick-hand), var(--font-nunito), Arial, sans-serif"
         fontWeight="700"
         fontSize="26"
         fill="#fff"

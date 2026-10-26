@@ -2,6 +2,17 @@
 
 **Stand:** Entwurf nach D-009, D-014, D-015 und D-018 (vorläufig, 2026-10-21). Noch nicht umgesetzt.
 
+> **Nachtrag D-024 (2026-10-26):** Kinder, die der Admin anlegt, bekommen einen frei
+> gewählten Benutzernamen und ein Erstpasswort statt Aktivierungskarten. Nach der ersten
+> Anmeldung muss das Kind ein eigenes Passwort wählen (mindestens 8 Zeichen, nicht zu häufig,
+> ohne Benutzernamen); erst dann sieht es seine Spiele. Passwort vergessen: Der Admin setzt
+> ein neues Erstpasswort, alle Sitzungen enden, das Kind muss wieder wechseln. Erwachsene
+> (Eltern, Lehrkräfte) brauchen mindestens 12 Zeichen. Elternzugang mit freiem Benutzernamen
+> folgt mit dem Elternbereich; die Abschnitte zu Karten unten gelten bis dahin als Entwurf.
+> Nach dem Anlegen oder Zurücksetzen druckt der Admin einen Loginzettel mit QR-Code zur
+> Anmeldeseite, Benutzername und Erstpasswort (D-025).
+> Spiele bekommt das Kind über Lernpakete (D-024). Im Prototyp umgesetzt.
+
 Überblick: Privatpersonen und Unternehmen (z. B. Lerntherapeuten) kaufen ihre Lizenz selbst
 online; dabei entsteht ihr Konto ohne Zutun des Admins (Abschnitt 1a). Der Admin kann Konten
 weiterhin manuell anlegen (Abschnitt 1). Der Lizenznehmer legt seine Schüler an. Pro Schüler

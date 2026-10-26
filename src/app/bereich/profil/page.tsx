@@ -24,7 +24,7 @@ export default async function ProfilPage() {
         <div className="flex items-center gap-4">
           <Avatar id={profil.avatar} className="h-20 w-20" />
           <div>
-            <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
+            <h1 className="font-display text-4xl" style={{ color: "var(--lv-navy)" }}>
               Mein Profil
             </h1>
             <p className="text-lg">

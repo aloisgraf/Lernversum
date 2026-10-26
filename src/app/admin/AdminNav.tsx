@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const nav = [
+const nav: { href: string; label: string; auch?: string }[] = [
   { href: "/admin", label: "Übersicht" },
-  { href: "/admin/lizenznehmer", label: "Lizenznehmer und Kinder" },
-  { href: "/admin/spiele", label: "Spiele und Themen" },
+  { href: "/admin/lizenznehmer", label: "Lizenznehmer und Kinder", auch: "/admin/kinder" },
+  { href: "/admin/spiele", label: "Kategorien und Spiele" },
 ];
 
 export function AdminNav() {
@@ -15,7 +15,10 @@ export function AdminNav() {
     <nav className="flex flex-row flex-wrap gap-2 md:flex-col">
       {nav.map((item) => {
         const active =
-          item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
+          item.href === "/admin"
+            ? pathname === "/admin"
+            : pathname.startsWith(item.href) ||
+              (item.auch ? pathname.startsWith(item.auch) : false);
         return (
           <Link
             key={item.href}

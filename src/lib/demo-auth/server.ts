@@ -1,6 +1,8 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { adminStore } from "@/lib/demo-admin/server";
+import type { Child } from "@/lib/demo-admin/store";
 import {
   LoginThrottle,
   SESSION_TTL_MS,
@@ -33,7 +35,11 @@ export async function login(username: string, password: string): Promise<LoginRe
   const waitMs = state.throttle.waitMs(username, now);
   if (waitMs > 0) return { ok: false, waitMs };
 
-  const user = findUser(demoAuthConfig(), username, password);
+  // Zuerst die festen Demo-Konten, dann die im Test-Admin angelegten Kinder.
+  const config = demoAuthConfig();
+  const envUser = findUser(config, username, password);
+  const child = !envUser && config.enabled ? adminStore().verifyLogin(username, password) : null;
+  const user = envUser ?? (child ? { username: child.username, role: "user" as const } : null);
   if (!user) {
     state.throttle.recordFailure(username, now);
     return { ok: false, waitMs: state.throttle.waitMs(username, now) };
@@ -71,7 +77,48 @@ export async function requireRole(role: DemoRole): Promise<DemoSession> {
   const session = await currentSession();
   if (!session) redirect("/login");
   if (session.role !== role) notFound();
+  if (role === "user") {
+    const child = kindZurSitzung(session);
+    // Gelöschtes Kind: Sitzung gilt nicht mehr.
+    if (child === null) {
+      state.sessions.deleteUser(session.username);
+      redirect("/login");
+    }
+    // Erstpasswort: Bis zum Wechsel ist nichts anderes erreichbar.
+    if (child?.mustChangePassword) redirect("/passwort-aendern");
+  }
   return session;
+}
+
+// Kind-Datensatz zur Sitzung. undefined: festes Demo-Konto ohne Datensatz; null: gelöscht.
+function kindZurSitzung(session: DemoSession): Child | null | undefined {
+  const child = adminStore().childByUsername(session.username);
+  if (child) return child;
+  const istDemoKonto = demoAuthConfig().enabled && session.username === "testuser";
+  return istDemoKonto ? undefined : null;
+}
+
+// Für die Seite „Passwort ändern“: angemeldetes Kind, auch wenn der Wechsel noch aussteht.
+export async function requireKindFuerPasswortwechsel(): Promise<{
+  session: DemoSession;
+  child: Child;
+}> {
+  const session = await currentSession();
+  if (!session) redirect("/login");
+  if (session.role !== "user") notFound();
+  const child = adminStore().childByUsername(session.username);
+  if (!child?.passwordHash) notFound();
+  return { session, child };
+}
+
+// Das Kind zur Sitzung, für Seiten im Kinderbereich (nach requireRole("user")).
+export function kindDerSitzung(session: DemoSession): Child | undefined {
+  return adminStore().childByUsername(session.username);
+}
+
+// Beendet die Sitzung eines Kontos, z. B. wenn der Admin ein Kind löscht.
+export function beendeSitzung(username: string): void {
+  state.sessions.deleteUser(username);
 }
 
 export function hasActiveSession(username: string): boolean {

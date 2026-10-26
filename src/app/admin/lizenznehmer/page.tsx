@@ -4,27 +4,25 @@ import { adminStore, today } from "@/lib/demo-admin/server";
 import { licenseActive, packageById } from "@/lib/demo-admin/store";
 import { requireRole } from "@/lib/demo-auth/server";
 import { ActionForm } from "../ActionForm";
+import { Kopf } from "../Kopf";
 import { createHolderAction } from "../actions";
-import { Field, inputClass } from "../ui";
+import { Field, Status, Tabelle, inputClass } from "../ui";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Lizenznehmer · Lernversum" };
 
-const typeLabel = { lehrkraft: "Lehrkraft", therapeut: "Lerntherapie", eltern: "Eltern" };
+const typeLabel = { lehrkraft: "Lehrkraft/Schule", therapeut: "Lerntherapie", eltern: "Eltern" };
 
 export default async function HoldersPage() {
   await requireRole("admin");
   const store = adminStore();
   const holders = [...store.holders.values()];
+  const now = today();
 
   return (
     <>
-      <h1 className="font-display text-3xl font-bold" style={{ color: "var(--lv-navy)" }}>
-        Lizenznehmer und Kinder
-      </h1>
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Neuen Lizenznehmer anlegen</h2>
-        <p className="text-sm" style={{ color: "var(--color-muted)" }}>
+      <Kopf titel="Lizenznehmer" knopf="Neuen Lizenznehmer anlegen">
+        <p className="text-sm" style={{ color: "var(--lv-muted)" }}>
           Später entsteht dieser Schritt automatisch beim Online-Kauf (D-018).
         </p>
         <ActionForm action={createHolderAction} submitLabel="Anlegen">
@@ -42,34 +40,38 @@ export default async function HoldersPage() {
             </select>
           </Field>
         </ActionForm>
-      </section>
-      <section className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Alle Lizenznehmer</h2>
-        {holders.length === 0 ? <p>Noch keine.</p> : null}
-        <ul className="flex flex-col gap-2">
+      </Kopf>
+      {holders.length === 0 ? (
+        <p>Noch keine Lizenznehmer.</p>
+      ) : (
+        <Tabelle label="Lizenznehmer" spalten={["Name", "Typ", "Kinder", "Lizenz"]}>
           {holders.map((holder) => {
             const pkg = holder.license ? packageById(holder.license.packageId) : undefined;
-            const active = licenseActive(holder.license, today());
+            const active = licenseActive(holder.license, now);
+            const kinder = store.childrenOf(holder.id).length;
             return (
-              <li key={holder.id}>
-                <Link
-                  href={`/admin/lizenznehmer/${holder.id}`}
-                  className="flex flex-wrap justify-between gap-2 lv-card p-4"
-                >
-                  <span>
-                    <strong>{holder.name}</strong> · {typeLabel[holder.type]}
-                  </span>
-                  <span style={{ color: "var(--color-muted)" }}>
-                    {pkg
-                      ? `${pkg.name} · ${store.childrenOf(holder.id).length}/${pkg.maxChildren} Kinder · ${active ? `gültig bis ${holder.license!.validUntil}` : "nicht gültig"}`
-                      : "keine Lizenz"}
-                  </span>
-                </Link>
-              </li>
+              <tr key={holder.id}>
+                <td>
+                  <Link href={`/admin/lizenznehmer/${holder.id}`}>{holder.name}</Link>
+                </td>
+                <td>{typeLabel[holder.type]}</td>
+                <td>{pkg ? `${kinder} von ${pkg.maxChildren}` : kinder}</td>
+                <td>
+                  {!holder.license ? (
+                    <Status art="neutral">keine Lizenz</Status>
+                  ) : active ? (
+                    <Status art="ok">{`gültig bis ${holder.license.validUntil}`}</Status>
+                  ) : holder.license.validUntil <= now ? (
+                    <Status art="aus">{`abgelaufen am ${holder.license.validUntil}`}</Status>
+                  ) : (
+                    <Status art="neutral">{`ab ${holder.license.validFrom}`}</Status>
+                  )}
+                </td>
+              </tr>
             );
           })}
-        </ul>
-      </section>
+        </Tabelle>
+      )}
     </>
   );
 }

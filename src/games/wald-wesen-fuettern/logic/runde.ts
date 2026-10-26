@@ -1,6 +1,7 @@
 import type { Endung, Stufe, WaldWesenConfig, Wort } from "../config/schema";
 
-// Reine Spiellogik ohne Oberfläche. Kein Speichern, keine Netzwerkzugriffe.
+// Reine Spiellogik ohne Oberfläche. Kein Speichern, keine Netzwerkzugriffe; das Ergebnis
+// einer Runde meldet die Spieloberfläche an die Plattform.
 
 /** Wohin ein Bild gehört: zu einem Wald-Wesen (Endung) oder in die Schlafhöhle. */
 export type Ziel = Endung | "hoehle";
@@ -73,10 +74,12 @@ export type SpielZustand = {
   geschafft: Wort[];
   /** Ergebnis der letzten Zuordnung, für die Rückmeldung in der Oberfläche. */
   letzte: { richtig: boolean; ziel: Ziel } | null;
+  /** Anzahl falscher Zuordnungen in dieser Runde (für das Ergebnis, ohne Abzug im Spiel). */
+  fehler: number;
 };
 
 export function starteSpiel(aufgaben: Wort[]): SpielZustand {
-  return { aufgaben, index: 0, geschafft: [], letzte: null };
+  return { aufgaben, index: 0, geschafft: [], letzte: null, fehler: 0 };
 }
 
 export function aktuelleAufgabe(zustand: SpielZustand): Wort | undefined {
@@ -95,7 +98,7 @@ export function ordneZu(zustand: SpielZustand, ziel: Ziel): SpielZustand {
   const aufgabe = aktuelleAufgabe(zustand);
   if (!aufgabe) return zustand;
   const richtig = zielFuer(aufgabe) === ziel;
-  if (!richtig) return { ...zustand, letzte: { richtig: false, ziel } };
+  if (!richtig) return { ...zustand, letzte: { richtig: false, ziel }, fehler: zustand.fehler + 1 };
   return {
     ...zustand,
     index: zustand.index + 1,

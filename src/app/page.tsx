@@ -11,11 +11,8 @@ export default function HomePage() {
         Die Plattform befindet sich im Aufbau.
       </p>
       <div className="flex flex-wrap justify-center gap-3">
-        <Link href="/spiele" className="lv-btn lv-btn-reward text-lg">
-          Spiele ausprobieren
-        </Link>
-        <Link href="/login" className="lv-btn lv-btn-quiet text-lg">
-          Anmelden (Demo)
+        <Link href="/login" className="lv-btn lv-btn-reward text-lg">
+          Anmelden
         </Link>
       </div>
     </main>

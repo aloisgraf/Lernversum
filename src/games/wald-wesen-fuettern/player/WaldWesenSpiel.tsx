@@ -156,9 +156,23 @@ function Rahmen({
   );
 }
 
-type Props = { config: WaldWesenConfig };
+// Ergebnis einer fertigen Runde, das die Plattform speichert (manifest.eventSchemaVersion 1).
+export type RundenErgebnis = { stufe: string; aufgaben: number; fehler: number; dauerSek: number };
 
-export function WaldWesenSpiel({ config }: Props) {
+type Props = {
+  config: WaldWesenConfig;
+  zurueckHref?: string;
+  // Ziel des Knopfs nach einer geschafften Runde (zurück in die Lernwelt); ohne: keiner.
+  fertigHref?: string;
+  onRundeFertig?: (ergebnis: RundenErgebnis) => unknown;
+};
+
+export function WaldWesenSpiel({
+  config,
+  zurueckHref = "/bereich",
+  fertigHref,
+  onRundeFertig,
+}: Props) {
   const [stufe, setStufe] = useState<Stufe | null>(null);
   const [zustand, setZustand] = useState<SpielZustand | null>(null);
   // Nach einer richtigen Zuordnung bleibt das gelöste Wort stehen, bis das Kind „Weiter“ tippt.
@@ -167,6 +181,8 @@ export function WaldWesenSpiel({ config }: Props) {
   const [zug, setZug] = useState<{ x: number; y: number } | null>(null);
   const zugStart = useRef<{ x: number; y: number; id: number } | null>(null);
   const weiterKnopf = useRef<HTMLButtonElement>(null);
+  const rundenStart = useRef(0);
+  const gemeldet = useRef(false);
   const { sprich, verfuegbar: kannVorlesen } = useVorlesen();
 
   const offen = zustand ? aktuelleAufgabe(zustand) : undefined;
@@ -188,7 +204,27 @@ export function WaldWesenSpiel({ config }: Props) {
     if (geloest) weiterKnopf.current?.focus();
   }, [geloest]);
 
+  // Startzeit einer neuen Runde (neue Aufgabenliste) für die Dauer im Ergebnis.
+  const aufgabenListe = zustand?.aufgaben;
+  useEffect(() => {
+    if (aufgabenListe) rundenStart.current = Date.now();
+  }, [aufgabenListe]);
+
+  // Fertige Runde einmal an die Plattform melden.
+  const fertig = zustand !== null && istFertig(zustand) && !geloest;
+  useEffect(() => {
+    if (!fertig || !zustand || !stufe || gemeldet.current) return;
+    gemeldet.current = true;
+    onRundeFertig?.({
+      stufe: stufe.id,
+      aufgaben: zustand.aufgaben.length,
+      fehler: zustand.fehler,
+      dauerSek: Math.round((Date.now() - rundenStart.current) / 1000),
+    });
+  }, [fertig, zustand, stufe, onRundeFertig]);
+
   function starte(neueStufe: Stufe) {
+    gemeldet.current = false;
     setStufe(neueStufe);
     setZustand(starteSpiel(erstelleRunde(config, neueStufe)));
     setGeloest(null);
@@ -257,7 +293,7 @@ export function WaldWesenSpiel({ config }: Props) {
     return (
       <Rahmen
         zurueck={
-          <Link href="/spiele" className={styles.zurueck} aria-label="Zurück zu den Spielen">
+          <Link href={zurueckHref} className={styles.zurueck} aria-label="Zurück">
             ←
           </Link>
         }
@@ -287,7 +323,7 @@ export function WaldWesenSpiel({ config }: Props) {
             ))}
           </div>
           <p className="text-base text-[#eaf5e4]">
-            Testversion: Es wird nichts gespeichert und nichts übertragen.
+            Wenn du eine Runde fertig spielst, merken wir uns deine Sterne.
           </p>
         </div>
       </Rahmen>
@@ -322,6 +358,14 @@ export function WaldWesenSpiel({ config }: Props) {
             ))}
           </ul>
           <div className="flex flex-wrap justify-center gap-4">
+            {fertigHref ? (
+              <Link
+                href={fertigHref}
+                className={`${gelberKnopf} inline-flex h-14 items-center px-8 text-xl`}
+              >
+                Zurück zum Planeten
+              </Link>
+            ) : null}
             <button
               type="button"
               onClick={() => starte(stufe)}
