@@ -236,9 +236,11 @@ erste Spiel und lobt nach jedem Spiel mit wechselnden Sätzen. Umsetzung: Planet
 Weltkarte führen auf eine eigene Seite `/bereich/welt/[id]` mit den freigegebenen Spielen
 dieser Kategorie. Die erste Kategorie ist der Feuerplanet mit Funki; weitere Welten zeigen
 vorerst die Insel ohne Begleiter. Verwendet wird das Bild von Alois selbst (er hat die
-Rechte daran bestätigt, 2026-10-26): als Szene mit Planet und Funki am rechten Rand und als
-runder Ausschnitt des Planeten auf der Weltkarte, beide als WebP im Projekt; eine eigene
-SVG-Nachzeichnung fand Alois unpassend und wurde verworfen. Funkis Sätze (`src/lib/welten/funki.ts`) wählen nach der Zahl der Runden, nicht nach
+Rechte daran bestätigt, 2026-10-26); eine eigene SVG-Nachzeichnung fand Alois unpassend und
+wurde verworfen. Nachtrag am selben Tag: Der Planet stammt jetzt aus einem zweiten Bild von
+Alois, freigestellt (schwarzer Hintergrund entfernt), auf Planetenseite und Weltkarte; Funki
+ist aus dem ersten Bild ausgeschnitten; der farbige Hintergrund (Himmel, Galaxie,
+Ringplanet, Lava-Landschaft) ist eine eigene SVG-Zeichnung (`src/ui/FeuerHimmel.tsx`). Funkis Sätze (`src/lib/welten/funki.ts`) wählen nach der Zahl der Runden, nicht nach
 Zufall; keine Vergleiche mit anderen Kindern. Die Seite prüft serverseitig, dass ein laufendes
 Lernpaket Spiele dieser Welt enthält, sonst geht es zurück zur Weltkarte.
 

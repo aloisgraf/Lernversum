@@ -100,8 +100,8 @@ Pill-Buttons und Datentabellen.
 - Gesperrte Planeten sind nur Anzeige und keine Sicherheitsgrenze. Der Server prüft bei jedem
   Spielaufruf und jeder gespeicherten Runde, ob ein laufendes Lernpaket das Spiel enthält
   (D-024). Inseln stehen für Kategorien; Stufen sieht das Kind nicht.
-- Lernwelt von innen (`/bereich/welt/[id]`, D-026): Bild von Alois
-  (`src/ui/bilder/feuerplanet-szene.webp`) am rechten Rand mit weich ausgeblendeter Kante auf
-  dem Hintergrund `.lv-feuer`; Funki im Bild bekommt eine Sprechblase (`role="status"`, wird
-  vorgelesen). Weltkarte: runder Ausschnitt `feuerplanet-planet.webp` (`FeuerplanetBild`).
+- Lernwelt von innen (`/bereich/welt/[id]`, D-026): freigestellter Planet
+  (`src/ui/bilder/feuerplanet.webp`) und Funki (`funki.webp`, rechter Rand, Sprechblase mit
+  `role="status"`) vor dem eigenen Hintergrund `FeuerHimmel`. Weltkarte:
+  `feuerplanet-karte.webp` (`FeuerplanetBild`).
 - Ergebnisse als Sterne (0 bis 3, mit Text für Screenreader), nie als Rangliste.

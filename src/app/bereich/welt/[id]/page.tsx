@@ -10,7 +10,9 @@ import { profilSpeicher } from "@/lib/demo-profile/server";
 import { funkiSagt } from "@/lib/welten/funki";
 import { WELT_ID, weltThema } from "@/lib/welten/thema";
 import Image from "next/image";
-import szene from "@/ui/bilder/feuerplanet-szene.webp";
+import planet from "@/ui/bilder/feuerplanet.webp";
+import funki from "@/ui/bilder/funki.webp";
+import { FeuerHimmel } from "@/ui/FeuerHimmel";
 import { Planet, motivFuer } from "@/ui/Planet";
 
 // Geschützte Seite: nie statisch vorrendern, Prüfung bei jeder Anfrage.
@@ -114,14 +116,18 @@ export default async function WeltPage({
     );
   }
 
-  // Feuerplanet: Bild von Alois als Szene am rechten Rand, Funki darin; Sprechblase darüber.
+  // Feuerplanet: Planet und Funki aus den Bildern von Alois, freigestellt, vor eigenem
+  // Hintergrund; Funki steht am rechten Rand, die Sprechblase über ihm.
   return (
-    <main className="lv-space lv-feuer flex min-h-screen flex-col gap-4 overflow-x-hidden px-4 pt-6 sm:px-8">
+    <main className="lv-space relative flex min-h-screen flex-col gap-4 overflow-hidden px-4 pt-6 sm:px-8">
+      <FeuerHimmel />
       {kopf}
-      <div className="grid flex-1 items-center gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-        <section className="order-2 flex flex-col items-center gap-5 pb-10 text-center lg:order-1">
+      <div className="relative grid flex-1 items-end gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+        <section className="order-2 flex flex-col items-center gap-5 self-center pb-10 text-center lg:order-1">
           <div>
-            <h1 className="font-display text-5xl">{thema.name}</h1>
+            <h1 className="font-display text-5xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]">
+              {thema.name}
+            </h1>
             <p className="text-xl" style={{ color: "var(--lv-on-dark-muted)" }}>
               {kategorie.name}
             </p>
@@ -129,40 +135,41 @@ export default async function WeltPage({
           <h2 className="font-display text-3xl">Deine Spiele</h2>
           {spielListe}
         </section>
-        <div className="relative order-1 -mx-4 sm:-mx-8 lg:order-2 lg:mx-0 lg:-mr-8">
-          <div
-            className="lv-card relative z-10 mx-4 mb-4 p-4 text-lg text-[var(--lv-text)] sm:mx-8 lg:absolute lg:top-[3%] lg:right-[3%] lg:m-0 lg:w-[44%]"
-            role="status"
-            aria-live="polite"
-            aria-label="Funki sagt"
-          >
-            {saetze.map((satz) => (
-              <p key={satz}>{satz}</p>
-            ))}
-            <span
-              aria-hidden="true"
-              className="absolute right-[18%] -bottom-3 h-6 w-6 rotate-45 bg-white"
-              style={{
-                borderRight: "1px solid var(--lv-border)",
-                borderBottom: "1px solid var(--lv-border)",
-              }}
-            />
-          </div>
+        <div className="relative order-1 min-h-[22rem] sm:min-h-[30rem] lg:order-2 lg:min-h-[40rem]">
           <Image
-            src={szene}
+            src={planet}
             alt=""
             priority
-            sizes="(min-width: 1024px) 58vw, 100vw"
-            className="h-auto w-full"
-            style={{
-              maskImage:
-                "linear-gradient(to right, transparent 0%, #000 14%), linear-gradient(to bottom, transparent 0%, #000 8%)",
-              maskComposite: "intersect",
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent 0%, #000 14%), linear-gradient(to bottom, transparent 0%, #000 8%)",
-              WebkitMaskComposite: "source-in",
-            }}
+            sizes="(min-width: 1024px) 40vw, 70vw"
+            className="absolute top-[6%] left-0 h-auto w-[68%] lg:top-[2%] lg:w-[64%]"
+            style={{ filter: "drop-shadow(0 0 28px rgba(255, 140, 30, 0.55))" }}
           />
+          <div className="absolute right-0 bottom-0 flex flex-col items-end">
+            <div
+              className="lv-card relative z-10 mb-3 w-56 p-3 text-base text-[var(--lv-text)] sm:w-72 sm:p-4 sm:text-lg lg:mr-6"
+              role="status"
+              aria-live="polite"
+              aria-label="Funki sagt"
+            >
+              {saetze.map((satz) => (
+                <p key={satz}>{satz}</p>
+              ))}
+              <span
+                aria-hidden="true"
+                className="absolute right-[30%] -bottom-3 h-6 w-6 rotate-45 bg-white"
+                style={{
+                  borderRight: "1px solid var(--lv-border)",
+                  borderBottom: "1px solid var(--lv-border)",
+                }}
+              />
+            </div>
+            <Image
+              src={funki}
+              alt=""
+              sizes="(min-width: 1024px) 240px, 140px"
+              className="h-auto w-32 sm:w-44 lg:w-60"
+            />
+          </div>
         </div>
       </div>
     </main>

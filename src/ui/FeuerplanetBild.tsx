@@ -1,7 +1,7 @@
 import Image from "next/image";
-import planet from "./bilder/feuerplanet-planet.webp";
+import planet from "./bilder/feuerplanet-karte.webp";
 
-// Feuerplanet für die Weltkarte, ausgeschnitten aus dem Bild von Alois (assets/LICENSES.md).
+// Feuerplanet für die Weltkarte: Bild von Alois, freigestellt (assets/LICENSES.md).
 // Dekorativ: Name und Status stehen als Text daneben.
 export function FeuerplanetBild({
   gesperrt = false,
@@ -16,11 +16,11 @@ export function FeuerplanetBild({
         src={planet}
         alt=""
         sizes="(min-width: 640px) 260px, 208px"
-        className="h-full w-full rounded-full"
+        className="h-full w-full"
         style={{
           filter: gesperrt
             ? "grayscale(0.9) opacity(0.6)"
-            : "drop-shadow(0 0 18px rgba(255, 150, 40, 0.65))",
+            : "drop-shadow(0 0 16px rgba(255, 140, 30, 0.55))",
         }}
       />
       {gesperrt ? (

@@ -256,22 +256,6 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Feuerplanet: Nachthimmel mit Galaxie oben rechts und Lava-Glühen von unten. */
-.lv-feuer {
-  background-color: #1a1450;
-  background-image:
-    radial-gradient(1.5px 1.5px at 12% 18%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 28% 42%, #fff 50%, transparent 51%),
-    radial-gradient(2px 2px at 44% 12%, var(--lv-yellow) 50%, transparent 51%),
-    radial-gradient(1px 1px at 63% 32%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 72% 8%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 90% 46%, #fff 50%, transparent 51%),
-    radial-gradient(28% 22% at 86% 14%, rgba(214, 92, 220, 0.5), transparent 70%),
-    radial-gradient(60% 40% at 10% 6%, rgba(39, 120, 245, 0.45), transparent 70%),
-    radial-gradient(80% 35% at 50% 100%, rgba(255, 106, 0, 0.45), transparent 70%),
-    linear-gradient(180deg, #1c1a6b 0%, #2a1a6e 55%, #3a1a55 100%);
-}
-
 /* Druck: Ist ein Loginzettel offen, wird nur er gedruckt. */
 @media print {
   body:has(.lv-zettel) * {

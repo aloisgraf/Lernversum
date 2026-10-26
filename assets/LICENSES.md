@@ -11,7 +11,9 @@ Jede Schrift, Grafik oder Mediendatei bekommt hier einen Eintrag, bevor sie verw
 | Lexend | Schrift im Spiel Wald-Wesen | Google Fonts, über `next/font/google` | SIL Open Font License 1.1 |
 | Wortmarke Lernversum | `src/ui/Wortmarke.tsx` | nach `Lernversum_Wortmarke.svg` aus dem Designpaket von Alois, im Code nachgebaut | Eigentum des Projekts |
 | Lernwelt-Inseln, Avatare, Sterne, Hintergrund | `src/ui/Planet.tsx`, `src/ui/Avatar.tsx`, `globals.css` | im Code gezeichnet (SVG, CSS), Stil nach dem UI-Konzept | Eigentum des Projekts |
-| Feuerplanet mit Funki (Bild) | `src/ui/bilder/feuerplanet-szene.webp`, Ausschnitt `feuerplanet-planet.webp` | Bild von Alois (2026-10-26), Nutzungsrechte von Alois bestätigt; für die App als WebP verkleinert und zugeschnitten | Nutzungsrecht laut Alois |
+| Feuerplanet (Bild) | `src/ui/bilder/feuerplanet.webp`, `feuerplanet-karte.webp` | zweites Bild von Alois (2026-10-26), schwarzer Hintergrund entfernt, verkleinert | Nutzungsrecht laut Alois |
+| Funki (Bild) | `src/ui/bilder/funki.webp` | aus dem ersten Bild von Alois (2026-10-26) ausgeschnitten | Nutzungsrecht laut Alois |
+| Hintergrund Feuerplanet | `src/ui/FeuerHimmel.tsx` | im Code gezeichnet (SVG) | Eigentum des Projekts |
 
 ## Noch nicht verwendet (Klärung offen)
 
