@@ -15,6 +15,11 @@ Jede Schrift, Grafik oder Mediendatei bekommt hier einen Eintrag, bevor sie verw
 | Hintergrund Feuerplanet | `src/ui/FeuerHimmel.tsx` | im Code gezeichnet (SVG) | Eigentum des Projekts |
 | Galaxie-Hintergrund Startseite | `src/ui/bilder/universum/weltall.webp` | Bild „Main_Hintergrund“ von Alois (2026-11-16), verkleinert | Nutzungsrecht laut Alois |
 | Planet Mathe | `src/ui/bilder/universum/planet-mathe.webp` | Bild „Planet_Mathe3“ von Alois (2026-11-16), schwarzer Hintergrund entfernt, verkleinert | Nutzungsrecht laut Alois |
+| Logo „Einfach Lernen im Lernversum“ | `src/ui/bilder/universum/logo.webp` | Bild von Alois (2026-11-16), dunkelblauer Hintergrund entfernt, verkleinert | Nutzungsrecht laut Alois |
+| Planet „Mein Planet“ | `src/ui/bilder/universum/planet-mein.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
+| Planet Schreiben | `src/ui/bilder/universum/planet-schreiben.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
+| Planet Geschichten | `src/ui/bilder/universum/planet-geschichten.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
+| Planet Lesen | `src/ui/bilder/universum/planet-lesen.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
 
 ## Noch nicht verwendet (Klärung offen)
 

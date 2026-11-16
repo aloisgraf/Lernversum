@@ -1,37 +1,53 @@
 import Image, { type StaticImageData } from "next/image";
+import geschichten from "./bilder/universum/planet-geschichten.webp";
+import lesen from "./bilder/universum/planet-lesen.webp";
 import mathe from "./bilder/universum/planet-mathe.webp";
+import mein from "./bilder/universum/planet-mein.webp";
+import schreiben from "./bilder/universum/planet-schreiben.webp";
 
-// Planeten der Kinder-Startseite, je einer Kategorie zugeordnet (über ihren Namen). Bilder von
-// Alois (assets/LICENSES.md). Reine Anzeige: Ob ein Planet offen ist, entscheidet der Server.
-export type Startplanet = { kategorie: string; name: string; bild: StaticImageData };
+// Planeten der Kinder-Startseite (Alois, 2026-11-16). Lernwelt-Planeten gehören über den Namen
+// zu einer Kategorie; „Mein Planet“ (kategorie: null) ist keine Lernwelt. Bilder von Alois
+// (assets/LICENSES.md). Reine Anzeige: Ob ein Planet offen ist, entscheidet der Server.
+export type Platz = "oben-links" | "oben-rechts" | "mitte" | "unten-links" | "unten-rechts";
+export type Startplanet = {
+  kategorie: string | null;
+  name: string;
+  bild: StaticImageData;
+  platz: Platz;
+};
 
+// Reihenfolge = Lesereihenfolge am Handy und für Vorleseprogramme.
 export const STARTPLANETEN: Startplanet[] = [
-  { kategorie: "Mathe", name: "Matheplanet", bild: mathe },
+  { kategorie: null, name: "Mein Planet", bild: mein, platz: "mitte" },
+  { kategorie: "Mathe", name: "Matheplanet", bild: mathe, platz: "oben-links" },
+  { kategorie: "Rechtschreibung", name: "Schreibplanet", bild: schreiben, platz: "oben-rechts" },
+  { kategorie: "Geschichten", name: "Geschichtenplanet", bild: geschichten, platz: "unten-links" },
+  { kategorie: "Lesen", name: "Leseplanet", bild: lesen, platz: "unten-rechts" },
 ];
 
 export function startplanetFuer(kategorieName: string): Startplanet | undefined {
   const name = kategorieName.trim().toLowerCase();
-  return STARTPLANETEN.find((p) => p.kategorie.toLowerCase() === name);
+  return STARTPLANETEN.find((p) => p.kategorie?.toLowerCase() === name);
 }
 
 // Dekorativ: Name und Status stehen als Text daneben.
 export function StartplanetBild({
   planet,
   gesperrt = false,
-  className = "w-[min(70vw,22rem)]",
+  className = "w-full",
 }: {
   planet: Startplanet;
   gesperrt?: boolean;
   className?: string;
 }) {
   return (
-    <span className={`relative inline-block ${className}`}>
+    <span className={`relative block ${className}`}>
       <Image
         src={planet.bild}
         alt=""
         priority
-        sizes="(min-width: 640px) 352px, 70vw"
-        className="h-auto w-full"
+        sizes="(min-width: 768px) 18rem, 45vw"
+        className="aspect-square h-auto w-full object-contain"
         style={{
           filter: gesperrt
             ? "grayscale(0.9) opacity(0.6)"

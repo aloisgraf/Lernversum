@@ -218,7 +218,9 @@ test("Kind muss beim ersten Login das Passwort ändern, vorher ist nichts erreic
   const ohne = await page.goto(SPIEL_URL);
   expect(ohne?.status()).toBe(404);
   await page.goto("/bereich");
-  await expect(page.getByText("Noch nicht entdeckt.")).toBeVisible();
+  // Vier Lernwelt-Planeten gesperrt; „Mein Planet“ ist keine Lernwelt und nie gesperrt.
+  await expect(page.getByText("Noch nicht entdeckt.")).toHaveCount(4);
+  await expect(page.getByText("Mein Planet", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: /Mathe/ })).toHaveCount(0);
   for (const pfad of ["/bereich/welt/kein-gueltiger-name", "/bereich/welt/0000000000000000"]) {
     const antwort = await page.goto(pfad);
@@ -252,7 +254,9 @@ test("Lernpaket: Kind sieht und spielt das Spiel, Admin sieht die Runde, nach En
   await expect(admin.getByText(/Spiele darin: Wald-Wesen füttern/)).toBeVisible();
 
   // Kind sieht das Spiel auf dem Feuerplaneten, aber keine Stufe; Funki begrüßt es.
-  await kindPage.goto(await weltAdresseImAdmin(admin, "Rechtschreibung"));
+  // Rechtschreibung gehört zum Schreibplaneten auf der Startseite.
+  await kindPage.goto("/bereich");
+  await kindPage.getByRole("link", { name: /Schreibplanet/ }).click();
   await expect(kindPage).toHaveURL(/\/bereich\/welt\/[0-9a-f]{16}$/);
   const welt = kindPage.url();
   await expect(kindPage.getByText(/mittel/i)).toHaveCount(0);
@@ -371,7 +375,7 @@ test("Startseite: Planet Mathe ist zu ohne Lernpaket und öffnet die Welt Mathe 
   await expect(kindPage).toHaveURL(/\/bereich$/);
 
   // Ohne Lernpaket: Mathe gesperrt, kein Link; Profil und Abmelden sind da.
-  await expect(kindPage.getByText("Noch nicht entdeckt.")).toBeVisible();
+  await expect(kindPage.getByText("Noch nicht entdeckt.")).toHaveCount(4);
   await expect(kindPage.getByRole("link", { name: /Mathe/ })).toHaveCount(0);
   await expect(kindPage.getByRole("link", { name: "Mein Lernonaut" })).toHaveAttribute(
     "href",

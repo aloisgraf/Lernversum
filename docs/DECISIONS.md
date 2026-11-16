@@ -255,6 +255,12 @@ laufendes Lernpaket Spiele dieser Kategorie enthält; die Planetenseite prüft d
 Andere Welten (z. B. Feuerplanet/Rechtschreibung) sind von der Startseite aus vorerst nicht
 verlinkt; ihre Seiten bleiben mit derselben Serverprüfung bestehen.
 
+Nachtrag 2026-11-16: Logo oben mittig und fünf gleich große Planeten (Bilder von Alois).
+Zuordnung über den Kategorienamen: Matheplanet → Mathe, Schreibplanet → Rechtschreibung (damit
+ist Wald-Wesen wieder von der Startseite erreichbar), Geschichtenplanet → Geschichten (Kategorie
+gibt es noch nicht, Planet bleibt gesperrt, bis ein Admin sie anlegt), Leseplanet → Lesen.
+„Mein Planet“ ist keine Lernwelt und hat vorerst kein Ziel.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit

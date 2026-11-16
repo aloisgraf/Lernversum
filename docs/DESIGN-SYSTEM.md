@@ -103,8 +103,12 @@ Pill-Buttons und Datentabellen.
   Spielaufruf und jeder gespeicherten Runde, ob ein laufendes Lernpaket das Spiel enthält
   (D-024). Inseln stehen für Kategorien; Stufen sieht das Kind nicht.
 - Kinder-Startseite (`/bereich`, D-027): Galaxie-Hintergrund `src/ui/bilder/universum/weltall.webp`,
-  oben links der Planet Mathe (`Startplanet`, `planet-mathe.webp`), oben rechts „Mein Lernonaut“
-  (Profil) und Abmelden. Gesperrt: grau mit Schloss und Text.
+  oben mittig das Logo „Einfach Lernen im Lernversum“ (`logo.webp`, Alt-Text mit dem Schriftzug),
+  fünf gleich große Planeten (`src/ui/Startplanet.tsx`, Breite `min(42vw, 17rem, 30vh)`): ab `md`
+  wie die Fünf auf einem Würfel (Mathe oben links, Schreiben oben rechts, „Mein Planet“ mittig
+  unter dem Logo, Geschichten unten links, Lesen unten rechts), am Handy Logo, „Mein Planet“ und
+  darunter zwei Spalten. Oben rechts „Mein Lernonaut“ (Profil) und Abmelden, über dem Raster
+  (`z-20`). Gesperrt: grau mit Schloss und Text.
 - Lernwelt von innen (`/bereich/welt/[id]`, D-026): Feuerplanet mit Planet
   (`src/ui/bilder/feuerplanet.webp`) und Funki (`funki.webp`, Sprechblase mit `role="status"`)
   vor dem Hintergrund `FeuerHimmel`; die Welt Mathe zeigt das Mathe-Bild.
