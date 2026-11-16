@@ -1,6 +1,5 @@
 "use client";
 
-import { Lexend } from "next/font/google";
 import Link from "next/link";
 import {
   useEffect,
@@ -26,14 +25,6 @@ import { bilder } from "../media/bilder";
 import { Hintergrund, WESEN, WesenFigur } from "./szene";
 import styles from "./spiel.module.css";
 import { useVorlesen } from "./vorlesen";
-
-// Die Schrift wird beim Build geladen und von der eigenen Domain ausgeliefert,
-// das Kind ruft zur Laufzeit nichts bei Google ab.
-const lexend = Lexend({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 const RING_STANDARD = "#f2c14e";
 const RING_HOEHLE = "#c9b78a";
@@ -126,7 +117,7 @@ function Rahmen({
   rechts?: ReactNode;
 }) {
   return (
-    <main className={`${lexend.className} ${styles.wald} relative min-h-dvh overflow-hidden`}>
+    <main className={`lv-kind ${styles.wald} relative min-h-dvh overflow-hidden`}>
       <Hintergrund />
       <div className="relative mx-auto flex min-h-dvh max-w-[1180px] flex-col px-4 pt-4 pb-4 sm:px-8 sm:pt-6">
         <div className="flex items-center justify-between gap-3">

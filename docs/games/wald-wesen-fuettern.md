@@ -7,7 +7,7 @@ Prototyp empfohlen).
 ## Lernziel und Mechanik
 
 Oberfläche nach Alois' Entwurf „Wald-Wesen füttern“ (Design-Canvas, Zauberwald-Szene mit
-gezeichneten Wesen, Schrift Lexend). Das Kind ordnet Bilder (Stufe 3: geschriebene Wörter) den
+gezeichneten Wesen, Schrift Patrick Hand). Das Kind ordnet Bilder (Stufe 3: geschriebene Wörter) den
 Wald-Wesen mit der passenden Endung zu:
 Igel = -el (blau), Eule = -en (grün), Fuchs = -er (rot). Die Schlafhöhle nimmt Wörter ohne diese
 Endungen auf. Zuordnen durch Ziehen oder durch Antippen des Wald-Wesens (barrierearme Alternative,
@@ -51,7 +51,7 @@ Noch nicht vorhanden (kommt mit der Plattform): Adminmaske (`admin/`), Statistik
 
 - Keine Anmeldung, keine Benutzerdaten, keine Ergebnisse gespeichert (weder Server noch Browser-
   Speicher, durch E2E-Test geprüft), keine Netzwerkaufrufe des Spiels.
-- Schrift Lexend über `next/font/google`: wird beim Build geladen und von der eigenen Domain
+- Schrift: Patrick Hand der Plattform (`.lv-kind`, bis 2026-10-26 Lexend), über `next/font/google`: wird beim Build geladen und von der eigenen Domain
   ausgeliefert; der Browser ruft zur Laufzeit nichts bei Google ab. Der Build braucht dafür
   Zugriff auf Google Fonts.
 - Vorlesen (Übergang bis zu den Aufnahmen): Browser-Sprachausgabe, ausschließlich mit Stimmen, die

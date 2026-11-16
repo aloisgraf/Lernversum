@@ -33,6 +33,31 @@ export async function gibStufeFrei(page: Page, paketName: string, ablauf = "") {
   await expect(page.getByText(`Lernpaket „${paketName}“ freigegeben.`)).toBeVisible();
 }
 
+// Adresse der Lernwelt einer Kategorie, abgelesen im Admin. Die Startseite verlinkt seit D-027
+// nur noch den Planeten Mathe; die Welt Rechtschreibung erreicht der Test über die Adresse.
+// Mit einer bereits angemeldeten Admin-Seite (je Konto gilt nur eine Sitzung).
+export async function weltAdresseImAdmin(admin: Page, kategorie: string): Promise<string> {
+  const zurueck = admin.url();
+  await admin.goto("/admin/spiele");
+  const id = await admin
+    .locator("section", { has: admin.getByRole("heading", { name: kategorie, exact: true }) })
+    .locator('input[name="categoryId"]')
+    .first()
+    .inputValue();
+  if (zurueck.startsWith("http")) await admin.goto(zurueck);
+  return `/bereich/welt/${id}`;
+}
+
+export async function weltAdresse(browser: Browser, kategorie: string): Promise<string> {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await login(page, ADMIN);
+  await expect(page).toHaveURL(/\/admin$/);
+  const adresse = await weltAdresseImAdmin(page, kategorie);
+  await context.close();
+  return adresse;
+}
+
 // Sorgt dafür, dass `testuser` das Spiel spielen darf (Server-Speicher ist für alle Tests gleich).
 export async function testuserDarfSpielen(browser: Browser) {
   const context = await browser.newContext();

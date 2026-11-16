@@ -14,6 +14,7 @@ import planet from "@/ui/bilder/feuerplanet.webp";
 import funki from "@/ui/bilder/funki.webp";
 import { FeuerHimmel } from "@/ui/FeuerHimmel";
 import { Planet, motivFuer } from "@/ui/Planet";
+import { StartplanetBild, startplanetFuer } from "@/ui/Startplanet";
 
 // Geschützte Seite: nie statisch vorrendern, Prüfung bei jeder Anfrage.
 export const dynamic = "force-dynamic";
@@ -62,6 +63,7 @@ export default async function WeltPage({
   const weltSpiele = spiele.filter((s) => slugs.has(s.slug));
   const thema = weltThema(index);
   const feuer = thema.art === "feuer";
+  const startplanet = startplanetFuer(kategorie.name);
   const saetze = funkiSagt({ name, runden: runden.length, geradeGeschafft: geschafft === "1" });
 
   const spielListe = (
@@ -103,12 +105,16 @@ export default async function WeltPage({
         {kopf}
         <section className="flex flex-col items-center gap-5 text-center">
           <h1 className="font-display text-5xl">{kategorie.name}</h1>
-          <Planet
-            id={id}
-            motiv={motivFuer(kategorie.name, index)}
-            gesperrt={false}
-            className="h-52 w-60"
-          />
+          {startplanet ? (
+            <StartplanetBild planet={startplanet} className="w-[min(80vw,26rem)]" />
+          ) : (
+            <Planet
+              id={id}
+              motiv={motivFuer(kategorie.name, index)}
+              gesperrt={false}
+              className="h-52 w-60"
+            />
+          )}
           <h2 className="font-display text-3xl">Deine Spiele</h2>
           {spielListe}
         </section>

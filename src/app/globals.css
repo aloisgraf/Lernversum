@@ -245,11 +245,12 @@ body {
   }
 }
 
-/* Kinderbereich, Start und Anmeldung (Weltraum-Hintergrund): Überschriften und Knöpfe in
-   Patrick Hand. Außerhalb der Layer, damit es die Utility `font-display` übersteuert. Nur ein
-   Schnitt, daher kein künstliches Fett. */
-.lv-space .font-display,
-.lv-space .lv-btn {
+/* Kinderbereich, Start, Anmeldung und Spiele (`.lv-kind`): alle Texte in Patrick Hand, auch
+   Fließtext, Formulare und Sprechblasen (Alois, 2026-10-26). Außerhalb der Layer, damit es die
+   Utilities `font-display`/`font-sans` übersteuert. Nur ein Schnitt, daher kein künstliches Fett. */
+.lv-space,
+.lv-kind,
+:is(.lv-space, .lv-kind) :is(.font-display, .font-sans, .lv-btn, input, button, select, textarea) {
   font-family: var(--font-patrick-hand), var(--font-nunito), Arial, sans-serif;
   font-weight: 400;
   font-synthesis: none;

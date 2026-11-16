@@ -34,7 +34,14 @@
   932c8ce bzw. 64c8454. Offen: Herkunft und Lizenz der
   Original-Logo-Schrift; Schritt 4 (Avatare im Spiel, Belohnungen) nach Phase 2b/3.
 
-- Admin-Aufbau nach Alois (D-024) umgesetzt, noch nicht committed: Kinder mit freiem
+- Neue Kinder-Startseite (D-027), noch nicht committed: Galaxie-Hintergrund, Planet Mathe
+  (eigene Welt, gesperrt ohne Mathe-Lernpaket), „Mein Lernonaut“ und Abmelden; Patrick Hand für
+  alle Texte im Kinderbereich und im Spiel. Der Gemini-Bildersatz für den Feuerplaneten
+  (2026-10-26) war nicht committed und ist mit dem alten Arbeitsstand verloren; die Bilder
+  liegen noch unter `/mnt/project-files/uploads/hearth/`.
+- Next.js 16.4.2 hat eine mittlere Sicherheitswarnung (GHSA-mfr8-8qww-v76h, behoben ab 16.4.5);
+  Update separat mit Freigabe.
+- Admin-Aufbau nach Alois (D-024) umgesetzt (031c32f, 60ddcfb): Kinder mit freiem
   Benutzernamen und Erstpasswort, Pflicht-Passwortwechsel, Kategorien mit Stufen, Lernpakete
   mit Ablaufdatum, Spielrunden mit Sternen, öffentliche Spieleseite entfernt. Lokal geprüft:
   siehe Abschluss-Nachricht im Thread (Lint, Typen, Format, Unit-, Build- und End-to-End-Tests).

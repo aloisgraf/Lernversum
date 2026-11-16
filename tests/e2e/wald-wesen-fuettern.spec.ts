@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { USER, login, testuserDarfSpielen } from "./hilfen";
+import { USER, login, testuserDarfSpielen, weltAdresse } from "./hilfen";
 
 // Stufe 3 zeigt Wörter statt Bilder, daher kann der Test die richtige Endung ablesen.
 async function richtigesZiel(page: Page): Promise<string> {
@@ -8,14 +8,17 @@ async function richtigesZiel(page: Page): Promise<string> {
   return ["el", "en", "er"].includes(ende) ? ende : "hoehle";
 }
 
+let rechtschreibung = "";
+
 test.beforeAll(async ({ browser }) => {
   await testuserDarfSpielen(browser);
+  rechtschreibung = await weltAdresse(browser, "Rechtschreibung");
 });
 
 async function starteStufe3(page: Page) {
   await login(page, USER);
   await expect(page).toHaveURL(/\/bereich$/);
-  await page.getByRole("link", { name: /Feuerplanet/ }).click();
+  await page.goto(rechtschreibung);
   await page.getByRole("link", { name: /Wald-Wesen füttern/ }).click();
   await expect(page.getByRole("heading", { name: "Wald-Wesen füttern" })).toBeVisible();
   await page.getByRole("button", { name: /Stufe 3/ }).click();
@@ -70,7 +73,7 @@ test("Spielseite speichert nichts im Browser außer der Sitzung", async ({ page 
 test("Zurück führt vom Spiel in die Lernwelt und von dort auf die Weltkarte", async ({ page }) => {
   await login(page, USER);
   await expect(page).toHaveURL(/\/bereich$/);
-  await page.getByRole("link", { name: /Feuerplanet/ }).click();
+  await page.goto(rechtschreibung);
   await expect(page).toHaveURL(/\/bereich\/welt\/[0-9a-f]{16}$/);
   const welt = page.url();
   await page.getByRole("link", { name: /Wald-Wesen füttern/ }).click();

@@ -244,6 +244,17 @@ Ringplanet, Lava-Landschaft) ist eine eigene SVG-Zeichnung (`src/ui/FeuerHimmel.
 Zufall; keine Vergleiche mit anderen Kindern. Die Seite prüft serverseitig, dass ein laufendes
 Lernpaket Spiele dieser Welt enthält, sonst geht es zurück zur Weltkarte.
 
+## D-027 Neue Kinder-Startseite: Galaxie und Planet Mathe — vorläufig (2026-11-16)
+
+Alois baut die Startseite nach dem Login neu auf. Sie zeigt vorerst nur den Galaxie-Hintergrund,
+oben links den Planeten Mathe (beide Bilder von Alois) und die Knöpfe „Mein Lernonaut“ (zur
+Profilseite; Details folgen) und „Abmelden“. Begrüßungskarte, Weltkacheln und „Mein
+Fortschritt“ sind entfallen. Der Planet gehört zur Kategorie Mathe (Zuordnung über den Namen,
+`src/ui/Startplanet.tsx`; Alois hat „eigene Welt Mathe“ gewählt). Er ist offen, wenn ein
+laufendes Lernpaket Spiele dieser Kategorie enthält; die Planetenseite prüft das erneut.
+Andere Welten (z. B. Feuerplanet/Rechtschreibung) sind von der Startseite aus vorerst nicht
+verlinkt; ihre Seiten bleiben mit derselben Serverprüfung bestehen.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit

@@ -11,7 +11,7 @@ Schritt 3 (Illustrationen) und 4 (gemeinsame Komponenten für Spiele) offen.
 | Admin | ruhig, dicht, tabellenlastig | helle Fläche, Navy-Seitenleiste, weiße Karten |
 | Lehrkraft | klar und freundlich, Übersichten, Diagramme, Formulare | wie Admin (noch nicht gebaut) |
 | Schüler | groß, bildhaft, wenig Text, kindgerecht | Weltraum-Hintergrund, Themen als Planeten |
-| Spiele | eigenes Erscheinungsbild je Spiel, auf gemeinsamer Basis | eigene Tokens je Spiel (z. B. Lexend) |
+| Spiele | eigenes Erscheinungsbild je Spiel, auf gemeinsamer Basis | eigene Tokens je Spiel (Farben, Formen; Schrift: Patrick Hand) |
 
 Start- und Login-Seite nutzen den Weltraum-Hintergrund mit einer hellen Karte für Formulare.
 
@@ -52,7 +52,9 @@ Weitere Tokens: `--lv-radius-card` 18 px, `--lv-radius-control` 12 px, `--lv-sha
   (`font-synthesis: none`), Größe statt Gewicht trägt die Hierarchie.
 - Alle über `next/font/google`: werden beim Build geladen und von der eigenen Domain
   ausgeliefert, kein Abruf bei Google zur Laufzeit (Datenschutz).
-- Spiele behalten ihre eigene Schrift (Wald-Wesen: Lexend).
+- Seit 2026-10-26 (Alois) gilt Patrick Hand im ganzen Kinderbereich für alle Texte, auch
+  Fließtext, Formulare, Sprechblasen und in den Spielen (Klasse `.lv-kind` am Spiel-`<main>`).
+  Wald-Wesen nutzt dafür nicht mehr Lexend.
 - Die Original-Logo-Schrift aus dem UI-Konzept ist nicht im Paket; sie wird erst verwendet,
   wenn Herkunft und Lizenz geklärt sind.
 
@@ -100,8 +102,10 @@ Pill-Buttons und Datentabellen.
 - Gesperrte Planeten sind nur Anzeige und keine Sicherheitsgrenze. Der Server prüft bei jedem
   Spielaufruf und jeder gespeicherten Runde, ob ein laufendes Lernpaket das Spiel enthält
   (D-024). Inseln stehen für Kategorien; Stufen sieht das Kind nicht.
-- Lernwelt von innen (`/bereich/welt/[id]`, D-026): freigestellter Planet
-  (`src/ui/bilder/feuerplanet.webp`) und Funki (`funki.webp`, rechter Rand, Sprechblase mit
-  `role="status"`) vor dem eigenen Hintergrund `FeuerHimmel`. Weltkarte:
-  `feuerplanet-karte.webp` (`FeuerplanetBild`).
+- Kinder-Startseite (`/bereich`, D-027): Galaxie-Hintergrund `src/ui/bilder/universum/weltall.webp`,
+  oben links der Planet Mathe (`Startplanet`, `planet-mathe.webp`), oben rechts „Mein Lernonaut“
+  (Profil) und Abmelden. Gesperrt: grau mit Schloss und Text.
+- Lernwelt von innen (`/bereich/welt/[id]`, D-026): Feuerplanet mit Planet
+  (`src/ui/bilder/feuerplanet.webp`) und Funki (`funki.webp`, Sprechblase mit `role="status"`)
+  vor dem Hintergrund `FeuerHimmel`; die Welt Mathe zeigt das Mathe-Bild.
 - Ergebnisse als Sterne (0 bis 3, mit Text für Screenreader), nie als Rangliste.
