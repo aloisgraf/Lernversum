@@ -276,6 +276,83 @@ body {
   }
 }
 
+/* Startseite und Planetenhimmel (Alois, 2026-11-17): Planeten mit offenen Aufgaben leuchten,
+   Aufgaben-Sterne pulsieren, Deko-Sterne funkeln, Sternschnuppen ziehen vorbei. Ohne Bewegung
+   (prefers-reduced-motion) bleibt das Leuchten als ruhiger Schein. */
+.lv-leuchten {
+  filter: drop-shadow(0 0 28px rgba(255, 214, 90, 0.95))
+    drop-shadow(0 0 60px rgba(255, 170, 40, 0.75));
+  animation: lv-leuchten 2.4s ease-in-out infinite;
+}
+@keyframes lv-leuchten {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 22px rgba(255, 214, 90, 0.85))
+      drop-shadow(0 0 48px rgba(255, 170, 40, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(255, 224, 110, 1))
+      drop-shadow(0 0 90px rgba(255, 170, 40, 0.95)) brightness(1.12);
+  }
+}
+.lv-aufgabenstern svg {
+  filter: drop-shadow(0 0 16px rgba(255, 216, 77, 0.9));
+  animation: lv-pulsieren 2s ease-in-out infinite;
+  transition: transform 150ms ease-out;
+}
+.lv-aufgabenstern:hover svg,
+.lv-aufgabenstern[aria-expanded="true"] svg {
+  transform: scale(1.12);
+}
+@keyframes lv-pulsieren {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+.lv-funkeln {
+  animation: lv-funkeln 3s ease-in-out infinite;
+}
+@keyframes lv-funkeln {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.lv-schnuppe {
+  position: absolute;
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), transparent);
+  border-radius: 2px;
+  transform: rotate(-25deg);
+  opacity: 0;
+  animation: lv-schnuppe 7s linear infinite;
+}
+@keyframes lv-schnuppe {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0;
+    translate: -260px 120px;
+  }
+  100% {
+    opacity: 0;
+    translate: -260px 120px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

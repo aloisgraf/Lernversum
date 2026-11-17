@@ -63,7 +63,16 @@ export type Child = {
 export type Category = { id: string; name: string };
 
 // Ein Spiel steht in einer Stufe einer Kategorie; dasselbe Spiel darf mehrfach vorkommen.
-export type Placement = { id: string; categoryId: string; stufe: Stufe; gameSlug: string };
+// stern: Aufgaben-Stern am Himmel des Planeten, unter dem das Kind das Spiel findet (Alois,
+// 2026-11-17). Reine Anordnung, keine Berechtigung hängt daran.
+export const STERNE_MAX = 8;
+export type Placement = {
+  id: string;
+  categoryId: string;
+  stufe: Stufe;
+  gameSlug: string;
+  stern: number;
+};
 
 export type PackageItem =
   | { art: "stufe"; categoryId: string; stufe: Stufe }
@@ -317,17 +326,26 @@ export class DemoAdminStore {
     return category;
   }
 
-  placeGame(categoryId: string, stufe: string, gameSlug: string): Placement {
+  placeGame(categoryId: string, stufe: string, gameSlug: string, stern = 1): Placement {
     this.guardSize(this.placements);
     this.requireCategory(categoryId);
     if (!STUFEN.includes(stufe as Stufe)) throw new DemoAdminError("Unbekannte Stufe.");
     if (!this.knownGames.includes(gameSlug)) throw new DemoAdminError("Unbekanntes Spiel.");
+    if (!Number.isInteger(stern) || stern < 1 || stern > STERNE_MAX) {
+      throw new DemoAdminError(`Stern muss zwischen 1 und ${STERNE_MAX} liegen.`);
+    }
     for (const p of this.placements.values()) {
       if (p.categoryId === categoryId && p.stufe === stufe && p.gameSlug === gameSlug) {
         throw new DemoAdminError("Das Spiel steht schon in dieser Stufe.");
       }
     }
-    const placement: Placement = { id: newId(), categoryId, stufe: stufe as Stufe, gameSlug };
+    const placement: Placement = {
+      id: newId(),
+      categoryId,
+      stufe: stufe as Stufe,
+      gameSlug,
+      stern,
+    };
     this.placements.set(placement.id, placement);
     return placement;
   }
@@ -340,6 +358,15 @@ export class DemoAdminStore {
     return [...this.placements.values()].filter(
       (p) => p.categoryId === categoryId && (stufe === undefined || p.stufe === stufe),
     );
+  }
+
+  // Unter welchem Stern ein Spiel auf dem Planeten steht: der kleinste Stern seiner Zuordnungen
+  // in dieser Kategorie (ein Spiel erscheint dort nur einmal), sonst Stern 1.
+  sternVon(categoryId: string, gameSlug: string): number {
+    const sterne = this.placementsOf(categoryId)
+      .filter((p) => p.gameSlug === gameSlug)
+      .map((p) => p.stern);
+    return sterne.length ? Math.min(...sterne) : 1;
   }
 
   createPackage(

@@ -109,7 +109,19 @@ Pill-Buttons und Datentabellen.
   unter dem Logo, Geschichten unten links, Lesen unten rechts), am Handy Logo, „Mein Planet“ und
   darunter zwei Spalten. Oben rechts „Mein Lernonaut“ (Profil) und Abmelden, über dem Raster
   (`z-20`). Gesperrt: grau mit Schloss und Text.
-- Lernwelt von innen (`/bereich/welt/[id]`, D-026): Feuerplanet mit Planet
-  (`src/ui/bilder/feuerplanet.webp`) und Funki (`funki.webp`, Sprechblase mit `role="status"`)
-  vor dem Hintergrund `FeuerHimmel`; die Welt Mathe zeigt das Mathe-Bild.
+- Startseite: Planeten mit offenen Aufgaben leuchten golden und pulsieren (`.lv-leuchten`),
+  dazu der Text „✨ Aufgaben warten“ (nicht nur Farbe).
+- Planetennamen stehen als Text im Bogen unter dem Planeten, ohne Rahmen, mit dunkler Kontur
+  für die Lesbarkeit (`PlanetSchild`, SVG-Text mit `role="img"` und Namen). „Mein Planet“ ist
+  etwas größer als die übrigen, das Logo etwas kleiner (Alois, 2026-11-17). Die Kopfzeile hat eine eigene Zeile über dem Raster,
+  damit die Knöpfe keinen Planeten verdecken.
+- Lernwelt von innen (`/bereich/welt/[id]`, D-028): Galaxie-Hintergrund (Platzhalter), Name
+  oben, unten die Landschaft der Welt über die ganze Breite (Matheplanet: `welt-mathe.webp`),
+  ohne eigene Landschaft der Planet der Startseite, dazwischen der Himmel (`src/ui/Sternenhimmel.tsx`)
+  mit Aufgaben-Sternen (Platzhalter-SVG, pulsierend, Knopf mit Name und Spielzahl),
+  funkelnden Deko-Sternen und Sternschnuppen. Ein Stern öffnet unten einen Toast mit seinen
+  Spielen; Escape oder „Schließen“ schließt ihn, der Fokus springt in den Toast und zurück zum
+  Stern. In der ersten Welt steht Funki (Sprechblase mit `role="status"`) unten rechts.
+  `FeuerHimmel` und `feuerplanet.webp` werden derzeit nicht verwendet.
+- Bewegung: bei `prefers-reduced-motion` ohne Animation, das Leuchten bleibt als ruhiger Schein.
 - Ergebnisse als Sterne (0 bis 3, mit Text für Screenreader), nie als Rangliste.

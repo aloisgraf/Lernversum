@@ -95,7 +95,11 @@ Sterne: 3 ohne Fehler, 2 bei höchstens einem Drittel Fehlversuche, sonst 1. Das
 
 ## Neues Spiel hinzufügen (Verfahren)
 
-1. Beschreibung von Alois analysieren: Lernziel, Mechanik, Inhalte, Einstellungen, Medien, Statistik.
+Spiele werden nicht im Admin hochgeladen (D-028). Alois liefert ein Spiel als einzelne
+HTML-Datei mit eingebettetem JavaScript (Prototyp) oder als Beschreibung; daraus wird ein
+Modul. Jedes Modul trägt im Manifest eine feste, eindeutige `nummer`.
+
+1. Beschreibung oder Prototyp von Alois analysieren: Lernziel, Mechanik, Inhalte, Einstellungen, Medien, Statistik.
 2. Kurzkonzept + Design-Entwurf zur Freigabe.
 3. Modul anlegen (Manifest, Schema, Migration mit RLS), Logik, Spieloberfläche, Adminmaske,
    Statistik.

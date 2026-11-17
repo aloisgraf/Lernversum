@@ -164,6 +164,19 @@ describe("Kategorien und Stufen", () => {
     expect(() => store.placeGame(cat.id, "mittel", "unbekannt")).toThrow(/Spiel/);
     expect(() => store.createCategory("rechtschreibung")).toThrow(/gibt es schon/);
   });
+
+  it("Stern am Himmel: 1 bis 8, Standard 1, kleinster Stern der Kategorie gilt", () => {
+    const { store, cat } = mitKindUndKategorie();
+    expect(store.sternVon(cat.id, GAME)).toBe(1);
+    store.placeGame(cat.id, "schwer", GAME, 5);
+    expect(store.sternVon(cat.id, GAME)).toBe(1);
+    store.placeGame(cat.id, "einfach", GAME2, 3);
+    store.placeGame(cat.id, "schwer", GAME2, 7);
+    expect(store.sternVon(cat.id, GAME2)).toBe(3);
+    for (const falsch of [0, 9, 2.5, Number.NaN]) {
+      expect(() => store.placeGame(cat.id, "mittel", GAME2, falsch)).toThrow(/Stern/);
+    }
+  });
 });
 
 describe("Lernpakete", () => {

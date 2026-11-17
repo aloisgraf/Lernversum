@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { spiele } from "@/games/registry";
 import { adminStore } from "@/lib/demo-admin/server";
-import { STUFEN } from "@/lib/demo-admin/store";
+import { STERNE_MAX, STUFEN } from "@/lib/demo-admin/store";
 import { requireRole } from "@/lib/demo-auth/server";
 import { ActionForm } from "../ActionForm";
 import { createCategoryAction, placeGameAction, removePlacementAction } from "../actions";
@@ -59,7 +59,9 @@ export default async function GamesPage() {
                           key={p.id}
                           className="flex flex-wrap items-center justify-between gap-2"
                         >
-                          <span>{titel.get(p.gameSlug) ?? p.gameSlug}</span>
+                          <span>
+                            {titel.get(p.gameSlug) ?? p.gameSlug} · Stern {p.stern}
+                          </span>
                           <ActionForm
                             action={removePlacementAction}
                             submitLabel="entfernen"
@@ -95,6 +97,15 @@ export default async function GamesPage() {
                 ))}
               </select>
             </Field>
+            <Field label="Stern am Himmel">
+              <select name="stern" defaultValue="1" className={inputClass}>
+                {Array.from({ length: STERNE_MAX }, (_, i) => i + 1).map((n) => (
+                  <option key={n} value={n}>
+                    Stern {n}
+                  </option>
+                ))}
+              </select>
+            </Field>
           </ActionForm>
         </section>
       ))}
@@ -103,12 +114,13 @@ export default async function GamesPage() {
         <Abschnitt>Vorhandene Spiele</Abschnitt>
         <Tabelle
           label="Vorhandene Spiele"
-          spalten={["Spiel", "Beschreibung", "Version", "Zugeordnet"]}
+          spalten={["Nr.", "Spiel", "Beschreibung", "Version", "Zugeordnet"]}
         >
           {spiele.map((spiel) => {
             const orte = [...store.placements.values()].filter((p) => p.gameSlug === spiel.slug);
             return (
               <tr key={spiel.slug}>
+                <td>{spiel.nummer}</td>
                 <td className="font-bold">
                   <span aria-hidden="true">{spiel.vorschau}</span> {spiel.titel}
                 </td>
@@ -119,7 +131,7 @@ export default async function GamesPage() {
                     ? orte
                         .map(
                           (p) =>
-                            `${store.categories.get(p.categoryId)?.name ?? "?"} · ${stufenName[p.stufe]}`,
+                            `${store.categories.get(p.categoryId)?.name ?? "?"} · ${stufenName[p.stufe]} · Stern ${p.stern}`,
                         )
                         .join(", ")
                     : "noch nicht"}

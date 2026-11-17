@@ -261,6 +261,24 @@ ist Wald-Wesen wieder von der Startseite erreichbar), Geschichtenplanet → Gesc
 gibt es noch nicht, Planet bleibt gesperrt, bis ein Admin sie anlegt), Leseplanet → Lesen.
 „Mein Planet“ ist keine Lernwelt und hat vorerst kein Ziel.
 
+## D-028 Planetenseite mit Aufgaben-Sternen; Spielnummer — vorläufig (2026-11-17)
+
+Ablauf nach Alois: Der Admin ordnet ein Spiel einer Welt (Kategorie), einer Stufe und einem
+Stern (1 bis 8, Alois wählte „Sternnummer“) zu und gibt es dem Kind über ein Lernpaket frei. Auf
+der Startseite leuchtet jeder Planet mit offenen Aufgaben. Auf der Planetenseite stehen die
+Aufgaben-Sterne am Himmel; ein Stern öffnet einen Toast mit den freigegebenen Spielen unter
+diesem Stern. Steht ein Spiel in einer Welt unter mehreren Sternen, gilt der kleinste. Der Stern
+ist reine Anordnung: Was das Kind sieht und spielen darf, entscheidet weiter allein das laufende
+Lernpaket (serverseitig, `playable`/`canPlay`). Sterne, Sternschnuppen und Hintergrund sind
+Platzhalter, bis die Bilder von Alois kommen.
+
+Spiele haben eine feste Nummer im Manifest (`nummer`), die der Admin in der Spieleliste sieht.
+Spiele werden nicht als Dateien hochgeladen, sondern als geprüfte Module eingebaut
+(`docs/GAME-MODULES.md`): Hochgeladener HTML- oder JavaScript-Code liefe in den Browsern der
+Kinder und bräuchte mindestens eine Sandbox auf eigener Adresse, eine strenge CSP und eine
+schmale Schnittstelle. Das ist vorerst nicht vorgesehen. Alois liefert Spiele als einzelne
+HTML-Datei (Prototyp) oder Beschreibung; daraus entsteht ein Modul.
+
 ## Ersetzt
 
 - Früheres Konzept „Elternlizenz / Therapeutenlizenz mit Kauf“ und „Themenstruktur mit

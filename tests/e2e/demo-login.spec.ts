@@ -263,6 +263,10 @@ test("Lernpaket: Kind sieht und spielt das Spiel, Admin sieht die Runde, nach En
   const funki = kindPage.getByRole("status", { name: "Funki sagt" });
   await expect(funki).toContainText(`Hallo ${kind.username}!`);
   await expect(funki).toContainText("Wähle das erste Spiel.");
+  // Das Spiel liegt hinter einem Aufgaben-Stern; der Stern öffnet unten den Toast.
+  await expect(kindPage.getByRole("region", { name: /Spiele von Stern/ })).toHaveCount(0);
+  await kindPage.getByRole("button", { name: /Stern 1/ }).click();
+  await expect(kindPage.getByRole("region", { name: "Spiele von Stern 1" })).toBeVisible();
   await kindPage.getByRole("link", { name: /Wald-Wesen füttern/ }).click();
   await kindPage.getByRole("button", { name: /Stufe 3/ }).click();
   for (let i = 0; i < 9; i++) {
@@ -286,6 +290,7 @@ test("Lernpaket: Kind sieht und spielt das Spiel, Admin sieht die Runde, nach En
   await expect
     .poll(async () => {
       await kindPage.goto(welt);
+      await kindPage.getByRole("button", { name: /Stern 1/ }).click();
       return kindPage.getByLabel("3 von 3 Sternen").count();
     })
     .toBe(1);
@@ -393,7 +398,9 @@ test("Startseite: Planet Mathe ist zu ohne Lernpaket und öffnet die Welt Mathe 
   });
   if ((await bereich.locator("li", { hasText: "Wald-Wesen füttern" }).count()) === 0) {
     await bereich.getByLabel("Stufe").selectOption("einfach");
+    await bereich.getByLabel("Stern am Himmel").selectOption("3");
     await bereich.getByRole("button", { name: "Spiel zuordnen" }).click();
+    await expect(bereich.locator("li", { hasText: "Stern 3" })).toBeVisible();
     await expect(bereich.locator("li", { hasText: "Wald-Wesen füttern" })).toBeVisible();
   }
   await oeffneKind(admin, kind.username);
@@ -409,7 +416,13 @@ test("Startseite: Planet Mathe ist zu ohne Lernpaket und öffnet die Welt Mathe 
   await kindPage.goto("/bereich");
   await kindPage.getByRole("link", { name: /Mathe/ }).click();
   await expect(kindPage).toHaveURL(new RegExp(`${mathe}$`));
+  // Das Spiel steht unter dem Stern, den der Admin gewählt hat.
+  await expect(kindPage.getByRole("button", { name: /Stern 1/ })).toHaveCount(0);
+  await kindPage.getByRole("button", { name: /Stern 3/ }).click();
   await expect(kindPage.getByRole("link", { name: /Wald-Wesen füttern/ })).toBeVisible();
+  // Escape schließt den Toast wieder.
+  await kindPage.keyboard.press("Escape");
+  await expect(kindPage.getByRole("link", { name: /Wald-Wesen füttern/ })).toHaveCount(0);
 
   // Aufräumen: Zuordnung wieder entfernen, damit andere Tests unverändert bleiben.
   await admin.goto("/admin/spiele");

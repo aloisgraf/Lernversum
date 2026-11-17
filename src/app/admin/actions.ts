@@ -4,7 +4,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { beendeSitzung, requireRole } from "@/lib/demo-auth/server";
 import { adminStore } from "@/lib/demo-admin/server";
-import { DemoAdminError, STUFEN, type PackageItem, type Stufe } from "@/lib/demo-admin/store";
+import {
+  DemoAdminError,
+  STERNE_MAX,
+  STUFEN,
+  type PackageItem,
+  type Stufe,
+} from "@/lib/demo-admin/store";
 import { anmeldeAdresse } from "@/lib/anmelde-adresse";
 import { qrZeilen } from "@/lib/qr";
 
@@ -143,12 +149,20 @@ export async function createCategoryAction(_: ActionState, form: FormData): Prom
 
 export async function placeGameAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(() => {
-    const input = z.object({ categoryId: id, stufe: z.enum(STUFEN), gameSlug: text(80) }).parse({
-      categoryId: field(form, "categoryId"),
-      stufe: field(form, "stufe"),
-      gameSlug: field(form, "gameSlug"),
-    });
-    adminStore().placeGame(input.categoryId, input.stufe, input.gameSlug);
+    const input = z
+      .object({
+        categoryId: id,
+        stufe: z.enum(STUFEN),
+        gameSlug: text(80),
+        stern: z.coerce.number().int().min(1).max(STERNE_MAX),
+      })
+      .parse({
+        categoryId: field(form, "categoryId"),
+        stufe: field(form, "stufe"),
+        gameSlug: field(form, "gameSlug"),
+        stern: field(form, "stern"),
+      });
+    adminStore().placeGame(input.categoryId, input.stufe, input.gameSlug, input.stern);
     return { ok: "Spiel zugeordnet." };
   });
 }

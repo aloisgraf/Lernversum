@@ -34,10 +34,12 @@
   932c8ce bzw. 64c8454. Offen: Herkunft und Lizenz der
   Original-Logo-Schrift; Schritt 4 (Avatare im Spiel, Belohnungen) nach Phase 2b/3.
 
+- Planetenseite mit Aufgaben-Sternen und Toast, Sternnummer im Admin, Spielnummer, Leuchten
+  aktiver Planeten, Landschaft Matheplanet (D-028). Sterne und Hintergrund sind Platzhalter.
 - Neue Kinder-Startseite (D-027), committed (27413ea): Galaxie-Hintergrund, Planet Mathe
   (eigene Welt, gesperrt ohne Mathe-Lernpaket), „Mein Lernonaut“ und Abmelden; Patrick Hand für
-  alle Texte im Kinderbereich und im Spiel. Noch nicht committed: Logo oben mittig und alle
-  fünf Planeten (Zuordnung in D-027); offen, was „Mein Planet“ öffnen soll. Der Gemini-Bildersatz für den Feuerplaneten
+  alle Texte im Kinderbereich und im Spiel. Logo und alle fünf Planeten in a961617 (Zuordnung
+  in D-027); „Mein Planet“ bleibt vorerst ohne Ziel (Alois). Der Gemini-Bildersatz für den Feuerplaneten
   (2026-10-26) war nicht committed und ist mit dem alten Arbeitsstand verloren; die Bilder
   liegen noch unter `/mnt/project-files/uploads/hearth/`.
 - Next.js 16.4.2 hat eine mittlere Sicherheitswarnung (GHSA-mfr8-8qww-v76h, behoben ab 16.4.5);

@@ -19,6 +19,7 @@ async function starteStufe3(page: Page) {
   await login(page, USER);
   await expect(page).toHaveURL(/\/bereich$/);
   await page.goto(rechtschreibung);
+  await page.getByRole("button", { name: /Stern 1/ }).click();
   await page.getByRole("link", { name: /Wald-Wesen füttern/ }).click();
   await expect(page.getByRole("heading", { name: "Wald-Wesen füttern" })).toBeVisible();
   await page.getByRole("button", { name: /Stufe 3/ }).click();
@@ -76,6 +77,7 @@ test("Zurück führt vom Spiel in die Lernwelt und von dort auf die Weltkarte", 
   await page.goto(rechtschreibung);
   await expect(page).toHaveURL(/\/bereich\/welt\/[0-9a-f]{16}$/);
   const welt = page.url();
+  await page.getByRole("button", { name: /Stern 1/ }).click();
   await page.getByRole("link", { name: /Wald-Wesen füttern/ }).click();
   await expect(page.getByRole("heading", { name: "Wald-Wesen füttern" })).toBeVisible();
   // Während der Runde führt Zurück erst zur Stufenwahl des Spiels, dann in die Lernwelt.

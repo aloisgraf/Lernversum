@@ -6,7 +6,7 @@ import { adminStore } from "@/lib/demo-admin/server";
 import { kindDerSitzung, requireRole } from "@/lib/demo-auth/server";
 import { profilSpeicher } from "@/lib/demo-profile/server";
 import { Avatar } from "@/ui/Avatar";
-import { STARTPLANETEN, StartplanetBild, type Platz } from "@/ui/Startplanet";
+import { PlanetSchild, STARTPLANETEN, StartplanetBild, type Platz } from "@/ui/Startplanet";
 import logo from "@/ui/bilder/universum/logo.webp";
 import weltall from "@/ui/bilder/universum/weltall.webp";
 
@@ -70,7 +70,7 @@ export default async function BereichPage() {
           dieselbe quadratische Fläche (Alois, 2026-11-16). */}
       <section
         aria-label="Meine Lernwelten"
-        className="relative z-10 mx-auto mt-2 grid max-w-6xl grid-cols-2 justify-items-center gap-x-4 gap-y-6 lg:-mt-14 md:grid-cols-3 md:gap-y-0"
+        className="relative z-10 mx-auto mt-2 grid max-w-6xl grid-cols-2 justify-items-center gap-x-4 gap-y-6 md:grid-cols-3 md:gap-y-0"
       >
         <div className="col-span-2 md:col-span-1 md:col-start-2 md:row-start-1 md:self-start">
           <Image
@@ -78,33 +78,26 @@ export default async function BereichPage() {
             alt="Einfach Lernen im Lernversum"
             priority
             sizes="(min-width: 768px) 28rem, 90vw"
-            className="h-auto w-[min(90vw,28rem)] md:w-full"
+            className="mx-auto h-auto w-[min(80vw,24rem)] md:w-[80%]"
           />
         </div>
         {planeten.map(({ planet, kategorie, offen }) => {
-          const schild = (
-            <span
-              className="font-display rounded-2xl px-4 py-1 text-2xl sm:text-3xl"
-              style={{
-                background: "rgba(23, 61, 131, 0.85)",
-                border: "2px solid rgba(166, 214, 255, 0.6)",
-              }}
-            >
-              {planet.name}
-            </span>
-          );
+          const schild = <PlanetSchild name={planet.name} />;
           return (
             <div
               key={planet.name}
-              className={`flex w-[min(42vw,17rem,30vh)] flex-col items-center gap-2 text-center ${PLATZ[planet.platz]}`}
+              className={`flex flex-col items-center gap-2 text-center ${planet.platz === "mitte" ? "w-[min(56vw,21rem,34vh)]" : "w-[min(42vw,17rem,27vh)]"} ${PLATZ[planet.platz]}`}
             >
               {offen && kategorie ? (
                 <Link
                   href={`/bereich/welt/${kategorie.id}`}
                   className="flex w-full flex-col items-center gap-2 rounded-3xl transition-transform hover:-translate-y-1"
                 >
-                  <StartplanetBild planet={planet} />
+                  <StartplanetBild planet={planet} leuchtet />
                   {schild}
+                  <span className="text-lg" style={{ color: "#FFE58A" }}>
+                    ✨ Aufgaben warten
+                  </span>
                 </Link>
               ) : planet.kategorie === null ? (
                 <>

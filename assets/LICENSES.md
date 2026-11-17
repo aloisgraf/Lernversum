@@ -20,6 +20,7 @@ Jede Schrift, Grafik oder Mediendatei bekommt hier einen Eintrag, bevor sie verw
 | Planet Schreiben | `src/ui/bilder/universum/planet-schreiben.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
 | Planet Geschichten | `src/ui/bilder/universum/planet-geschichten.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
 | Planet Lesen | `src/ui/bilder/universum/planet-lesen.webp` | Bild von Alois (2026-11-16), freigestellt, verkleinert | Nutzungsrecht laut Alois |
+| Landschaft Matheplanet | `src/ui/bilder/universum/welt-mathe.webp` | Bild „mathe-welt“ von Alois (2026-11-17), leerer oberer Teil abgeschnitten, Horizont weich ausgeblendet, verkleinert | Nutzungsrecht laut Alois |
 
 ## Noch nicht verwendet (Klärung offen)
 
